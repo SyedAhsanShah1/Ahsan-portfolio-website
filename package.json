@@ -1,7 +1,7 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "portfolio-website",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -87,13 +87,4 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
   }
-}
-{
-  "name": "portfolio-website",
-  "version": "1.0.0",
-  "private": true,
-  "engines": {
-    "node": "24.x"
-  },
-  ...
 }
