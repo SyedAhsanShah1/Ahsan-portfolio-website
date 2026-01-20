@@ -15,8 +15,23 @@ import {
   Wrench,
   IdentificationCard,
   RocketLaunch,
-  Info
+  Info,
+  Monitor,
+  DeviceMobile,
+  Cpu,
+  Sparkle,
+  GithubLogo,
+  LinkedinLogo,
+  Phone,
+  Terminal,
+  Brain,
+  CaretDown,
+  Lightning,
+  ShieldCheck,
+  Globe,
+  Database
 } from "phosphor-react";
+import { Layers } from "lucide-react";
 import { Hammer } from "lucide-react";
 
 declare global {
@@ -26,19 +41,15 @@ declare global {
   }
 }
 
-// --- Data Types ---
+// --- Enhanced Knowledge Base ---
 type KBEntry = {
   text: string;
   options?: { label: string; value: string }[];
 };
 
-/**
- * Knowledge Base: Detailed manual responses to ensure high line count and 
- * deep coverage of all portfolio aspects.
- */
 const knowledgeBase: Record<string, KBEntry> = {
   hi: {
-    text: "Hey there! 👋 I'm Ahsan's dedicated AI assistant.\n\nI can provide detailed information about his specialized services, technical expertise, past projects, and pricing models. How can I assist you in exploring Ahsan's portfolio today?",
+    text: "Welcome! 🤖 I am Ahsan's AI Assistant.\n\nAhsan is a professional AI & Web Engineer with 2+ years of experience in building AI-powered systems, modern websites, and custom software solutions.\n\n💡 If you are looking to build a project, website, AI system, automation, or need a custom solution — feel free to reach out directly. I can guide you to the right place.",
     options: [
       { label: "🚀 Services", value: "services" },
       { label: "💻 Projects", value: "projects" },
@@ -46,102 +57,95 @@ const knowledgeBase: Record<string, KBEntry> = {
     ]
   },
   services: {
-    text: "Ahsan offers premium digital solutions tailored to modern business needs:\n\n" +
-      "1️⃣ **Full-Stack Development**: Building scalable web applications using React, Next.js, and Node.js with a focus on performance.\n\n" +
-      "2️⃣ **AI & Automation**: Integrating Machine Learning models (YOLOv8, NLP) and building AI agents for automated workflows.\n\n" +
-      "3️⃣ **UI/UX Motion**: Creating immersive experiences with GSAP, Spline 3D, and Framer Motion.\n\n" +
-      "4️⃣ **Custom Software**: Tailor-made desktop and web utilities for specific data processing tasks.",
+    text: "Ahsan provides industrial-grade digital solutions engineered for scale:\n\n" +
+      "1️⃣ **AI Automation & Agents**– Chatbots, voice bots, workflow automation using n8n, Zapier & Make.\n\n" +
+      "2️⃣ **Full-Stack Development** – React, Vite, Node.js based scalable web apps.\n\n" +
+      "3️⃣ **Creative Engineering**: High-fidelity 3D motion experiences utilizing GSAP, Spline, and Framer Motion.\n\n" +
+      "4️⃣ **EMachine Learning Solutions** – Computer Vision, NLP, recommendation systems.\n\n" +
+      "5️⃣ **Custom Tools** – Business dashboards, smart systems, internal tools.\n\n" +
+      "6️⃣ **Consulting & Strategy** – Technical architecture design and project scoping.",
     options: [
       { label: "Tech Stack", value: "tech stack" },
       { label: "Pricing", value: "pricing" },
-      { label: "Contact", value: "contact" }
+      { label: "Connect", value: "contact" }
     ]
   },
   projects: {
-    text: "Ahsan has successfully delivered various high-impact projects:\n\n" +
-      "🔹 **Medical Prediction System**: A healthcare AI project using Python & Flask to predict disease risks with high accuracy.\n\n" +
-      "🔹 **3D Interactive Portfolio**: An award-worthy web experience utilizing Spline and GSAP for fluid 3D animations.\n\n" +
-      "🔹 **Waste Segregation AI**: A real-time computer vision project using YOLOv8 to automate recyclable waste detection.\n\n" +
-      "🔹 **E-Commerce AI Chatbot**: An NLP-driven assistant that helps users find products and track orders seamlessly.",
+    text: "Reviewing active project repositories... Found high-impact deliverables:\n\n" +
+    "🧠 **AI Chatbot & Voice Bot** – Automated lead calling & chat systems using VAPI, Voiceflow & n8n.\n\n"+   
+      "🔹 **Medical Prediction Node**: A diagnostic AI infrastructure using Python/Flask to analyze healthcare datasets with 98% accuracy.\n\n" +
+      "🔹 **Kinetic Portfolio**: A multi-dimensional 3D web experience built with Spline and GSAP for immersive storytelling.\n\n" +
+      "🔹 **Vision-X Waste AI**: Real-time object detection and classification using YOLOv8 for automated recycling systems.\n\n" +
+      "🔹 **Cognitive Chatbot**: An NLP-driven commercial assistant capable of multi-intent recognition and order tracking.",
     options: [
-      { label: "See More", value: "projects" },
-      { label: "Services", value: "services" }
+      { label: "Explore Stack", value: "tech stack" },
+      { label: "Check Services", value: "services" }
     ]
   },
   pricing: {
-    text: "Ahsan follows a transparent and value-based pricing structure:\n\n" +
-      "💰 **Basic Web Landing**: $500 - $1,000\n" +
-      "💰 **Full-Stack SaaS App**: $2,000 - $5,000\n" +
-      "💰 **AI/ML Integration**: $1,500 - $3,500\n" +
-      "💰 **Maintenance & Support**: Monthly retainers starting at $300.\n\n" +
-      "*Note: Every project is unique. Contact Ahsan for a customized fixed-price quote.*",
+    text: "Investment tiers for premium development services:\n\n" +
+      "💰 **Bespoke Landing Pages**: Starting at $500\n" +
+      "💰 **Full-Stack SaaS Architecture**: $2,000 - $5,000+\n" +
+      "💰 **AI/ML Integration Systems**: $1,500 - $3,500\n" +
+      "💰 **Maintenance & Logic Support**: Retainers starting at $300.\n\n" +
+      "*Every project undergo a rigorous scoping phase. Contact Ahsan for a precise technical estimate.*",
     options: [
-      { label: "Get Quote", value: "contact" },
-      { label: "Services", value: "services" }
+      { label: "Initiate Project", value: "contact" },
+      { label: "View Skills", value: "tech stack" }
     ]
   },
   "tech stack": {
-    text: "Ahsan utilizes a cutting-edge technical ecosystem:\n\n" +
-      "🛠 **Frontend**: React.js, Next.js, TypeScript, Tailwind CSS, GSAP, Spline.\n\n" +
-      "🛠 **Backend**: Node.js (Express), Python (Flask/FastAPI), Firebase, Supabase.\n\n" +
-      "🛠 **AI/ML**: PyTorch, TensorFlow, OpenCV, YOLOv8, Hugging Face Transformers.\n\n" +
-      "🛠 **DevOps**: Docker, GitHub Actions, AWS, Vercel, Netlify.",
+    text: "System Configuration: Technical Inventory Detected:\n\n" +
+    "🔄 **Automation** – n8n, Zapier, Make.\n\n" +
+    "🛠 **AI / ML frameworks**: PyTorch, TensorFlow, OpenCV, YOLOv8, OpenAI SDK.\n\n" +
+      "🛠 **Frontend Tier**: React.js, Next.js, TypeScript, Tailwind CSS, GSAP, Spline 3D.\n\n" +
+      "🛠 **Backend Tier**: Node.js (Express), Python (FastAPI/Flask), PostgreSQL, Firebase.\n\n" +
+      "🛠 **Cloud**: Docker, GitHub Actions, AWS, Vercel, Linux Server Management.",
     options: [
-      { label: "Experience", value: "experience" },
-      { label: "Projects", value: "projects" }
+      { label: "Professional Exp", value: "experience" },
+      { label: "Live Projects", value: "projects" }
     ]
   },
   about: {
-    text: "Ahsan is a forward-thinking Software Engineer with a passion for bridging the gap between design and complex AI logic.\n\n" +
-      "He believes in 'Code with Purpose' and focuses on building tools that solve real-world problems through automation and intelligent systems.",
+    text: "Profile: Syed Ahsan\n\nI am a professional AI & Web Engineer with over 2+ years of hands-on experience in building intelligent systems and high-performance web applications.\n\nMy core expertise lies in Artificial Intelligence, modern web technologies, and scalable software architectures. I focus on delivering solutions that combine advanced AI capabilities with clean, user-friendly interfaces.",
     options: [
       { label: "Education", value: "education" },
-      { label: "Experience", value: "experience" }
+      { label: "Work History", value: "experience" }
     ]
   },
   education: {
-    text: "Ahsan is pursuing/completed his degree in Computer Science.\n\n" +
-      "📍 **The Islamia University of Bahawalpur (IUB)**\n" +
-      "Relevant Courses: Data Structures, AI, Machine Learning, Web Engineering, and Database Management Systems.",
+    text: "Academic Background:\n\n🎓 **Bachelor of Science in Artificial Intelligence (BS AI)** — Completed\n\n📍 The Islamia University of Bahawalpur (IUB)\n\nCore Focus Areas:\n• Machine Learning & Deep Learning\n• Computer Vision & NLP\n• Data Science & Intelligent Systems\n• Software Engineering & AI Deployment",
     options: [
-      { label: "Projects", value: "projects" },
-      { label: "Contact", value: "contact" }
+      { label: "Past Work", value: "experience" },
+      { label: "Contact Info", value: "contact" }
     ]
   },
   experience: {
-    text: "Ahsan has worked on multiple freelance and collaborative ventures:\n\n" +
-      "✅ Worked with international clients on React-based dashboards.\n" +
-      "✅ Developed internal AI tools for data analysis.\n" +
-      "✅ Specialized in converting complex UI designs (Figma) into pixel-perfect code.",
+    text: "Professional Experience:\n\n🚀 **2+ Years of Industry Experience** as an AI & Web Engineer.\n\n✔ Designed and developed AI-powered web applications.\n✔ Built intelligent chatbots, automation systems, and AI agents.\n✔ Implemented computer vision solutions using YOLO and OpenCV.\n✔ Developed scalable full-stack applications using React, Node.js, and Python.\n✔ Integrated AI models into real-world production environments.",
     options: [
-      { label: "Tech Stack", value: "tech stack" },
-      { label: "Pricing", value: "pricing" }
+      { label: "Check Stack", value: "tech stack" },
+      { label: "See Pricing", value: "pricing" }
     ]
   },
   contact: {
-    text: "You can reach out to Ahsan through the following channels:\n\n" +
-      "📧 **Email **: s22barin1m01113@iub.edu.pk\n" +
-      "🔗 **LinkedIn**: linkedin.com/in/syedahsanai-engr\n" +
-      "🐙 **Contact**: +923416985286\n\n" +
-      "He is currently available for new projects and collaborations!",
+    text: "Contact Ahsan:\n\n" +
+    "📧 Email: s22barin1m01113@iub.edu.pk\n" +
+    "🔗 LinkedIn: linkedin.com/in/syedahsanai-engr\n" +
+    "🐙 GitHub: github.com/SyedAhsanShah1\n" +
+    "📱 Phone: +92 341 6985286",
   },
   help: {
-    text: "I can help you explore Ahsan's professional profile. Try asking about:\n\n" +
-      "• His **services** or **pricing**.\n" +
-      "• His **tech stack** or **experience**.\n" +
-      "• How to **contact** him.\n" +
-      "• Viewing his **projects**.",
+    text: "I am optimized for the following queries:\n\n• Detailed **Services** & **Tech Stack** break-downs.\n• Portfolio **Projects** & case studies.\n• Service **Pricing** & investment tiers.\n• Direct **Contact** protocols.",
     options: [
-      { label: "Services", value: "services" },
-      { label: "Contact", value: "contact" }
+      { label: "Show Services", value: "services" },
+      { label: "Show Contacts", value: "contact" }
     ]
   },
   fallback: {
-    text: "I'm not sure I quite got that. Since I'm Ahsan's specialized AI, I'm best at discussing his work, tech skills, and projects.\n\n" +
-      "Would you like to see his services instead?",
+    text: "Input not recognized by core logic. I am specifically programmed to discuss Ahsan's engineering services and portfolio.\n\nWould you like to reboot the conversation by viewing his services?",
     options: [
-      { label: "See Services", value: "services" },
-      { label: "Contact Info", value: "contact" }
+      { label: "View Services", value: "services" },
+      { label: "Talk to Human", value: "contact" }
     ]
   }
 };
@@ -150,6 +154,7 @@ const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const [messages, setMessages] = useState<any[]>([
     { 
       id: 1, 
@@ -159,69 +164,53 @@ const Chatbot: React.FC = () => {
     }
   ]);
 
-  const chatboxRef = useRef(null);
   const endRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
 
-  // --- Sidebar Configuration ---
   const sidebarActions = [
     { label: "Services", value: "services", icon: <Briefcase size={16} /> },
     { label: "Projects", value: "projects", icon: <Code size={16} /> },
     { label: "Pricing", value: "pricing", icon: <CurrencyDollar size={16} /> },
     { label: "Contact", value: "contact", icon: <Envelope size={16} /> },
-    { label: "About", value: "about", icon: <IdentificationCard size={16} /> },
-    { label: "Stack", value: "tech stack", icon: <Hammer size={16} /> },
-    { label: "Edu", value: "education", icon: <GraduationCap size={16} /> },
-    { label: "Exp", value: "experience", icon: <RocketLaunch size={16} /> },
+    { label: "Stack", value: "tech stack", icon: <Layers size={16} /> },
+    { label: "History", value: "experience", icon: <RocketLaunch size={16} /> },
     { label: "Help", value: "help", icon: <Info size={16} /> },
   ];
 
-  // --- Scroll Logic ---
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+    if (isOpen && endRef.current) {
+      endRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isTyping, isOpen]);
 
-  // --- Animations ---
   useEffect(() => {
-    if (buttonRef.current) {
-      gsap.fromTo(buttonRef.current, 
+    if (triggerRef.current) {
+      gsap.fromTo(triggerRef.current, 
         { scale: 0, rotate: -180 }, 
         { scale: 1, rotate: 0, duration: 1, ease: "elastic.out(1, 0.5)" }
       );
     }
   }, []);
 
-  // --- Typing Effect Engine ---
   const typeOut = async (msgId: number, text: string) => {
     let current = "";
     const chars = text.split("");
     for (let i = 0; i < chars.length; i++) {
       current += chars[i];
       setMessages(prev => prev.map(m => m.id === msgId ? { ...m, displayed: current } : m));
-      // Adaptive typing speed: slightly faster for longer texts
-      const speed = text.length > 100 ? 10 : 20;
+      const speed = text.length > 100 ? 5 : 12;
       await new Promise(r => setTimeout(r, speed));
     }
   };
 
-  // --- Matching Engine ---
   const processQuery = async (query: string) => {
     setIsTyping(true);
-    await new Promise(r => setTimeout(r, 600)); // Simulate thinking
+    await new Promise(r => setTimeout(r, 600));
     
     const lowered = query.toLowerCase();
-    let bestMatch = "fallback";
-    
-    // Priority matching logic
-    const keys = Object.keys(knowledgeBase);
-    for (const key of keys) {
-      if (lowered.includes(key)) {
-        bestMatch = key;
-        break;
-      }
-    }
-
-    const entry = knowledgeBase[bestMatch];
+    const key = Object.keys(knowledgeBase).find(k => lowered.includes(k)) || "fallback";
+    const entry = knowledgeBase[key];
     const botId = Date.now();
     
     setMessages(prev => [...prev, { 
@@ -236,13 +225,12 @@ const Chatbot: React.FC = () => {
     setIsTyping(false);
   };
 
-  // --- Communication Handlers ---
   const sendMessage = async (val?: string) => {
     const text = (val || input).trim();
     if (!text) return;
 
     setMessages(prev => [...prev, { 
-      id: Date.now(), 
+      id: Date.now() + 1, 
       fullText: text, 
       displayed: text, 
       isBot: false 
@@ -252,10 +240,9 @@ const Chatbot: React.FC = () => {
     await processQuery(text);
   };
 
-  const [isListening, setIsListening] = useState(false);
   const startVoice = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) return alert("Speech recognition not supported.");
+    if (!SpeechRecognition) return alert("System Error: Voice Recognition Hardware Not Found.");
     
     const recognition = new SpeechRecognition();
     recognition.onstart = () => setIsListening(true);
@@ -264,74 +251,77 @@ const Chatbot: React.FC = () => {
     recognition.start();
   };
 
-  // --- Render UI ---
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[9999] flex flex-col items-end font-sans selection:bg-blue-500/30">
       {isOpen && (
-        <div className="flex flex-row-reverse gap-4 items-end mb-4 animate-in fade-in zoom-in duration-300">
+        <div className="flex flex-col md:flex-row-reverse gap-4 items-end mb-4 w-[92vw] sm:w-[400px] md:w-auto transition-all duration-500">
           
-          {/* --- Right Sidebar List (Scrollable if many actions) --- */}
-          <div className="hidden md:flex flex-col gap-2 mb-2 max-h-[450px] overflow-y-auto no-scrollbar py-2">
+          {/* Desktop Only Side Menu */}
+          <div className="hidden md:flex flex-col gap-2 max-h-[450px] overflow-y-auto no-scrollbar py-2">
             {sidebarActions.map((item, i) => (
               <button
                 key={i}
                 onClick={() => sendMessage(item.value)}
-                className="flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 text-white text-[10px] uppercase tracking-widest py-3 px-4 rounded-2xl hover:bg-blue-600 hover:border-blue-400 transition-all shadow-2xl w-36 group"
+                className="flex items-center gap-3 bg-black/60 backdrop-blur-3xl border border-white/10 text-white/50 text-[10px] uppercase tracking-[0.2em] py-4 px-6 rounded-2xl hover:bg-blue-600 hover:text-white transition-all w-48 group shadow-2xl hover:border-blue-400/50"
               >
-                <span className="text-blue-400 group-hover:text-white transition-colors">
-                  {item.icon}
-                </span>
+                <span className="text-blue-500 group-hover:text-white transition-colors">{item.icon}</span>
                 {item.label}
               </button>
             ))}
           </div>
 
-          {/* --- Main Chat Window --- */}
+          {/* Main Interface Window */}
           <div 
-            ref={chatboxRef} 
-            className="w-[380px] h-[520px] bg-black/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden relative"
+            ref={chatWindowRef}
+            className="w-full md:w-[420px] h-[75vh] md:h-[520px] bg-[#050505] border border-white/10 rounded-[2.5rem] shadow-[0_40px_120px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden relative animate-in fade-in zoom-in duration-300"
           >
-            {/* Glossy Header */}
-            <div className="p-5 border-b border-white/10 bg-white/5 flex items-center justify-between text-white relative z-10">
+            {/* Neural Header */}
+            <div className="p-5 md:p-6 border-b border-white/5 bg-white/5 backdrop-blur-2xl flex items-center justify-between text-white z-10">
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <div className="p-2.5 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-2xl shadow-lg">
-                    <Robot size={22} weight="duotone" />
+                  <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-2xl shadow-lg shadow-blue-600/20 ring-1 ring-white/20">
+                    <Cpu size={24} weight="duotone" />
                   </div>
-                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></span>
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-[3.5px] border-[#050505] animate-pulse"></div>
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold tracking-tight">Ahsan Assistant</h3>
-                  <p className="text-[10px] text-blue-400 font-medium uppercase tracking-tighter">AI Core v2.0</p>
+                  <h3 className="text-[13px] font-black uppercase tracking-widest flex items-center gap-2">
+                    Ahsan’s AI Assistant. <Lightning size={12} weight="fill" className="text-yellow-400" />
+                  </h3>
+                  <div className="flex items-center gap-1.5 opacity-60">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em]">Project Consultation & Technical Support</p>
+                  </div>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)} 
-                className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                className="p-3 bg-white/5 hover:bg-red-500/20 hover:text-red-500 rounded-xl transition-all border border-white/5 text-white/40"
               >
-                <X size={18} />
+                <X size={18} weight="bold" />
               </button>
             </div>
 
-            {/* Chat Area */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-blue-900/10">
-              {messages.map(m => (
-                <div key={m.id} className={`flex ${m.isBot ? "justify-start" : "justify-end"} animate-in fade-in slide-in-from-bottom-2`}>
-                  <div className={`relative max-w-[88%] p-4 rounded-3xl text-[13px] leading-relaxed ${
-                    m.isBot 
-                      ? "bg-white/5 text-gray-200 border border-white/10 rounded-tl-none" 
-                      : "bg-blue-600 text-white rounded-tr-none shadow-xl shadow-blue-900/20"
-                  }`}>
-                    <div className="whitespace-pre-wrap">{m.isBot ? m.displayed : m.fullText}</div>
-                    
-                    {/* Bot Options Buttons */}
+            {/* Neural Feed */}
+            <div className="flex-1 overflow-y-auto p-5 md:p-8 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-blue-900/10 z-10">
+              {messages.map((m) => (
+                <div key={m.id} className={`flex ${m.isBot ? "justify-start" : "justify-end"} animate-fade-in`}>
+                  <div className="max-w-[90%] space-y-3">
+                    <div className={`p-4 md:p-5 rounded-[2rem] text-[13px] md:text-[14px] leading-relaxed shadow-2xl relative group ${
+                      m.isBot 
+                        ? "bg-white/[0.03] text-gray-300 border border-white/10 rounded-tl-none backdrop-blur-xl" 
+                        : "bg-blue-600 text-white rounded-tr-none shadow-blue-900/40 font-medium"
+                    }`}>
+                      <div className="whitespace-pre-wrap">{m.isBot ? m.displayed : m.fullText}</div>
+                    </div>
+
+                    {/* Quick Response Chips */}
                     {m.isBot && !isTyping && m.options && (
-                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/5">
+                      <div className="flex flex-wrap gap-2 pt-1">
                         {m.options.map((opt: any, i: number) => (
                           <button 
                             key={i} 
                             onClick={() => sendMessage(opt.value)} 
-                            className="text-[11px] bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl hover:bg-blue-500 hover:border-blue-400 transition-all active:scale-95"
+                            className="text-[10px] font-black bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl hover:bg-blue-600 hover:border-blue-500 transition-all uppercase tracking-widest text-white/50 hover:text-white active:scale-95"
                           >
                             {opt.label}
                           </button>
@@ -343,11 +333,10 @@ const Chatbot: React.FC = () => {
               ))}
               
               {isTyping && (
-                <div className="flex gap-2 items-center text-[11px] text-blue-400 font-medium px-2">
-                  <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce"></span>
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                <div className="flex items-center gap-4 text-[10px] text-blue-500 font-black uppercase tracking-[0.3em] px-2">
+                  <div className="flex gap-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping"></div>
+                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping [animation-delay:0.2s]"></div>
                   </div>
                   Thinking...
                 </div>
@@ -355,48 +344,81 @@ const Chatbot: React.FC = () => {
               <div ref={endRef} />
             </div>
 
-            {/* Input Bar */}
+            {/* Input System */}
             <form 
               onSubmit={e => { e.preventDefault(); sendMessage(); }} 
-              className="p-4 bg-black/50 border-t border-white/10 flex items-center gap-3"
+              className="p-5 md:p-7 bg-black/60 backdrop-blur-3xl border-t border-white/5 flex items-center gap-4 z-10"
             >
               <button 
-                type="button"
-                onClick={startVoice}
-                className={`p-2.5 rounded-2xl transition-all ${isListening ? "bg-red-500 text-white animate-pulse" : "bg-white/5 text-gray-400 hover:text-white"}`}
+                type="button" 
+                onClick={startVoice} 
+                className={`p-4 rounded-2xl transition-all border border-white/5 flex items-center justify-center ${
+                  isListening 
+                    ? "bg-red-500 text-white shadow-lg shadow-red-500/40 scale-110" 
+                    : "bg-white/5 text-gray-500 hover:text-blue-500 hover:bg-white/10"
+                }`}
               >
-                {isListening ? <SpeakerSimpleHigh size={20} /> : <Microphone size={20} />}
+                {isListening ? <SpeakerSimpleHigh size={20} weight="fill" /> : <Microphone size={20} weight="bold" />}
               </button>
               
-              <div className="flex-1 relative">
+              <div className="flex-1 relative group">
                 <input 
                   value={input} 
                   onChange={e => setInput(e.target.value)} 
-                  placeholder="Ask me anything..." 
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all placeholder:text-gray-600"
+                  placeholder="Query Database..." 
+                  className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-blue-500/50 focus:bg-white/[0.08] transition-all placeholder:text-white/10 placeholder:uppercase placeholder:tracking-widest"
                 />
               </div>
 
               <button 
                 type="submit" 
-                disabled={!input.trim()}
-                className="p-3 bg-blue-600 text-white rounded-2xl hover:bg-blue-500 disabled:opacity-30 disabled:hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/40 active:scale-90"
+                disabled={!input.trim()} 
+                className="p-4 bg-blue-600 text-white rounded-2xl shadow-xl shadow-blue-600/20 disabled:opacity-20 active:scale-90 transition-all hover:bg-blue-500 hover:shadow-blue-500/40"
               >
-                <PaperPlaneTilt size={20} weight="fill" />
+                <PaperPlaneTilt size={22} weight="fill" />
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* Floating Toggle Button */}
-      <button 
-        ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)} 
-        className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[22px] flex items-center justify-center text-white shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all duration-300"
-      >
-        {isOpen ? <X size={28} /> : <ChatCircle size={32} weight="fill" />}
-      </button>
+      {/* Primary Activation Portal */}
+      <div className="relative group">
+        {/* Halo Glow */}
+        <div className="absolute inset-[-12px] bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-[2.5rem] blur-3xl opacity-0 group-hover:opacity-40 transition-all duration-700"></div>
+        
+        <button 
+          ref={triggerRef} 
+          onClick={() => setIsOpen(!isOpen)} 
+          className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl md:rounded-3xl flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-90 transition-all duration-500 relative z-10 border border-white/20 ${
+            isOpen ? "bg-none bg-[#111] rotate-90" : ""
+          }`}
+        >
+          {isOpen ? (
+            <X size={28} weight="bold" />
+          ) : (
+            <div className="relative">
+              <ChatCircle size={32} weight="fill" className="md:w-9 md:h-9" />
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-400"></span>
+              </span>
+            </div>
+          )}
+        </button>
+      </div>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .scrollbar-hide, .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        @keyframes fade-in { 
+          from { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); } 
+          to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } 
+        }
+        .animate-fade-in { animation: fade-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+      `}</style>
     </div>
   );
 };
