@@ -102,7 +102,7 @@ const Hero = () => {
 
   return (
     <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div ref={splineRef} className="absolute inset-0 w-full h-full opacity-70">
+      <div ref={splineRef} className="absolute inset-0 w-full h-full opacity-70 hidden md:block">
         <iframe src="https://my.spline.design/genkubgreetingrobot-MW4W3iAFsJj5olFfT1MhN0TH/" frameBorder="0" width="100%" height="100%" className="w-full h-full" />
       </div>
 
@@ -138,7 +138,7 @@ const Hero = () => {
 
           <Button onClick={scrollToProjects} variant="ghost" className="group inline-flex items-center gap-3 px-8 py-4 text-foreground hover:bg-primary/10 rounded-lg font-medium transition-all duration-300 hover:scale-105" size="lg">
             View My Work
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300"/>
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
         </div>
       </div>
