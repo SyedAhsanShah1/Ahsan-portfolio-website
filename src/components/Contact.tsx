@@ -148,7 +148,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-foreground font-medium">Email</p>
-                  <p className="text-muted-foreground">s22barin1m01113@iub.edu.pk</p>
+                  <p className="text-muted-foreground">info@syedahsan-ai-engr.tech</p>
                 </div>
               </div>
 
@@ -176,10 +176,10 @@ const Contact = () => {
             <div>
               <h4 className="text-lg font-medium text-foreground mb-4">Follow Me</h4>
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110">
                   <GithubLogo size={20} className="text-primary-foreground" />
                 </a>
-                <a href="https://www.linkedin.com/in/syedahsanai-engr/" className="w-12 h-12 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110">
+                <a href="https://www.linkedin.com/in/syedahsanai-engr/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110">
                   <LinkedinLogo size={20} className="text-secondary-foreground" />
                 </a>
               </div>

@@ -129,7 +129,7 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   contact: {
     text: "Contact Ahsan:\n\n" +
-      "📧 Email: s22barin1m01113@iub.edu.pk\n" +
+      "📧 Email: info@syedahsan-ai-engr.tech\n" +
       "🔗 LinkedIn: linkedin.com/in/syedahsanai-engr\n" +
       "🐙 GitHub: github.com/SyedAhsanShah1\n" +
       "📱 Phone: +92 341 6985286",

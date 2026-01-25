@@ -15,7 +15,7 @@ const Navigation = () => {
       opacity: 0,
       duration: 1,
       ease: "power3.out",
-      delay: 3.5 
+      delay: 0.5
     });
 
     gsap.from(logoRef.current, {
@@ -23,7 +23,7 @@ const Navigation = () => {
       opacity: 0,
       duration: 0.8,
       ease: "power3.out",
-      delay: 3.7
+      delay: 0.7
     });
 
     gsap.from(menuRef.current?.children || [], {
@@ -32,7 +32,7 @@ const Navigation = () => {
       duration: 0.6,
       stagger: 0.1,
       ease: "power3.out",
-      delay: 3.8
+      delay: 0.8
     });
   }, []);
 
@@ -43,7 +43,7 @@ const Navigation = () => {
         duration: 0.5,
         ease: "power3.out"
       });
-      
+
       gsap.from(mobileMenuRef.current?.querySelectorAll('.menu-item') || [], {
         x: 50,
         opacity: 0,
@@ -78,7 +78,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav ref={navRef}className="fixed top-0 left-0 right-0 z-40 glass border-b border-white/10">
+      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-40 glass border-b border-white/10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div ref={logoRef}>
@@ -93,8 +93,8 @@ const Navigation = () => {
                   {item.name}
                 </button>
               ))}
-              
-              <button onClick={() => scrollToSection('contact')}className="px-6 py-2 bg-gradient-primary text-primary-foreground rounded-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105">
+
+              <button onClick={() => scrollToSection('contact')} className="px-6 py-2 bg-gradient-primary text-primary-foreground rounded-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105">
                 Hire Me
               </button>
             </div>
@@ -106,22 +106,22 @@ const Navigation = () => {
         </div>
       </nav>
 
-      <div ref={mobileMenuRef}className="fixed top-0 right-0 w-full h-full bg-background/95 backdrop-blur-lg z-50 transform translate-x-full md:hidden">
+      <div ref={mobileMenuRef} className="fixed top-0 right-0 w-full h-full bg-background/95 backdrop-blur-lg z-50 transform translate-x-full md:hidden">
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <h2 className="text-2xl font-light text-primary-glow">Portfolio</h2>
           <button onClick={() => setIsOpen(false)} className="text-foreground p-2">
             <X size={24} />
           </button>
         </div>
-        
+
         <div className="flex flex-col space-y-6 p-6 mt-8">
           {navItems.map((item) => (
             <button key={item.id} onClick={() => scrollToSection(item.id)} className="menu-item text-left text-xl text-foreground/80 hover:text-primary-glow transition-colors duration-300">
               {item.name}
             </button>
           ))}
-          
-          <button onClick={() => scrollToSection('contact')}className="menu-item px-6 py-3 bg-gradient-primary text-primary-foreground rounded-lg hover:shadow-glow-primary transition-all duration-300 text-center mt-8">
+
+          <button onClick={() => scrollToSection('contact')} className="menu-item px-6 py-3 bg-gradient-primary text-primary-foreground rounded-lg hover:shadow-glow-primary transition-all duration-300 text-center mt-8">
             Hire Me
           </button>
         </div>

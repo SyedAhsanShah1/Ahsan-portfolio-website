@@ -74,10 +74,10 @@ const Footer = () => {
               Building intelligent, scalable, and user-focused AI-powered web solutions.
             </p>
             <div className="flex gap-4">
-              <a href="" className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110">
+              <a href="" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110">
                 <GithubLogo size={18} className="text-primary-foreground" />
               </a>
-              <a href="https://www.linkedin.com/in/syedahsanai-engr/" className="w-10 h-10 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110">
+              <a href="https://www.linkedin.com/in/syedahsanai-engr/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110">
                 <LinkedinLogo size={18} className="text-secondary-foreground" />
               </a>
             </div>
@@ -106,7 +106,7 @@ const Footer = () => {
             <div className="space-y-3">
               <p className="text-muted-foreground">
                 <span className="text-primary-glow">Email:</span><br />
-                s22barin1m01113@iub.edu.pk
+                info@syedahsan-ai-engr.tech
               </p>
               <p className="text-muted-foreground">
                 <span className="text-primary-glow">Location:</span><br />
@@ -128,7 +128,7 @@ const Footer = () => {
           </div> */}
 
           <button onClick={scrollToTop} className="px-4 py-2 gap-2 flex items-center bg-gradient-primary text-primary-foreground rounded-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105 text-sm">
-            Back to Top <ArrowUp size={18}/>
+            Back to Top <ArrowUp size={18} />
           </button>
         </div>
       </div>
