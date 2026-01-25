@@ -25,32 +25,32 @@ const About = () => {
   const skillsRef = useRef<HTMLDivElement>(null);
 
   const skills = [
-  // --- AI & Data ---
-  { icon: Brain, name: 'Machine Learning', level: 90 },
-  { icon: Brain, name: 'Deep Learning', level: 85 },
-  { icon: Brain, name: 'Natural Language Processing', level: 88 },
-  { icon: Eye, name: 'Computer Vision', level: 82 },
-  { icon: Cpu, name: 'TensorFlow / PyTorch', level: 85 },
-  { icon: ChartBar, name: 'Data Analysis (Pandas, NumPy)', level: 95 },
+    // --- AI & Data ---
+    { icon: Brain, name: 'Machine Learning', level: 90 },
+    { icon: Brain, name: 'Deep Learning', level: 85 },
+    { icon: Brain, name: 'Natural Language Processing', level: 88 },
+    { icon: Eye, name: 'Computer Vision', level: 82 },
+    { icon: Cpu, name: 'TensorFlow / PyTorch', level: 85 },
+    { icon: ChartBar, name: 'Data Analysis (Pandas, NumPy)', level: 95 },
 
-  // --- Programming ---
-  { icon: Code, name: 'Python', level: 95 },
-  { icon: Code, name: 'JavaScript', level: 65 },
+    // --- Programming ---
+    { icon: Code, name: 'Python', level: 95 },
+    { icon: Code, name: 'JavaScript', level: 65 },
 
-  // --- Web Development ---
-  { icon: Globe, name: 'HTML5 / CSS3', level: 90 },
-  { icon: Code, name: 'React.js', level: 45 },
-  { icon: Terminal, name: 'Node.js / Express.js', level: 40 },
+    // --- Web Development ---
+    { icon: Globe, name: 'HTML5 / CSS3', level: 90 },
+    { icon: Code, name: 'React.js', level: 45 },
+    { icon: Terminal, name: 'Node.js / Express.js', level: 40 },
 
-  // --- Newly Added (Replaced SQL, MongoDB, Node.js) ---
-  { icon: Robot, name: 'AI Model Training & Evaluation', level: 88 },
-  { icon: Terminal, name: 'REST API Integration', level: 85 },
-  { icon: CloudArrowUp, name: 'Model Deployment (Web-based)', level: 80 },
-  { icon: Code, name: 'Backend Logic & Automation', level: 82 },
+    // --- Newly Added (Replaced SQL, MongoDB, Node.js) ---
+    { icon: Robot, name: 'AI Model Training & Evaluation', level: 88 },
+    { icon: Terminal, name: 'REST API Integration', level: 85 },
+    { icon: CloudArrowUp, name: 'Model Deployment (Web-based)', level: 80 },
+    { icon: Code, name: 'Backend Logic & Automation', level: 82 },
 
-  // --- UI / UX ---
-  { icon: Stack, name: 'Responsive UI Design', level: 85 },
-];
+    // --- UI / UX ---
+    { icon: Stack, name: 'Responsive UI Design', level: 85 },
+  ];
 
 
 
@@ -128,7 +128,7 @@ const About = () => {
               <div className="w-20 h-1 bg-gradient-primary rounded-full mb-6" />
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed break-words">
               I’m an AI & Web Engineer with hands-on experience in Machine Learning, Deep Learning, and Natural Language Processing, along with strong skills in modern web development.
 
               I build intelligent, data-driven systems and integrate them into scalable web applications. My work includes developing ML models, implementing NLP-based solutions, building REST APIs, and creating responsive web interfaces.
@@ -182,8 +182,8 @@ const About = () => {
         </div>
       </div>
 
-      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 hidden md:block" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 hidden md:block" />
     </section>
   );
 };

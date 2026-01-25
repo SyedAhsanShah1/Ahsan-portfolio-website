@@ -237,11 +237,21 @@ const Chatbot: React.FC = () => {
         const data = await response.json();
         const botId = Date.now();
 
+        // Check for Rate Limit Error to show fallback options
+        const isRateLimit = response.status === 429 || (data.reply && data.reply.includes("Too many requests"));
+
+        const fallbackOptions = [
+          { label: "View Services", value: "services" },
+          { label: "About Ahsan", value: "about" },
+          { label: "Contact", value: "contact" }
+        ];
+
         setMessages(prev => [...prev, {
           id: botId,
           fullText: data.reply,
           displayed: "",
-          isBot: true
+          isBot: true,
+          options: isRateLimit ? fallbackOptions : undefined
         }]);
 
         await typeOut(botId, data.reply);
@@ -250,7 +260,11 @@ const Chatbot: React.FC = () => {
           id: Date.now(),
           fullText: "I'm having trouble connecting to the server. Please check my connection.",
           displayed: "I'm having trouble connecting to the server. Please check my connection.",
-          isBot: true
+          isBot: true,
+          options: [
+            { label: "View Services", value: "services" },
+            { label: "Contact", value: "contact" }
+          ]
         }]);
       }
     }
