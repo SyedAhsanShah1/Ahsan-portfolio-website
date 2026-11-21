@@ -9,7 +9,7 @@ Ahsan page, and a Cohere AI chatbot (same setup as Nexavo).
 Research-lab look: cool light background `#F5F7FA` with a subtle dot-grid pattern,
 deep navy ink `#0B1B33`, electric blue `#2563EB` primary, teal `#0D9488` accent.
 Space Grotesk for display headings, Inter for body text, JetBrains Mono for small
-eyebrow labels and tags (for example `// 01 - about`).
+mono eyebrow labels and tags (for example `01 - ABOUT`).
 
 The Tailwind CSS-variable token system (`background`, `foreground`, `primary`,
 `secondary`, `accent`, `muted`, `border`, `card`, gradients, shadows) is used
