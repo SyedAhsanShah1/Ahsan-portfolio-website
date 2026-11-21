@@ -1,11 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { ArrowRight, User, Briefcase, Flask, FolderOpen, Brain, Envelope } from 'phosphor-react';
 import Hero from '../components/Hero';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const EXPLORE = [
   {
@@ -54,49 +49,22 @@ const HIGHLIGHTS = [
 ];
 
 const Index = () => {
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(introRef.current?.children || [], {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: introRef.current, start: 'top 85%' },
-      });
-
-      gsap.from(cardsRef.current?.children || [], {
-        y: 60,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: cardsRef.current, start: 'top 85%' },
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <div>
       <Hero />
 
       {/* Short intro + highlights */}
       <section className="py-16 px-6">
-        <div ref={introRef} className="container mx-auto max-w-6xl text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
+        <div className="container mx-auto max-w-6xl text-center">
+          <h2 data-reveal className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
             Researcher first, <span className="text-primary">engineer always</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
+          <p data-reveal data-delay="0.1" className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
             I&apos;m Syed Ahsan - an MS Computer Science student and Research Assistant at ITU Lahore. My work lives
             where AI meets medicine: teaching machines to design optical lenses, auditing fairness in medical AI, and
             building web apps that put models in people&apos;s hands.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div data-reveal data-delay="0.2" className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {HIGHLIGHTS.map((h) => (
               <div key={h.label} className="glass rounded-2xl px-4 py-5">
                 <p className="font-display text-2xl md:text-3xl font-semibold text-primary">{h.value}</p>
@@ -110,15 +78,20 @@ const Index = () => {
       {/* Explore the site */}
       <section className="pb-24 px-6">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground text-center mb-12" data-reveal>
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary text-center mb-3">
+            // explore
+          </p>
+          <h2 data-reveal data-delay="0.05" className="font-display text-3xl md:text-4xl font-semibold text-foreground text-center mb-12">
             Explore the <span className="text-primary">portfolio</span>
           </h2>
-          <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {EXPLORE.map((card) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {EXPLORE.map((card, i) => (
               <Link
                 key={card.to}
                 to={card.to}
                 data-tilt
+                data-reveal
+                data-delay={(i * 0.08).toFixed(2)}
                 className="group glass rounded-2xl p-7 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 will-change-transform"
               >
                 <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 transition-transform duration-300">

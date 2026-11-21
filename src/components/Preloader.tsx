@@ -14,14 +14,7 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    tl.from(logoRef.current, {
-      scale: 0.5,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out"
-    })
-
-      .to(progressBarRef.current, {
+    tl.to(progressBarRef.current, {
         width: "100%",
         duration: 2.5,
         ease: "power2.out"
@@ -61,11 +54,11 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
   return (
     <div ref={preloaderRef} className="fixed inset-0 z-50 flex items-center justify-center bg-background">
       <div className="text-center">
-        <div ref={logoRef} className="mb-8">
+        <div ref={logoRef} className="mb-8 animate-fade-in">
           <h1 className="text-2xl md:text-3xl font-light text-foreground text-glow mb-4">
              Syed Ahsan
           </h1>
-          <p className="text-xl text-muted-foreground">Loading Portfolio...</p>
+          <p className="font-mono text-sm tracking-[0.3em] uppercase text-muted-foreground">Loading Portfolio...</p>
         </div>
 
         <div className="w-80 max-w-md mx-auto">

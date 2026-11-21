@@ -1,9 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, GithubLogo, Globe, Eye, Brain, Cpu, Storefront } from 'phosphor-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 type Project = {
   id: number;
@@ -19,10 +14,6 @@ type Project = {
 };
 
 const Projects = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-
   const projects: Project[] = [
     {
       id: 1,
@@ -41,7 +32,7 @@ const Projects = () => {
       description:
         'Sole-author working paper studying fairness in glaucoma detection with EfficientNet-B1. FIN-race AUC 85.6 - measuring how well the model performs across patient groups.',
       tileIcon: <Eye size={64} weight="duotone" className="text-white/90" />,
-      tileGradient: 'bg-gradient-to-br from-secondary to-emerald-700',
+      tileGradient: 'bg-gradient-to-br from-[#0B1B33] to-[#0D9488]',
       tech: ['Python', 'PyTorch', 'EfficientNet-B1', 'Fairness', 'Medical Imaging'],
       liveUrl: '',
       githubUrl: '',
@@ -53,7 +44,7 @@ const Projects = () => {
       description:
         'A family-level reproducibility study of anomaly detection benchmarks - comparing ~30 algorithms across 6 families on 16 ODDS datasets.',
       tileIcon: <Brain size={64} weight="duotone" className="text-white/90" />,
-      tileGradient: 'bg-gradient-to-br from-primary to-amber-500',
+      tileGradient: 'bg-gradient-to-br from-primary to-[#38BDF8]',
       tech: ['Python', 'PyOD', 'Benchmarking', 'Reproducibility'],
       liveUrl: '',
       githubUrl: '',
@@ -65,7 +56,7 @@ const Projects = () => {
       description:
         'Research Assistant work at ITU Lahore: AI-driven inverse design of optical lenses, learning a deep-learning surrogate model from FDTD simulation data.',
       tileIcon: <Cpu size={64} weight="duotone" className="text-white/90" />,
-      tileGradient: 'bg-gradient-to-br from-indigo-900 to-secondary',
+      tileGradient: 'bg-gradient-to-br from-[#1E3A5F] to-secondary',
       tech: ['PyTorch', 'Ansys Lumerical', 'FDTD', 'Inverse Design'],
       liveUrl: '',
       githubUrl: '',
@@ -88,7 +79,7 @@ const Projects = () => {
       description:
         'Founder of Nexavo AI, a Pakistan-only store selling AI tools with Safepay checkout in PKR - cards, JazzCash, Easypaisa and Raast.',
       tileIcon: <Storefront size={64} weight="duotone" className="text-white/90" />,
-      tileGradient: 'bg-gradient-to-br from-amber-500 to-primary',
+      tileGradient: 'bg-gradient-to-br from-[#0D9488] to-primary',
       tech: ['Next.js', 'Safepay', 'React', 'Tailwind CSS'],
       liveUrl: '',
       githubUrl: '',
@@ -96,59 +87,31 @@ const Projects = () => {
     },
   ];
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(titleRef.current?.children || [], {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 80%',
-        },
-      });
-
-      gsap.from(containerRef.current?.children || [], {
-        y: 100,
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="projects" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
+    <section id="projects" className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl">
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+        <div className="text-center mb-16">
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 04 - projects</p>
+          <h2 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             AI &amp; Web <span className="text-primary">Projects</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div data-reveal data-delay="0.1" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
+          <p data-reveal data-delay="0.15" className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A curated collection of AI and web engineering projects - research, intelligent systems, and
             production web applications.
           </p>
-          <p className="text-sm text-muted-foreground/80 italic mt-3">
+          <p data-reveal data-delay="0.2" className="text-sm text-muted-foreground/80 italic mt-3">
             Built, broken, fixed, and shipped. Mostly in that order.
           </p>
         </div>
 
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, i) => (
             <div
               key={project.id}
               data-tilt
+              data-reveal
+              data-delay={((i % 3) * 0.1).toFixed(2)}
               className="glass cursor-pointer rounded-xl overflow-hidden hover:shadow-glow-primary transition-shadow duration-500 group will-change-transform"
             >
               <div className="relative overflow-hidden h-48">
@@ -242,7 +205,7 @@ const Projects = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12 space-y-4">
+        <div data-reveal className="text-center mt-12 space-y-4">
           <a
             href="https://github.com/mscsAhsan"
             target="_blank"

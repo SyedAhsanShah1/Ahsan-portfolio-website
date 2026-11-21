@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
 import {
   ChatCircle,
   X,
@@ -168,21 +167,14 @@ const Chatbot: React.FC = () => {
     { label: "Help", value: "help", icon: <Info size={16} /> },
   ];
 
+  /* Chat trigger entrance: CSS keyframe (animate-scale-in) that ends at the
+     button's natural state. The old GSAP scale-0 entrance could strand the
+     button invisible if the tween never ran. */
   useEffect(() => {
     if (isOpen && endRef.current) {
       endRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isTyping, isOpen]);
-
-  useEffect(() => {
-    if (triggerRef.current) {
-      gsap.fromTo(
-        triggerRef.current,
-        { scale: 0, rotate: -180 },
-        { scale: 1, rotate: 0, duration: 1, ease: "elastic.out(1, 0.5)" }
-      );
-    }
-  }, []);
 
   const typeOut = async (msgId: number, text: string) => {
     let current = "";
@@ -441,7 +433,7 @@ const Chatbot: React.FC = () => {
         <button
           ref={triggerRef}
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-primary rounded-2xl md:rounded-3xl flex items-center justify-center text-primary-foreground shadow-2xl hover:scale-110 active:scale-90 transition-all duration-500 relative z-10 border border-white/20 ${
+          className={`animate-scale-in w-12 h-12 md:w-16 md:h-16 bg-gradient-primary rounded-2xl md:rounded-3xl flex items-center justify-center text-primary-foreground shadow-2xl hover:scale-110 active:scale-90 transition-all duration-500 relative z-10 border border-white/20 ${
             isOpen ? "bg-none bg-secondary rotate-90" : ""
           }`}
         >

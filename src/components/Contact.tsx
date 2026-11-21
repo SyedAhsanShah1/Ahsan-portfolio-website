@@ -1,64 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PaperPlaneTilt, GithubLogo, LinkedinLogo, Envelope, Phone, MapPin, CheckCircle } from 'phosphor-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Contact = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
   const [sent, setSent] = useState(false);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(titleRef.current?.children || [], {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 80%',
-        },
-      });
-
-      gsap.from(formRef.current?.children || [], {
-        x: -50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: formRef.current,
-          start: 'top 80%',
-        },
-      });
-
-      gsap.from(infoRef.current?.children || [], {
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: infoRef.current,
-          start: 'top 80%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,26 +40,27 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
+    <section id="contact" className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-6xl">
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+        <div className="text-center mb-16">
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 06 - contact</p>
+          <h2 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             Get In <span className="text-primary">Touch</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div data-reveal data-delay="0.1" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
+          <p data-reveal data-delay="0.15" className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Have a project in mind, a research idea, or just want to say hello? Drop me a message and let&apos;s
             create something amazing together.
           </p>
-          <p className="text-sm text-muted-foreground/80 italic mt-3">
+          <p data-reveal data-delay="0.2" className="text-sm text-muted-foreground/80 italic mt-3">
             Replies are powered by a human, not a bot. The bot just takes the messages.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          <div ref={formRef} className="space-y-6">
+          <div className="space-y-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
+              <div data-reveal>
                 <label htmlFor="name" className="block text-foreground mb-2 font-medium">
                   Name
                 </label>
@@ -125,7 +76,7 @@ const Contact = () => {
                 />
               </div>
 
-              <div>
+              <div data-reveal data-delay="0.08">
                 <label htmlFor="email" className="block text-foreground mb-2 font-medium">
                   Email
                 </label>
@@ -141,7 +92,7 @@ const Contact = () => {
                 />
               </div>
 
-              <div>
+              <div data-reveal data-delay="0.16">
                 <label htmlFor="message" className="block text-foreground mb-2 font-medium">
                   Message
                 </label>
@@ -157,14 +108,16 @@ const Contact = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                data-magnetic
-                className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
-              >
+              <div data-reveal data-delay="0.24">
+                <button
+                  type="submit"
+                  data-magnetic
+                  className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+                >
                 Send Message
                 <PaperPlaneTilt size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </button>
+              </div>
 
               {sent && (
                 <p className="flex items-center justify-center gap-2 text-secondary text-sm font-medium">
@@ -175,8 +128,8 @@ const Contact = () => {
             </form>
           </div>
 
-          <div ref={infoRef} className="space-y-8">
-            <div>
+          <div className="space-y-8">
+            <div data-reveal>
               <h3 className="font-display text-2xl font-semibold text-foreground mb-6">Let&apos;s Connect</h3>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 I&apos;m always excited to work on new projects and collaborate with amazing people. Whether you have
@@ -195,7 +148,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div data-reveal data-delay="0.1" className="space-y-4">
               <a href="mailto:asmatullahshah0343@gmail.com" className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-primary transition-all duration-300">
                 <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
                   <Envelope size={20} className="text-primary-foreground" />
@@ -228,7 +181,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div>
+            <div data-reveal data-delay="0.2">
               <h4 className="text-lg font-medium text-foreground mb-4">Follow Me</h4>
               <div className="flex gap-4">
                 <a

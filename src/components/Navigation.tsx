@@ -17,54 +17,17 @@ const NAV_ITEMS = [
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-  const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.5,
-    });
-
-    gsap.from(logoRef.current, {
-      x: -50,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      delay: 0.7,
-    });
-
-    gsap.from(menuRef.current?.children || [], {
-      y: -20,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out',
-      delay: 0.8,
-    });
-  }, []);
-
+  /* The nav is visible by default (CSS fade-in on mount only). It used to
+     hide with a gsap.from opacity tween, which could strand it invisible. */
   useEffect(() => {
     if (isOpen) {
       gsap.to(mobileMenuRef.current, {
         x: 0,
         duration: 0.5,
         ease: 'power3.out',
-      });
-
-      gsap.from(mobileMenuRef.current?.querySelectorAll('.menu-item') || [], {
-        x: 50,
-        opacity: 0,
-        duration: 0.4,
-        stagger: 0.1,
-        ease: 'power3.out',
-        delay: 0.2,
       });
     } else {
       gsap.to(mobileMenuRef.current, {
@@ -94,16 +57,16 @@ const Navigation = () => {
 
   return (
     <>
-      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-40 glass border-b border-border/60">
+      <nav className="fixed top-0 left-0 right-0 z-40 glass border-b border-border/60 animate-fade-in">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div ref={logoRef}>
+            <div>
               <Link to="/" className="font-display text-2xl font-semibold text-primary">
                 Syed Ahsan
               </Link>
             </div>
 
-            <div ref={menuRef} className="hidden xl:flex items-center space-x-6">
+            <div className="hidden xl:flex items-center space-x-6">
               {NAV_ITEMS.map((item) => (
                 <NavLink key={item.to} to={item.to} end={item.to === '/'} className={linkClass}>
                   {item.name}
@@ -144,16 +107,17 @@ const Navigation = () => {
         </div>
 
         <div className="flex flex-col space-y-5 p-6 mt-6">
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.map((item, i) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/'}
               onClick={() => setIsOpen(false)}
+              style={isOpen ? { animationDelay: `${0.1 + i * 0.06}s` } : undefined}
               className={({ isActive }) =>
                 `menu-item text-left text-xl transition-colors duration-300 ${
                   isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-                }`
+                } ${isOpen ? 'anim-fade-in-delayed' : ''}`
               }
             >
               {item.name}
@@ -165,7 +129,8 @@ const Navigation = () => {
               setIsOpen(false);
               navigate('/contact');
             }}
-            className="menu-item px-6 py-3 bg-gradient-primary text-primary-foreground rounded-full hover:shadow-glow-primary transition-all duration-300 text-center mt-8"
+            style={isOpen ? { animationDelay: '0.6s' } : undefined}
+            className={`menu-item px-6 py-3 bg-gradient-primary text-primary-foreground rounded-full hover:shadow-glow-primary transition-all duration-300 text-center mt-8 ${isOpen ? 'anim-fade-in-delayed' : ''}`}
           >
             Hire Me
           </button>

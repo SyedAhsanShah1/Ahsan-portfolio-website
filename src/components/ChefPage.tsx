@@ -165,35 +165,9 @@ const ChefPage = () => {
     toastTimer.current = setTimeout(() => setToast(null), 3500);
   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.chef-hero', {
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-      });
-      gsap.from('.toon-chef', {
-        x: 60,
-        opacity: 0,
-        scale: 0.9,
-        duration: 1,
-        ease: 'back.out(1.5)',
-        delay: 0.25,
-      });
-      gsap.from('.dish-card', {
-        y: 60,
-        opacity: 0,
-        scale: 0.92,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'back.out(1.6)',
-        delay: 0.3,
-      });
-    }, pageRef);
-
-    return () => ctx.revert();
-  }, []);
+  /* Entrance uses the shared CSS + IntersectionObserver reveal
+     (data-reveal) - the old gsap.from opacity tweens got stuck at
+     opacity 0 on the live site and hid the whole menu. */
 
   // Soft mouse parallax on the floating food
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -211,7 +185,8 @@ const ChefPage = () => {
     if (willOpen) {
       const card = document.getElementById(`dish-${id}`);
       if (card) {
-        gsap.fromTo(card, { scale: 0.97 }, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+        /* Transform-only pulse from its current (visible) state. */
+        gsap.to(card, { scale: 1.02, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' });
       }
     }
   };
@@ -263,7 +238,7 @@ const ChefPage = () => {
         {/* Hero: photo + toon chef side by side */}
         <div className="grid md:grid-cols-2 gap-10 items-center mb-14">
           {/* Photo with chef hat */}
-          <div className="chef-hero text-center">
+          <div data-reveal className="text-center">
             <div className="relative w-56 h-56 md:w-64 md:h-64 mx-auto mb-6">
               <div className="absolute -top-2 left-1/3 flex gap-2 z-20">
                 <span className="steam-wisp block w-1.5 h-8 bg-muted-foreground/40 rounded-full blur-[2px]" />
@@ -297,7 +272,7 @@ const ChefPage = () => {
           </div>
 
           {/* Animated toon chef - tap 3 times for a surprise */}
-          <div ref={toonRef} onClick={onToonTripleClick} title="Tap 3 times for a surprise" className="toon-chef text-center cursor-pointer">
+          <div ref={toonRef} onClick={onToonTripleClick} title="Tap 3 times for a surprise" data-reveal data-delay="0.15" className="text-center cursor-pointer">
             <div className="relative mx-auto max-w-[320px]">
               <ToonChef className="w-full h-auto drop-shadow-xl" />
             </div>
@@ -307,7 +282,8 @@ const ChefPage = () => {
           </div>
         </div>
 
-        <div className="text-center mb-14">
+        <div data-reveal className="text-center mb-14">
+          <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// hidden_talent</p>
           <h1 className="font-display text-5xl md:text-6xl font-semibold text-foreground mb-3">
             Chef <span className="text-primary">Ahsan</span>
           </h1>
@@ -383,15 +359,15 @@ const ChefPage = () => {
         </div>
 
         {/* Menu */}
-        <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+        <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
           The <span className="text-primary">Menu</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-10">
+        <p data-reveal data-delay="0.05" className="text-center text-muted-foreground mb-10">
           Tap a dish to reveal its totally unbiased reviews.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-          {DISHES.map((dish) => {
+          {DISHES.map((dish, i) => {
             const open = openDish === dish.id;
             return (
               <button
@@ -399,10 +375,11 @@ const ChefPage = () => {
                 id={`dish-${dish.id}`}
                 onClick={() => toggleDish(dish.id)}
                 data-tilt
-                className={`dish-card text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 will-change-transform ${
+                data-reveal
+                data-delay={((i % 3) * 0.08).toFixed(2)}
+                className={`text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 will-change-transform ${
                   open ? 'ring-2 ring-primary/50' : ''
                 }`}
-                style={{ animationDelay: `${dish.id * 0.35}s` }}
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <div className="group-hover:scale-110 transition-transform duration-300">{dish.art}</div>
@@ -478,7 +455,7 @@ const ChefPage = () => {
         </div>
 
         {/* Order CTA */}
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <button
             onClick={orderNow}
             data-magnetic

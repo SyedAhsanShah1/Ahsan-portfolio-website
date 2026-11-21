@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 /* Shared playful bits: sparkle bursts, triple-click easter eggs,
    floating doodles and a tiny joke toast. No new dependencies. */
 
-const BURST_COLORS = ['#E4572E', '#F2A007', '#1E4D3B', '#E4572E', '#F2A007'];
+const BURST_COLORS = ['#2563EB', '#0D9488', '#38BDF8', '#1D4ED8', '#14B8A6'];
 
 /** Little confetti-style sparkle burst at page coordinates (x, y). */
 export function sparkleBurst(x: number, y: number) {

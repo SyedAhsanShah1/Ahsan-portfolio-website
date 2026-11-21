@@ -6,12 +6,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * ScrollFX: one place for the scroll-based and mouse-based motion.
- * Declarative attributes, transform/opacity only, mouse effects only
- * on devices with a fine pointer (touch devices simply do nothing).
+ * ScrollFX: one place for scroll-based and mouse-based motion.
  *
+ * CONTENT VISIBILITY lives on a bulletproof CSS + IntersectionObserver
+ * system ([data-reveal] in index.css). Nothing is ever hidden by GSAP:
+ * the observer adds .is-visible when an element scrolls into view, and a
+ * repeating safety check reveals anything currently in the viewport that
+ * the observer missed. The safety check only touches in-viewport elements,
+ * so below-fold content keeps its scroll-in animation. GSAP is only used
+ * for transform-only effects (parallax, tilt, magnetic, mouse parallax)
+ * that can never hide content.
+ *
+ *  [data-reveal] [data-delay="0.1"]  - fade/slide/blur-in reveal on scroll
  *  [data-parallax] [data-speed="8"]  - background drifts with scroll (scrub)
- *  [data-reveal] [data-delay="0.1"]  - blur-in reveal when scrolled into view
  *  [data-mouse-zone] + [data-mouse="14"] - children shift with the cursor
  *  [data-mouse-x="14"]                - children shift on x only (for floating blobs)
  *  [data-tilt]                     - 3D tilt following the mouse
@@ -25,9 +32,57 @@ export const ScrollFX = () => {
   useEffect(() => {
     const finePointer = window.matchMedia('(pointer: fine)').matches;
     const cleanups: Array<() => void> = [];
+    const timers: number[] = [];
+    const intervals: number[] = [];
+
+    /* ---- Bulletproof content reveal (CSS + IntersectionObserver) ---- */
+    /* Safety net: reveal anything currently in the viewport that the
+       observer missed. Only in-viewport elements, so below-fold content
+       keeps its scroll-in animation instead of being revealed early. */
+    const revealInView = () => {
+      document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('is-visible');
+          timers.push(window.setTimeout(() => { el.style.transitionDelay = ''; }, 1000));
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const delay = Number(el.dataset.delay || 0);
+          el.classList.add('is-visible');
+          observer.unobserve(el);
+          /* Clear the stagger delay once the reveal finished, so later
+             hover transitions on the same element are not delayed. */
+          timers.push(window.setTimeout(() => { el.style.transitionDelay = ''; }, delay * 1000 + 900));
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+    );
+
+    const observeReveals = () => {
+      document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)').forEach((el) => {
+        const delay = Number(el.dataset.delay || 0);
+        if (delay) el.style.transitionDelay = `${delay * 1000}ms`;
+        observer.observe(el);
+      });
+    };
+
+    observeReveals();
+    /* Safety net: check every second, in-viewport elements only. */
+    revealInView();
+    intervals.push(window.setInterval(revealInView, 1000));
+    /* Images changing the layout must not strand anything. */
+    const onLoad = () => observeReveals();
+    window.addEventListener('load', onLoad);
 
     const ctx = gsap.context(() => {
-      /* Scroll parallax on background blobs and photos. */
+      /* Scroll parallax on background blobs and photos (transform only). */
       gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
         const speed = Number(el.dataset.speed || 8);
         gsap.fromTo(
@@ -44,20 +99,6 @@ export const ScrollFX = () => {
             },
           }
         );
-      });
-
-      /* Blur-in reveals. */
-      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
-        const delay = Number(el.dataset.delay || 0);
-        gsap.from(el, {
-          opacity: 0,
-          y: 36,
-          filter: 'blur(6px)',
-          duration: 0.9,
-          delay,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-        });
       });
     });
 
@@ -141,6 +182,10 @@ export const ScrollFX = () => {
     ScrollTrigger.refresh();
     return () => {
       ctx.revert();
+      observer.disconnect();
+      window.removeEventListener('load', onLoad);
+      timers.forEach((t) => window.clearTimeout(t));
+      intervals.forEach((i) => window.clearInterval(i));
       cleanups.forEach((fn) => fn());
     };
   }, [pathname]);

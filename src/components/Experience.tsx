@@ -1,9 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Flask, ChalkboardTeacher, Code, Users } from 'phosphor-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ROLES = [
   {
@@ -54,52 +49,19 @@ const ROLES = [
 ];
 
 const Experience = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(titleRef.current?.children || [], {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 85%',
-        },
-      });
-
-      gsap.from(listRef.current?.children || [], {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: listRef.current,
-          start: 'top 85%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="experience" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
+    <section id="experience" className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-4xl">
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+        <div className="text-center mb-16">
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 02 - experience</p>
+          <h2 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             My <span className="text-primary">Experience</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div data-reveal data-delay="0.1" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
+          <p data-reveal data-delay="0.15" className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Research, teaching, and community leadership - from the lab bench to the lecture hall.
           </p>
-          <p className="text-sm text-muted-foreground/80 italic mt-3">
+          <p data-reveal data-delay="0.2" className="text-sm text-muted-foreground/80 italic mt-3">
             (The lecture hall has better Wi-Fi than the lab. Allegedly.)
           </p>
         </div>
@@ -116,9 +78,9 @@ const Experience = () => {
           </p>
         </div>
 
-        <div ref={listRef} className="relative space-y-8 before:absolute before:left-[27px] before:top-2 before:bottom-2 before:w-px before:bg-primary/30">
-          {ROLES.map((role) => (
-            <article key={role.title} data-tilt className="relative pl-20 will-change-transform">
+        <div className="relative space-y-8 before:absolute before:left-[27px] before:top-2 before:bottom-2 before:w-px before:bg-primary/30">
+          {ROLES.map((role, i) => (
+            <article key={role.title} data-tilt data-reveal data-delay={(i * 0.08).toFixed(2)} className="relative pl-20 will-change-transform">
               <div className={`absolute left-0 top-0 w-14 h-14 ${role.accent} rounded-2xl flex items-center justify-center shadow-glass z-10`}>
                 <role.icon size={26} className="text-primary-foreground" />
               </div>

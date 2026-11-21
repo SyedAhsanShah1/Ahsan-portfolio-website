@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,54 @@
 
 @layer base {
   :root {
-    /* Warm editorial paper theme */
-    --background: 40 60% 96%;
-    --foreground: 30 6% 10%;
+    /* Research-lab theme: cool light background, deep navy ink,
+       electric blue primary, teal accent, mono labels */
+    --background: 210 40% 97%;
+    --foreground: 222 47% 11%;
 
-    --primary: 14 78% 54%;
-    --primary-foreground: 30 100% 97%;
-    --primary-glow: 14 85% 60%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 221 83% 60%;
 
-    --secondary: 158 44% 21%;
-    --secondary-foreground: 40 60% 96%;
-    --secondary-glow: 158 40% 32%;
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 210 40% 97%;
+    --secondary-glow: 222 40% 22%;
 
-    --accent: 40 90% 49%;
-    --accent-foreground: 30 6% 10%;
-    --accent-glow: 40 95% 58%;
+    --accent: 173 80% 32%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 173 80% 40%;
 
-    --muted: 38 30% 90%;
-    --muted-foreground: 30 8% 42%;
-    --border: 38 25% 84%;
-    --input: 40 50% 98%;
-    --ring: 14 78% 54%;
+    --muted: 210 24% 93%;
+    --muted-foreground: 215 16% 42%;
+    --border: 214 22% 86%;
+    --input: 210 40% 99%;
+    --ring: 221 83% 53%;
 
-    --card: 42 100% 99%;
-    --card-foreground: 30 6% 10%;
-    --glass: 40 60% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --glass: 210 40% 97%;
 
-    --popover: 42 100% 99%;
-    --popover-foreground: 30 6% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
     --destructive: 0 72% 48%;
-    --destructive-foreground: 30 100% 97%;
+    --destructive-foreground: 0 0% 100%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(14 78% 54%), hsl(40 90% 49%));
-    --gradient-secondary: linear-gradient(135deg, hsl(158 44% 21%), hsl(158 40% 32%));
-    --gradient-background: linear-gradient(180deg, hsl(40 60% 96%), hsl(38 45% 93%));
-    --gradient-glass: linear-gradient(135deg, hsl(40 60% 96% / 0.7), hsl(38 45% 93% / 0.7));
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(173 80% 32%));
+    --gradient-secondary: linear-gradient(135deg, hsl(222 47% 11%), hsl(217 45% 24%));
+    --gradient-background: linear-gradient(180deg, hsl(210 40% 97%), hsl(212 32% 93%));
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.75), hsl(210 40% 97% / 0.75));
 
-    --shadow-neon: 0 10px 30px hsl(14 78% 54% / 0.18);
-    --shadow-cyan: 0 10px 30px hsl(158 44% 21% / 0.18);
-    --shadow-glass: 0 8px 32px hsl(30 6% 10% / 0.08);
-    --glow-primary: 0 8px 28px hsl(14 78% 54% / 0.35);
-    --glow-secondary: 0 8px 28px hsl(158 44% 21% / 0.3);
+    --shadow-neon: 0 10px 30px hsl(221 83% 53% / 0.16);
+    --shadow-cyan: 0 10px 30px hsl(173 80% 32% / 0.16);
+    --shadow-glass: 0 8px 32px hsl(222 47% 11% / 0.08);
+    --glow-primary: 0 8px 28px hsl(221 83% 53% / 0.35);
+    --glow-secondary: 0 8px 28px hsl(222 47% 11% / 0.35);
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --radius: 1rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -68,18 +69,54 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    background: var(--gradient-background);
+    /* Subtle lab dot-grid over the cool gradient background */
+    background-image:
+      radial-gradient(hsl(222 47% 11% / 0.05) 1px, transparent 1px),
+      var(--gradient-background);
+    background-size: 26px 26px, auto;
     overflow-x: hidden;
   }
 
   h1, h2, h3, .font-display {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+
+  /* Content reveal system: CSS + IntersectionObserver (see Motion.tsx).
+     Content is hidden ONLY by this CSS class, and three independent paths
+     (observer, 2.5s safety timer, window load) add .is-visible - so no
+     content can ever stay invisible. Never hide content with GSAP. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(4px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease;
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
+
+  /* Delayed CSS fade-in (used for mobile menu items). Starts hidden and
+     ends at the element's natural state, so it can never get stuck. */
+  .anim-fade-in-delayed {
+    opacity: 0;
+    animation: fade-in 0.5s ease-out forwards;
   }
 
   .glass {
-    background: rgba(255, 253, 248, 0.75);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(25, 24, 23, 0.08);
+    border: 1px solid rgba(11, 27, 51, 0.08);
     box-shadow: var(--shadow-glass);
   }
 
@@ -183,7 +220,7 @@
     animation: wiggle 0.5s ease-in-out;
   }
 
-  /* Warm text selection */
+  /* Blue text selection */
   ::selection {
     background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));

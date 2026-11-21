@@ -1,15 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Eye, Brain, Cpu, Flask } from 'phosphor-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const RESEARCH = [
   {
     icon: Eye,
     status: 'Working paper - draft',
-    statusStyle: 'bg-amber-500/15 text-amber-700 border-amber-500/30',
+    statusStyle: 'bg-accent/15 text-accent border-accent/30',
     title: 'FIN Glaucoma Fairness Study',
     role: 'Sole author',
     description:
@@ -39,57 +34,24 @@ const RESEARCH = [
 ];
 
 const Research = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(titleRef.current?.children || [], {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 80%',
-        },
-      });
-
-      gsap.from(cardsRef.current?.children || [], {
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: cardsRef.current,
-          start: 'top 80%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="research" ref={sectionRef} className="py-20 px-6 relative overflow-hidden bg-card/60">
+    <section id="research" className="py-20 px-6 relative overflow-hidden bg-card/60">
       <div className="container mx-auto max-w-7xl">
-        <div ref={titleRef} className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4 border border-secondary/20">
+        <div className="text-center mb-16">
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 03 - research</p>
+          <span data-reveal data-delay="0.05" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4 border border-secondary/20">
             <Flask size={16} />
             Research
           </span>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+          <h2 data-reveal data-delay="0.1" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             Research <span className="text-primary">Work</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div data-reveal data-delay="0.15" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
+          <p data-reveal data-delay="0.2" className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Honest labels, no exaggeration: these are working papers and ongoing research - drafts in progress,
             shared as they are.
           </p>
-          <p className="text-sm text-muted-foreground/80 italic mt-3">
+          <p data-reveal data-delay="0.25" className="text-sm text-muted-foreground/80 italic mt-3">
             Yes, the drafts are real. No, they are not published yet.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2 mt-8" data-reveal>
@@ -101,11 +63,13 @@ const Research = () => {
           </div>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {RESEARCH.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {RESEARCH.map((item, i) => (
             <article
               key={item.title}
               data-tilt
+              data-reveal
+              data-delay={(i * 0.1).toFixed(2)}
               className="glass rounded-2xl p-8 hover:shadow-glow-primary hover:-translate-y-2 transition-all duration-300 will-change-transform"
             >
               <div className="flex items-start justify-between gap-3 mb-5">

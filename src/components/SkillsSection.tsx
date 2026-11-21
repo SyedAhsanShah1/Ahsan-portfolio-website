@@ -1,6 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 import {
   Brain,
   Eye,
@@ -13,8 +11,6 @@ import {
   FileText,
   Sparkle,
 } from 'phosphor-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const SKILLS = [
   { icon: Code, name: 'Python', level: 95, group: 'Programming' },
@@ -33,59 +29,48 @@ const GROUPS = ['AI / ML', 'Research tools', 'Programming'];
 
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [barsVisible, setBarsVisible] = useState(false);
 
+  /* Skill bars fill with a CSS width transition once scrolled into view.
+     If the observer never fires, the bars simply show at full width from
+     the start (they are never hidden by JS). */
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>('.skill-bar-fill').forEach((bar) => {
-        gsap.fromTo(
-          bar,
-          { width: '0%' },
-          {
-            width: `${bar.dataset.level}%`,
-            duration: 1.4,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: bar,
-              start: 'top 92%',
-              once: true,
-            },
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setBarsVisible(true);
+            observer.disconnect();
           }
-        );
-      });
-
-      gsap.utils.toArray<HTMLElement>('.skill-card').forEach((card, i) => {
-        gsap.from(card, {
-          y: 30,
-          opacity: 0,
-          scale: 0.9,
-          duration: 0.6,
-          delay: (i % 5) * 0.08,
-          ease: 'back.out(1.7)',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 92%',
-            once: true,
-          },
         });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    const safety = window.setTimeout(() => setBarsVisible(true), 2500);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safety);
+    };
   }, []);
 
   return (
     <div ref={sectionRef}>
       {GROUPS.map((group) => (
         <div key={group} className="mb-14">
-          <h3 className="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
+          <h3 data-reveal className="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
             <span className="w-8 h-1 bg-gradient-primary rounded-full" />
             {group}
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {SKILLS.filter((s) => s.group === group).map((skill) => (
+            {SKILLS.filter((s) => s.group === group).map((skill, i) => (
               <div
                 key={skill.name}
-                className="skill-card glass p-6 cursor-pointer rounded-xl hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 group"
+                data-reveal
+                data-delay={(i * 0.08).toFixed(2)}
+                className="glass p-6 cursor-pointer rounded-xl hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 group"
               >
                 <div className="flex flex-col items-center text-center space-y-3">
                   <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -94,9 +79,8 @@ const SkillsSection = () => {
                   <h4 className="text-base font-medium text-foreground">{skill.name}</h4>
                   <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
                     <div
-                      className="skill-bar-fill bg-gradient-primary h-2 rounded-full"
-                      data-level={skill.level}
-                      style={{ width: `${skill.level}%` }}
+                      className="bg-gradient-primary h-2 rounded-full transition-[width] duration-1000 ease-out"
+                      style={{ width: barsVisible ? `${skill.level}%` : '0%' }}
                     />
                   </div>
                   <span className="text-primary font-medium">{skill.level}%</span>
@@ -107,7 +91,7 @@ const SkillsSection = () => {
         </div>
       ))}
 
-      <p className="text-center text-muted-foreground text-sm mt-4 flex items-center justify-center gap-2">
+      <p data-reveal className="text-center text-muted-foreground text-sm mt-4 flex items-center justify-center gap-2">
         <Sparkle size={16} className="text-accent" />
         Also: IEEE Student Branch leadership · Deep Embed Lab intern (Oct 2023 - Nov 2024)
       </p>

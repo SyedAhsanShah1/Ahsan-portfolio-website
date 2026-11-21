@@ -20,9 +20,6 @@ const TICKER_ITEMS = [
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
   const blobRef1 = useRef<HTMLDivElement>(null);
   const blobRef2 = useRef<HTMLDivElement>(null);
@@ -63,37 +60,9 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [roleIndex]);
 
+  /* Entrance: content visibility uses the shared CSS + IntersectionObserver
+     reveal (data-reveal), never GSAP opacity tweens, so it cannot get stuck. */
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
-
-    tl.from(titleRef.current, {
-      y: 50,
-      opacity: 0,
-      filter: 'blur(10px)',
-      duration: 1,
-      ease: 'power3.out',
-    })
-      .from(photoRef.current, {
-        x: 80,
-        opacity: 0,
-        scale: 0.9,
-        duration: 1.1,
-        ease: 'power3.out',
-      }, '-=0.7')
-      .from(subtitleRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-      }, '-=0.5')
-      .from(ctaRef.current, {
-        y: 30,
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
-      }, '-=0.3');
-
     const float = (el: HTMLDivElement | null, y: number, x: number, dur: number, delay: number) => {
       if (!el) return;
       gsap.to(el, {
@@ -108,10 +77,6 @@ const Hero = () => {
     float(blobRef1.current, -24, 12, 5, 0);
     float(blobRef2.current, -32, -16, 6, 1);
     float(blobRef3.current, -26, 20, 7, 2);
-
-    return () => {
-      tl.kill();
-    };
   }, []);
 
   const navigate = useNavigate();
@@ -139,41 +104,40 @@ const Hero = () => {
       <div ref={blobRef1} data-mouse-x="14" data-parallax data-speed="6" className="absolute top-1/4 left-[8%] w-64 h-64 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
       <div ref={blobRef2} data-mouse-x="20" data-parallax data-speed="9" className="absolute top-1/3 right-[6%] w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
       <div ref={blobRef3} data-mouse-x="16" data-parallax data-speed="7" className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none" />
-      {/* Subtle paper grain / dot texture */}
-      {/* Subtle paper grain / dot texture */}
+      {/* Subtle dot texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.35]"
-        style={{ backgroundImage: 'radial-gradient(hsl(30 6% 10% / 0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
+        style={{ backgroundImage: 'radial-gradient(hsl(222 47% 11% / 0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
       />
 
       <div className="relative z-10 container mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-12 items-center">
         <div className="text-center lg:text-left">
-          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-6 border border-secondary/20">
+          <p data-reveal className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-6 border border-secondary/20">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            MS Computer Science - ITU Lahore
+            <span className="font-mono text-xs tracking-wider">MS Computer Science - ITU Lahore</span>
           </p>
 
-          <h1 ref={titleRef} className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
+          <h1 data-reveal data-delay="0.05" className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
             Hi, I&apos;m{' '}
             <span className="text-primary">Syed Ahsan</span>
           </h1>
 
-          <div className="font-display text-2xl md:text-3xl lg:text-4xl text-secondary mb-6 min-h-[2.5rem]">
+          <div data-reveal data-delay="0.1" className="font-display text-2xl md:text-3xl lg:text-4xl text-secondary mb-6 min-h-[2.5rem]">
             {typed}
             <span className="typewriter-caret" />
           </div>
 
-          <p ref={subtitleRef} className="text-lg md:text-xl text-muted-foreground mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          <p data-reveal data-delay="0.15" className="text-lg md:text-xl text-muted-foreground mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
             AI researcher at ITU Lahore, working on medical imaging and AI - AI-driven design of optical
             lenses. I build intelligent systems where machine learning meets real medicine.
           </p>
 
-          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-8 border border-secondary/20">
+          <p data-reveal data-delay="0.2" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-8 border border-secondary/20">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            Open to research collaborations and AI projects
+            <span className="font-mono text-xs tracking-wider">Open to research collaborations and AI projects</span>
           </p>
 
-          <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          <div data-reveal data-delay="0.25" className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
             <Button onClick={hireMe} data-magnetic className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105" size="lg">
               <Handshake size={20} />
               Hire Me
@@ -191,8 +155,10 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Profile photo */}
-        <div ref={photoRef} data-mouse="10" data-parallax data-speed="5" className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 will-change-transform">
+        {/* Profile photo - reveal lives on the wrapper so GSAP mouse/parallax
+            transforms on the inner element never fight the reveal transition */}
+        <div data-reveal data-delay="0.15" className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96">
+          <div ref={photoRef} data-mouse="10" data-parallax data-speed="5" className="relative w-full h-full will-change-transform">
           <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-primary opacity-20 blur-xl" />
           <div className="absolute -inset-3 rounded-[2.5rem] border-2 border-primary/30 rotate-3" />
           <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-glass bg-card">
@@ -207,6 +173,7 @@ const Hero = () => {
             <p className="text-xs text-muted-foreground">ITU Lahore - since Mar 2026</p>
           </div>
           <div className="absolute -top-4 -right-4 w-10 h-10 bg-accent rounded-full animate-float" style={{ animationDelay: '1s' }} />
+          </div>
         </div>
       </div>
 

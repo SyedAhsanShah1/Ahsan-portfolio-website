@@ -5,6 +5,7 @@ const SkillsPage = () => (
     <section className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16" data-reveal>
+          <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 05 - skills</p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             My <span className="text-primary">Skills</span>
           </h2>

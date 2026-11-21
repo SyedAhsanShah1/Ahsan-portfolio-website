@@ -1,48 +1,30 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GithubLogo, LinkedinLogo, CookingPot } from 'phosphor-react';
 import { ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Footer = () => {
-  const footerRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
 
+  /* Floating particles only (transform-only gsap.to). The footer content
+     itself uses the shared data-reveal system - it used to hide with a
+     gsap.from opacity tween that could strand it invisible. */
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(footerRef.current?.children || [], {
-        y: 60,
-        opacity: 0,
-        filter: 'blur(10px)',
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top 90%',
-        },
-      });
-
-      const particles = particlesRef.current?.children;
-      if (particles) {
-        Array.from(particles).forEach((particle, index) => {
-          gsap.to(particle, {
-            y: -30,
-            x: Math.random() * 40 - 20,
-            duration: 3 + Math.random() * 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'power1.inOut',
-            delay: index * 0.5,
-          });
+    const particles = particlesRef.current?.children;
+    if (particles) {
+      Array.from(particles).forEach((particle, index) => {
+        gsap.to(particle, {
+          y: -30,
+          x: Math.random() * 40 - 20,
+          duration: 3 + Math.random() * 2,
+          repeat: -1,
+          yoyo: true,
+          ease: 'power1.inOut',
+          delay: index * 0.5,
         });
-      }
-    }, footerRef);
-
-    return () => ctx.revert();
+      });
+    }
   }, []);
 
   const scrollToTop = () => {
@@ -61,7 +43,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer ref={footerRef} className="relative py-16 px-6 overflow-hidden bg-secondary text-secondary-foreground">
+    <footer className="relative py-16 px-6 overflow-hidden bg-secondary text-secondary-foreground">
       <div ref={particlesRef} className="absolute inset-0 pointer-events-none opacity-30">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent rounded-full blur-sm" />
         <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-primary rounded-full blur-sm" />
@@ -73,7 +55,7 @@ const Footer = () => {
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div>
+          <div data-reveal>
             <h3 className="font-display text-2xl font-semibold mb-4">Syed Ahsan</h3>
             <p className="text-secondary-foreground/70 leading-relaxed mb-6">
               AI researcher and engineer - building intelligent systems where machine learning meets real medicine.
@@ -100,7 +82,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div>
+          <div data-reveal data-delay="0.1">
             <h4 className="text-lg font-medium mb-4">Quick Links</h4>
             <nav className="space-y-3">
               {footerLinks.map((link) => (
@@ -115,7 +97,7 @@ const Footer = () => {
             </nav>
           </div>
 
-          <div>
+          <div data-reveal data-delay="0.2">
             <h4 className="text-lg font-medium mb-4">Get In Touch</h4>
             <div className="space-y-3">
               <p className="text-secondary-foreground/70">
@@ -138,7 +120,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/15 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div data-reveal className="border-t border-white/15 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-secondary-foreground/70 text-center md:text-left">
             © 2026 Syed Ahsan Shah. All rights reserved.
           </p>
