@@ -88,7 +88,7 @@ const SkillsSection = () => {
                 className="skill-card glass p-6 cursor-pointer rounded-xl hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 group"
               >
                 <div className="flex flex-col items-center text-center space-y-3">
-                  <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:animate-bounce">
+                  <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
                     <skill.icon size={24} className="text-primary-foreground" />
                   </div>
                   <h4 className="text-base font-medium text-foreground">{skill.name}</h4>
@@ -109,7 +109,7 @@ const SkillsSection = () => {
 
       <p className="text-center text-muted-foreground text-sm mt-4 flex items-center justify-center gap-2">
         <Sparkle size={16} className="text-accent" />
-        Also: IEEE Student Branch leadership · Deep Embed Lab intern (Oct 2023 – Nov 2024)
+        Also: IEEE Student Branch leadership · Deep Embed Lab intern (Oct 2023 - Nov 2024)
       </p>
     </div>
   );

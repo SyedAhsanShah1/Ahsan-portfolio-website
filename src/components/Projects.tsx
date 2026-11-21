@@ -26,7 +26,7 @@ const Projects = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: 'Smart Bin — AI Waste Segregation',
+      title: 'Smart Bin - AI Waste Segregation',
       description:
         'AI-based waste segregation system (final-year project) using Arduino and computer vision to sort waste automatically. Submitted to ICECT 2027 as Paper ID 96.',
       image: '/Images/project-3.png',
@@ -39,31 +39,31 @@ const Projects = () => {
       id: 2,
       title: 'FIN Glaucoma Fairness Study',
       description:
-        'Sole-author working paper studying fairness in glaucoma detection with EfficientNet-B1. FIN-race AUC 85.6 — measuring how well the model performs across patient groups.',
+        'Sole-author working paper studying fairness in glaucoma detection with EfficientNet-B1. FIN-race AUC 85.6 - measuring how well the model performs across patient groups.',
       tileIcon: <Eye size={64} weight="duotone" className="text-white/90" />,
       tileGradient: 'bg-gradient-to-br from-secondary to-emerald-700',
       tech: ['Python', 'PyTorch', 'EfficientNet-B1', 'Fairness', 'Medical Imaging'],
       liveUrl: '',
       githubUrl: '',
-      badge: 'Working paper — draft',
+      badge: 'Working paper - draft',
     },
     {
       id: 3,
       title: 'Anomaly-Detection Reproducibility Study',
       description:
-        'A family-level reproducibility study of anomaly detection benchmarks — comparing ~30 algorithms across 6 families on 16 ODDS datasets.',
+        'A family-level reproducibility study of anomaly detection benchmarks - comparing ~30 algorithms across 6 families on 16 ODDS datasets.',
       tileIcon: <Brain size={64} weight="duotone" className="text-white/90" />,
       tileGradient: 'bg-gradient-to-br from-primary to-amber-500',
       tech: ['Python', 'PyOD', 'Benchmarking', 'Reproducibility'],
       liveUrl: '',
       githubUrl: '',
-      badge: 'In progress — draft',
+      badge: 'In progress - draft',
     },
     {
       id: 4,
-      title: 'Meta-Lens Inverse Design',
+      title: 'AI-Driven Optical Lens Design',
       description:
-        'Research Assistant work at ITU Lahore: AI-driven inverse design of meta-lenses, learning a deep-learning surrogate model from FDTD simulation data.',
+        'Research Assistant work at ITU Lahore: AI-driven inverse design of optical lenses, learning a deep-learning surrogate model from FDTD simulation data.',
       tileIcon: <Cpu size={64} weight="duotone" className="text-white/90" />,
       tileGradient: 'bg-gradient-to-br from-indigo-900 to-secondary',
       tech: ['PyTorch', 'Ansys Lumerical', 'FDTD', 'Inverse Design'],
@@ -75,7 +75,7 @@ const Projects = () => {
       id: 5,
       title: 'AI-Powered Diabetes Prediction System',
       description:
-        'Machine learning–based web application that predicts the likelihood of diabetes using patient health parameters, with a trained classification model integrated into a Flask backend.',
+        'Machine learning-based web application that predicts the likelihood of diabetes using patient health parameters, with a trained classification model integrated into a Flask backend.',
       image: '/Images/project-1.jpg',
       tech: ['Python', 'Machine Learning', 'Flask', 'Scikit-learn', 'HTML', 'Tailwind CSS'],
       liveUrl:
@@ -84,9 +84,9 @@ const Projects = () => {
     },
     {
       id: 6,
-      title: 'Nexavo AI — AI Tools Store',
+      title: 'Nexavo AI - AI Tools Store',
       description:
-        'Founder of Nexavo AI, a Pakistan-only store selling AI tools with Safepay checkout in PKR — cards, JazzCash, Easypaisa and Raast.',
+        'Founder of Nexavo AI, a Pakistan-only store selling AI tools with Safepay checkout in PKR - cards, JazzCash, Easypaisa and Raast.',
       tileIcon: <Storefront size={64} weight="duotone" className="text-white/90" />,
       tileGradient: 'bg-gradient-to-br from-amber-500 to-primary',
       tech: ['Next.js', 'Safepay', 'React', 'Tailwind CSS'],
@@ -122,38 +122,6 @@ const Projects = () => {
           start: 'top 80%',
         },
       });
-
-      // Hover tilt + lift on project cards
-      const cards = containerRef.current?.children;
-      if (cards) {
-        Array.from(cards).forEach((card) => {
-          const element = card as HTMLElement;
-
-          element.addEventListener('mousemove', (e: MouseEvent) => {
-            const rect = element.getBoundingClientRect();
-            const px = (e.clientX - rect.left) / rect.width - 0.5;
-            const py = (e.clientY - rect.top) / rect.height - 0.5;
-            gsap.to(element, {
-              y: -10,
-              rotateY: px * 8,
-              rotateX: -py * 8,
-              transformPerspective: 900,
-              duration: 0.4,
-              ease: 'power2.out',
-            });
-          });
-
-          element.addEventListener('mouseleave', () => {
-            gsap.to(element, {
-              y: 0,
-              rotateY: 0,
-              rotateX: 0,
-              duration: 0.5,
-              ease: 'power2.out',
-            });
-          });
-        });
-      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -168,8 +136,11 @@ const Projects = () => {
           </h2>
           <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A curated collection of AI and web engineering projects — research, intelligent systems, and
+            A curated collection of AI and web engineering projects - research, intelligent systems, and
             production web applications.
+          </p>
+          <p className="text-sm text-muted-foreground/80 italic mt-3">
+            Built, broken, fixed, and shipped. Mostly in that order.
           </p>
         </div>
 
@@ -177,6 +148,7 @@ const Projects = () => {
           {projects.map((project) => (
             <div
               key={project.id}
+              data-tilt
               className="glass cursor-pointer rounded-xl overflow-hidden hover:shadow-glow-primary transition-shadow duration-500 group will-change-transform"
             >
               <div className="relative overflow-hidden h-48">
@@ -192,7 +164,7 @@ const Projects = () => {
                       className="absolute inset-0 opacity-20"
                       style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '18px 18px' }}
                     />
-                    <span className="relative group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                    <span className="relative">
                       {project.tileIcon}
                     </span>
                   </div>
@@ -270,20 +242,25 @@ const Projects = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 space-y-4">
           <a
-            href="https://www.linkedin.com/in/syedahsanai-engr/"
+            href="https://github.com/mscsAhsan"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 bg-gradient-secondary text-secondary-foreground rounded-full hover:shadow-glow-secondary transition-all duration-300 hover:scale-105"
+            data-magnetic
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-secondary text-secondary-foreground rounded-full hover:shadow-glow-secondary transition-all duration-300 hover:scale-105"
           >
-            View All Projects
+            <GithubLogo size={20} />
+            View All Projects on GitHub
           </a>
+          <p className="text-sm text-muted-foreground">
+            More experiments, scripts and side projects live on GitHub.
+          </p>
         </div>
       </div>
 
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-x-1/2" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-x-1/2" data-parallax data-speed="8" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2" data-parallax data-speed="10" />
     </section>
   );
 };

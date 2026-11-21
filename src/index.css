@@ -164,6 +164,38 @@
     animation: marquee 28s linear infinite;
   }
 
+  /* Fade-in (used by rotating fun facts and toasts) */
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  /* Playful wiggle on hover (buttons, logo, cards) */
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2.5deg) scale(1.03); }
+    75% { transform: rotate(2.5deg) scale(1.03); }
+  }
+  .hover-wiggle:hover {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  /* Warm text selection */
+  ::selection {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Small screens: keep the marquee calm and text readable */
+  @media (max-width: 640px) {
+    .animate-marquee {
+      animation-duration: 20s;
+    }
+  }
+
   /* Chef page: steam wisps + wobble */
   @keyframes steam-rise {
     0% { transform: translateY(0) scaleX(1); opacity: 0; }

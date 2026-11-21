@@ -18,6 +18,7 @@ import Preloader from './components/Preloader';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import { ScrollFX } from './components/Motion';
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,7 @@ const Layout = () => {
 
       <div className={`transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         <Navigation />
+        <ScrollFX />
         <main id="page-content">
           <Outlet />
         </main>
@@ -86,11 +88,11 @@ const App = () => (
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/skills" element={<SkillsPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            {/* Hidden talent page - in the main nav now, so it lives inside the layout */}
+            <Route path="/hidden-talent" element={<ChefPage />} />
+            <Route path="/chef" element={<ChefPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
-          {/* Hidden talent page — deliberately outside the main layout/nav */}
-          <Route path="/hidden-talent" element={<ChefPage />} />
-          <Route path="/chef" element={<ChefPage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

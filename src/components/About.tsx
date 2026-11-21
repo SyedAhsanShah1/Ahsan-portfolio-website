@@ -8,23 +8,32 @@ import {
   Sparkle,
 } from 'phosphor-react';
 import { Link } from 'react-router-dom';
+import { Doodles } from './FunBits';
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* True, harmless fun facts that rotate every few seconds. */
+const FUN_FACTS = [
+  'President of a society that taught 1000+ students.',
+  'Chai-powered debugger. The chai is non-negotiable.',
+  'Deep Embed Lab intern, IEEE leader, and part-time chef.',
+  'Favourite debugging tool: a fresh cup of chai and a second look.',
+];
 
 const TIMELINE = [
   {
     year: '2026',
-    title: 'BS Artificial Intelligence — IUB',
+    title: 'BS Artificial Intelligence - IUB',
     text: 'Completed my BS in AI at The Islamia University of Bahawalpur, CGPA 3.30/4.00.',
   },
   {
     year: 'Mar 2026',
-    title: 'Research Assistant — ITU Lahore',
-    text: 'Joined ITU as an RA, working on AI-integrated meta optics: AI-driven inverse design of meta-lenses using FDTD simulation data and a deep-learning surrogate model.',
+    title: 'Research Assistant - ITU Lahore',
+    text: 'Joined ITU as an RA, working on medical imaging and AI: AI-driven inverse design of optical lenses using FDTD simulation data and a deep-learning surrogate model.',
   },
   {
     year: 'Aug 2026',
-    title: 'MS Computer Science + Teaching Assistant — ITU',
+    title: 'MS Computer Science + Teaching Assistant - ITU',
     text: 'Started my MS in Computer Science at ITU Lahore, and began teaching as a Teaching Assistant for Numerical Analysis.',
   },
 ];
@@ -64,6 +73,15 @@ const About = () => {
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const [factIndex, setFactIndex] = useState(0);
+
+  /* Rotate one true fun fact every 4.5 seconds. */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFactIndex((prev) => (prev + 1) % FUN_FACTS.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -109,9 +127,11 @@ const About = () => {
 
   return (
     <section id="about" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
+      {/* Playful doodles, desktop only, inner page only */}
+      <Doodles />
       <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div ref={imageRef} className="relative">
+          <div ref={imageRef} data-parallax data-speed="5" className="relative will-change-transform">
             <div className="relative w-80 h-80 mx-auto lg:mx-0">
               <div className="absolute inset-0 bg-gradient-primary rounded-full blur-xl opacity-30 animate-pulse" />
               <div className="relative w-full h-full glass rounded-full p-2 hover:shadow-glow-primary transition-all duration-500 group">
@@ -137,14 +157,14 @@ const About = () => {
             </div>
 
             <p className="text-lg text-muted-foreground leading-relaxed break-words">
-              I&apos;m Muhammad Ahsan Shah — Syed Ahsan — an MS Computer Science student and Research Assistant at
-              ITU Lahore. My research is in AI-integrated meta optics: using deep learning to inversely design
-              meta-lenses from FDTD simulation data.
+              I&apos;m Muhammad Ahsan Shah - Syed Ahsan - an MS Computer Science student and Research Assistant at
+              ITU Lahore. My research is in medical imaging and AI: using deep learning to inversely design
+              optical lenses from FDTD simulation data.
             </p>
 
             <p className="text-lg text-muted-foreground leading-relaxed">
               I completed my BS in Artificial Intelligence at The Islamia University of Bahawalpur (CGPA 3.30/4.00),
-              interned at the Deep Embed Lab, and led the IUB Skills &amp; Career Development Society as president —
+              interned at the Deep Embed Lab, and led the IUB Skills &amp; Career Development Society as president -
               running Python, marketing and analytics courses for 1000+ students. Alongside research, I&apos;m a
               Teaching Assistant for Numerical Analysis at ITU and I build AI-powered web applications.
             </p>
@@ -170,10 +190,17 @@ const About = () => {
               </div>
             </div>
 
+            <div className="glass px-4 py-3 rounded-xl">
+              <span className="text-sm text-muted-foreground">Fun fact:</span>
+              <p key={factIndex} className="animate-fade-in text-foreground font-medium mt-0.5">
+                {FUN_FACTS[factIndex]}
+              </p>
+            </div>
+
             <p className="text-sm text-muted-foreground/80 italic pt-2">
               Fun fact: there&apos;s a side of me the CV doesn&apos;t show.{' '}
               <Link to="/hidden-talent" className="text-primary font-medium not-italic hover:underline">
-                Psst — hidden talent →
+                Psst - hidden talent →
               </Link>
             </p>
           </div>
@@ -202,13 +229,13 @@ const About = () => {
 
           <p className="text-center text-muted-foreground text-sm mt-10 flex items-center justify-center gap-2">
             <Sparkle size={16} className="text-accent" />
-            Also: IEEE Student Branch leadership · Deep Embed Lab intern (Oct 2023 – Nov 2024)
+            Also: IEEE Student Branch leadership · Deep Embed Lab intern (Oct 2023 - Nov 2024)
           </p>
         </div>
       </div>
 
-      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 hidden md:block" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 hidden md:block" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 hidden md:block" data-parallax data-speed="8" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 hidden md:block" data-parallax data-speed="10" />
     </section>
   );
 };

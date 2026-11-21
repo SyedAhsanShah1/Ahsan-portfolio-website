@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CookingPot, Star, ShoppingBag, X } from 'phosphor-react';
+import { ArrowLeft, CookingPot, Star, ShoppingBag, X, Quotes, Fire, Timer } from 'phosphor-react';
 import ToonChef from './ToonChef';
 import { BiryaniPot, ChaiCup, MaggiPlate, Chilli, RollingPin, BurgerArt, BowlArt, FriesArt } from './FoodArt';
+import { sparkleBurst, useTripleClick } from './FunBits';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Dish = {
   id: number;
@@ -21,8 +25,8 @@ const DISHES: Dish[] = [
     name: 'Biryani.exe',
     tagline: 'The flagship build',
     description: 'Compiles perfectly every time. Except when it doesn\u2019t.',
-    price: 'Rs. 0 — priceless, apparently',
-    reviews: ['Mum: 10/10 — biased reviewer', 'Friends: ate it, survived.'],
+    price: 'Rs. 0 - priceless, apparently',
+    reviews: ['Mum: 10/10 - biased reviewer', 'Friends: ate it, survived.'],
     art: <BiryaniPot className="w-24 h-24" />,
   },
   {
@@ -48,7 +52,7 @@ const DISHES: Dish[] = [
     name: 'Anda Burger',
     tagline: 'The hello world of street food',
     description: 'Egg, bun, chutney, confidence. No dependencies required.',
-    price: 'Rs. 150 — no framework needed',
+    price: 'Rs. 150 - no framework needed',
     reviews: ['Street vendor: \u201cBeta, ye to main bhi bana leta.\u201d'],
     art: <BurgerArt className="w-24 h-24" />,
   },
@@ -57,7 +61,7 @@ const DISHES: Dish[] = [
     name: 'Daal Chawal',
     tagline: 'The production build',
     description: 'Boring, reliable, undefeated. Ships every single time.',
-    price: 'Free — it\u2019s already at home',
+    price: 'Free - it\u2019s already at home',
     reviews: ['Dad: \u201cFinally, something that compiles first try.\u201d'],
     art: <BowlArt className="w-24 h-24" />,
   },
@@ -66,7 +70,7 @@ const DISHES: Dish[] = [
     name: 'Fries.exe',
     tagline: 'Crispy on the outside',
     description: 'Crispy on the outside, undefined on the inside.',
-    price: 'Rs. 200 — salt sold separately',
+    price: 'Rs. 200 - salt sold separately',
     reviews: ['Neighbours: \u201cWe can smell it. Again.\u201d'],
     art: <FriesArt className="w-24 h-24" />,
   },
@@ -80,10 +84,86 @@ const FLOATERS = [
   { art: <RollingPin className="w-20 h-8 md:w-28 md:h-10" />, className: 'bottom-[8%] left-[6%]', depth: 18, delay: '2.4s' },
 ];
 
+/* Joke stats, totally unverified, exactly as the chef claims them. */
+const CHEF_STATS = [
+  { icon: CookingPot, value: 47, label: 'Biryani attempts' },
+  { icon: Star, value: 12, label: 'Edible biryanis' },
+  { icon: Fire, value: 9, label: 'Smoke alarms triggered' },
+  { icon: Timer, value: 1204, label: 'Cups of chai brewed' },
+  { icon: CookingPot, value: 86, label: 'Maggi packs sacrificed' },
+  { icon: Star, value: 0, label: 'Michelin stars' },
+];
+
+const KITCHEN_RULES = [
+  'The chef is always right, especially when the smoke alarm disagrees.',
+  'If it compiles, it is dinner.',
+  'Tasting is mandatory. Sharing is optional.',
+  'No crying over spilt chai.',
+  'The recipe is a suggestion, not a contract.',
+  'Whoever cooks does not wash up. The chef wrote this rule.',
+];
+
+const CHEF_REVIEWS = [
+  {
+    quote: 'Beta, ye to main bhi bana leti.',
+    name: 'Ammi',
+    note: '10/10, would eat again. She had no choice.',
+  },
+  {
+    quote: 'I came for the Wi-Fi. I stayed for the biryani.',
+    name: 'Roommate',
+    note: '5 stars, 1 complaint: there was never enough.',
+  },
+  {
+    quote: 'We can smell it. Again. Every Sunday.',
+    name: 'The neighbour',
+    note: 'No stars given, but the whole street showed up.',
+  },
+  {
+    quote: 'I have seen things no alarm should see.',
+    name: 'The smoke alarm',
+    note: 'Retired early.',
+  },
+];
+
+function ChefCount({ target }: { target: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const obj = { v: 0 };
+    const tween = gsap.to(obj, {
+      v: target,
+      duration: 1.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top 92%',
+        once: true,
+      },
+      onUpdate: () => setValue(Math.round(obj.v)),
+    });
+    return () => {
+      tween.kill();
+    };
+  }, [target]);
+
+  return (
+    <span ref={ref}>{value.toLocaleString()}</span>
+  );
+}
+
 const ChefPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
   const [openDish, setOpenDish] = useState<number | null>(null);
-  const [toast, setToast] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 3500);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -137,9 +217,25 @@ const ChefPage = () => {
   };
 
   const orderNow = () => {
-    setToast(true);
-    window.setTimeout(() => setToast(false), 3500);
+    showToast('Kitchen closed - the chef is debugging.');
   };
+
+  /* Easter egg: click the chef hat. */
+  const onHatClick = (e: React.MouseEvent) => {
+    sparkleBurst(e.clientX, e.clientY);
+    showToast('The hat approves. The smoke alarm does not.');
+  };
+
+  /* Easter egg: click the toon chef 3 times. */
+  const toonRef = useRef<HTMLDivElement>(null);
+  const onToonTripleClick = useTripleClick(() => {
+    const el = toonRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      sparkleBurst(r.left + r.width / 2, r.top + r.height / 2);
+    }
+    showToast('The toon has feelings too. Mostly hunger.');
+  });
 
   return (
     <div ref={pageRef} onMouseMove={handleMouseMove} className="min-h-screen bg-background relative overflow-hidden">
@@ -176,8 +272,11 @@ const ChefPage = () => {
               </div>
               <svg
                 viewBox="0 0 200 110"
-                className="absolute -top-14 left-1/2 -translate-x-1/2 w-52 z-20 drop-shadow-lg"
-                aria-label="Chef hat"
+                onClick={onHatClick}
+                className="absolute -top-14 left-1/2 -translate-x-1/2 w-52 z-20 drop-shadow-lg cursor-pointer hover-wiggle"
+                aria-label="Chef hat - click me"
+                role="button"
+                title="Click the hat. You know you want to."
               >
                 <path
                   d="M100 8c-14 0-24 9-26 21-12 1-22 10-22 23 0 7 3 13 8 17-4 4-7 10-7 16 0 8 5 14 12 17h70c7-3 12-9 12-17 0-6-3-12-7-16 5-4 8-10 8-17 0-13-10-22-22-23-2-12-12-21-26-21z"
@@ -190,20 +289,20 @@ const ChefPage = () => {
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-accent shadow-glass bg-card">
                 <img src="/Images/ahsan-profile.jpg" alt="Chef Ahsan" className="w-full h-full object-cover object-top" />
               </div>
-              <div className="absolute -bottom-3 -right-3 w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-glow-primary animate-wobble">
+              <div className="absolute -bottom-3 -right-3 w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-glow-primary">
                 <CookingPot size={28} className="text-primary-foreground" />
               </div>
             </div>
             <p className="text-sm text-muted-foreground italic">The real chef. Allegedly.</p>
           </div>
 
-          {/* Animated toon chef */}
-          <div className="toon-chef text-center">
+          {/* Animated toon chef - tap 3 times for a surprise */}
+          <div ref={toonRef} onClick={onToonTripleClick} title="Tap 3 times for a surprise" className="toon-chef text-center cursor-pointer">
             <div className="relative mx-auto max-w-[320px]">
               <ToonChef className="w-full h-auto drop-shadow-xl" />
             </div>
             <p className="text-sm text-muted-foreground italic mt-2">
-              Toon Chef Ahsan — waving, blinking, and stirring the pot since forever.
+              Toon Chef Ahsan - waving, blinking, and stirring the pot since forever.
             </p>
           </div>
         </div>
@@ -214,7 +313,7 @@ const ChefPage = () => {
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
             By day, an AI researcher. By night, a chef whose greatest achievement is a biryani that compiled on
-            the first try — once.
+            the first try - once.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
@@ -233,6 +332,56 @@ const ChefPage = () => {
           </div>
         </div>
 
+        {/* Chef's story */}
+        <div className="max-w-3xl mx-auto mb-14">
+          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+            The <span className="text-primary">Chef&apos;s Story</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-8" />
+          <div className="glass rounded-2xl p-6 md:p-8 space-y-4 text-muted-foreground leading-relaxed" data-reveal>
+            <p>
+              Every great chef has an origin story. Mine starts in a hostel kitchen at 2am, with one packet of
+              Maggi, no clean pan, and far too much confidence. That Maggi took 7 minutes. The packet said 2.
+              I have been in a dispute with the packet ever since.
+            </p>
+            <p>
+              From there it was a short, smoky road to biryani. Forty-seven attempts later, twelve of them
+              edible, I earned the title Chef Ahsan. Self-awarded, obviously. No culinary school has claimed
+              me yet.
+            </p>
+            <p>
+              My philosophy is simple: cooking is just debugging with extra steps. If the code compiles, it
+              is dinner. If it does not, it is still dinner, we just call it experimental cuisine.
+            </p>
+          </div>
+        </div>
+
+        {/* Chef's stats (joke numbers, unverified, as claimed by the chef) */}
+        <div className="mb-14">
+          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+            Chef&apos;s <span className="text-primary">Stats</span>
+          </h2>
+          <p className="text-center text-muted-foreground mb-8">
+            Totally unverified kitchen statistics, as reported by the chef himself.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4" data-reveal>
+            {CHEF_STATS.map((stat) => (
+              <div key={stat.label} className="glass rounded-2xl px-4 py-6 text-center hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
+                <div className="w-11 h-11 mx-auto mb-3 bg-gradient-primary rounded-xl flex items-center justify-center">
+                  <stat.icon size={22} className="text-primary-foreground" />
+                </div>
+                <p className="font-display text-3xl md:text-4xl font-semibold text-primary">
+                  <ChefCount target={stat.value} />
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-sm text-muted-foreground/80 italic mt-4">
+            The other 35 biryanis were not failures. They were learning experiences. Mostly for the smoke alarm.
+          </p>
+        </div>
+
         {/* Menu */}
         <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
           The <span className="text-primary">Menu</span>
@@ -249,7 +398,8 @@ const ChefPage = () => {
                 key={dish.id}
                 id={`dish-${dish.id}`}
                 onClick={() => toggleDish(dish.id)}
-                className={`dish-card animate-wobble text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 ${
+                data-tilt
+                className={`dish-card text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 will-change-transform ${
                   open ? 'ring-2 ring-primary/50' : ''
                 }`}
                 style={{ animationDelay: `${dish.id * 0.35}s` }}
@@ -283,10 +433,55 @@ const ChefPage = () => {
           })}
         </div>
 
+        {/* Kitchen rules */}
+        <div className="mb-14">
+          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+            Kitchen <span className="text-primary">Rules</span>
+          </h2>
+          <p className="text-center text-muted-foreground mb-8">
+            Posted on the fridge. Enforced by no one. Broken by everyone.
+          </p>
+          <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4" data-reveal>
+            {KITCHEN_RULES.map((rule, i) => (
+              <div key={rule} className="glass rounded-2xl p-5 flex gap-4 items-start hover:shadow-glow-primary transition-all duration-300">
+                <span className="shrink-0 w-9 h-9 bg-gradient-primary rounded-full flex items-center justify-center font-display font-semibold text-primary-foreground">
+                  {i + 1}
+                </span>
+                <p className="text-foreground leading-relaxed">{rule}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reviews */}
+        <div className="mb-14">
+          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+            What People <span className="text-primary">Say</span>
+          </h2>
+          <p className="text-center text-muted-foreground mb-8">
+            Real quotes. Real people. Questionable sample size.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6" data-reveal>
+            {CHEF_REVIEWS.map((review) => (
+              <figure key={review.name} className="glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1">
+                <Quotes size={28} weight="fill" className="text-primary mb-3" />
+                <blockquote className="font-display text-xl text-foreground leading-relaxed mb-4">
+                  &ldquo;{review.quote}&rdquo;
+                </blockquote>
+                <figcaption>
+                  <p className="font-semibold text-primary">{review.name}</p>
+                  <p className="text-sm text-muted-foreground italic">{review.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+
         {/* Order CTA */}
         <div className="text-center mb-16">
           <button
             onClick={orderNow}
+            data-magnetic
             className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-primary text-primary-foreground rounded-full font-semibold text-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
           >
             <ShoppingBag size={22} />
@@ -301,10 +496,10 @@ const ChefPage = () => {
 
       {/* Joke toast */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-glow-secondary animate-fade-in">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md flex items-center justify-center gap-3 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-glow-secondary animate-fade-in">
           <CookingPot size={22} className="text-accent shrink-0" />
-          <p className="font-medium">Kitchen closed — the chef is debugging.</p>
-          <button onClick={() => setToast(false)} className="text-secondary-foreground/60 hover:text-secondary-foreground" aria-label="Dismiss">
+          <p className="font-medium text-center">{toast}</p>
+          <button onClick={() => setToast(null)} className="text-secondary-foreground/60 hover:text-secondary-foreground shrink-0" aria-label="Dismiss">
             <X size={18} />
           </button>
         </div>

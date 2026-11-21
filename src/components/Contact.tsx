@@ -75,7 +75,7 @@ const Contact = () => {
     }
 
     const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
-    const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`);
+    const body = encodeURIComponent(`${formData.message}\n\n- ${formData.name} (${formData.email})`);
     window.location.href = `mailto:asmatullahshah0343@gmail.com?subject=${subject}&body=${body}`;
 
     setSent(true);
@@ -100,6 +100,9 @@ const Contact = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Have a project in mind, a research idea, or just want to say hello? Drop me a message and let&apos;s
             create something amazing together.
+          </p>
+          <p className="text-sm text-muted-foreground/80 italic mt-3">
+            Replies are powered by a human, not a bot. The bot just takes the messages.
           </p>
         </div>
 
@@ -156,6 +159,7 @@ const Contact = () => {
 
               <button
                 type="submit"
+                data-magnetic
                 className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
               >
                 Send Message
@@ -174,10 +178,21 @@ const Contact = () => {
           <div ref={infoRef} className="space-y-8">
             <div>
               <h3 className="font-display text-2xl font-semibold text-foreground mb-6">Let&apos;s Connect</h3>
-              <p className="text-muted-foreground leading-relaxed mb-8">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 I&apos;m always excited to work on new projects and collaborate with amazing people. Whether you have
                 a specific project in mind or just want to explore possibilities, I&apos;d love to hear from you.
               </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                <span className="px-3 py-1.5 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20">
+                  Research collaborations
+                </span>
+                <span className="px-3 py-1.5 bg-secondary/10 text-secondary text-xs font-semibold rounded-full border border-secondary/20">
+                  AI + web projects
+                </span>
+                <span className="px-3 py-1.5 bg-accent/15 text-accent-foreground text-xs font-semibold rounded-full border border-accent/30">
+                  Medical imaging AI
+                </span>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -217,7 +232,7 @@ const Contact = () => {
               <h4 className="text-lg font-medium text-foreground mb-4">Follow Me</h4>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/SyedAhsanShah1"
+                  href="https://github.com/mscsAhsan"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110"
@@ -240,8 +255,8 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" data-parallax data-speed="8" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" data-parallax data-speed="10" />
     </section>
   );
 };

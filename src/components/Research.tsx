@@ -8,17 +8,17 @@ gsap.registerPlugin(ScrollTrigger);
 const RESEARCH = [
   {
     icon: Eye,
-    status: 'Working paper — draft',
+    status: 'Working paper - draft',
     statusStyle: 'bg-amber-500/15 text-amber-700 border-amber-500/30',
     title: 'FIN Glaucoma Fairness Study',
     role: 'Sole author',
     description:
-      'A decision-audit of fairness in glaucoma detection. Using EfficientNet-B1, the study measures how a model performs across patient groups — FIN-race AUC 85.6 — and asks whether accuracy is shared fairly, not just high on average.',
+      'A decision-audit of fairness in glaucoma detection. Using EfficientNet-B1, the study measures how a model performs across patient groups - FIN-race AUC 85.6 - and asks whether accuracy is shared fairly, not just high on average.',
     points: ['EfficientNet-B1', 'FIN-race AUC 85.6', 'Fairness audit across groups'],
   },
   {
     icon: Brain,
-    status: 'In progress — draft',
+    status: 'In progress - draft',
     statusStyle: 'bg-primary/10 text-primary border-primary/30',
     title: 'Anomaly-Detection Reproducibility Study',
     role: 'Working draft',
@@ -28,13 +28,13 @@ const RESEARCH = [
   },
   {
     icon: Cpu,
-    status: 'Ongoing research — ITU',
+    status: 'Ongoing research - ITU',
     statusStyle: 'bg-secondary/10 text-secondary border-secondary/30',
-    title: 'AI-Integrated Meta Optics',
+    title: 'AI-Driven Optical Lens Design',
     role: 'Research Assistant, ITU Lahore',
     description:
-      'AI-driven inverse design of meta-lenses: training a deep-learning surrogate model on FDTD simulation data so new lens designs can be predicted in seconds instead of simulated for hours.',
-    points: ['FDTD simulation data', 'Deep-learning surrogate model', 'Meta-lens inverse design'],
+      'AI-driven inverse design of optical lenses: training a deep-learning surrogate model on FDTD simulation data so new lens designs can be predicted in seconds instead of simulated for hours.',
+    points: ['FDTD simulation data', 'Deep-learning surrogate model', 'Optical lens inverse design'],
   },
 ];
 
@@ -86,16 +86,27 @@ const Research = () => {
           </h2>
           <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Honest labels, no exaggeration: these are working papers and ongoing research — drafts in progress,
+            Honest labels, no exaggeration: these are working papers and ongoing research - drafts in progress,
             shared as they are.
           </p>
+          <p className="text-sm text-muted-foreground/80 italic mt-3">
+            Yes, the drafts are real. No, they are not published yet.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-8" data-reveal>
+            {['Medical Imaging', 'Fairness in AI', 'Reproducibility', 'Deep Learning'].map((focus) => (
+              <span key={focus} className="px-4 py-1.5 bg-card text-foreground text-sm font-medium rounded-full border border-border shadow-sm">
+                {focus}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {RESEARCH.map((item) => (
             <article
               key={item.title}
-              className="glass rounded-2xl p-8 hover:shadow-glow-primary hover:-translate-y-2 transition-all duration-300"
+              data-tilt
+              className="glass rounded-2xl p-8 hover:shadow-glow-primary hover:-translate-y-2 transition-all duration-300 will-change-transform"
             >
               <div className="flex items-start justify-between gap-3 mb-5">
                 <div className="w-14 h-14 bg-gradient-primary rounded-2xl flex items-center justify-center">

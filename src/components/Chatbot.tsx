@@ -38,7 +38,7 @@ type KBEntry = {
 
 const knowledgeBase: Record<string, KBEntry> = {
   hi: {
-    text: "Welcome! I'm Ahsan's AI Assistant.\n\nSyed Ahsan is an MS Computer Science student and Research Assistant at ITU Lahore, working on AI-integrated meta optics. He also builds AI-powered web applications.\n\nAsk me about his research, projects, experience, or how to reach him.",
+    text: "Welcome! I'm Ahsan's AI Assistant.\n\nSyed Ahsan is an MS Computer Science student and Research Assistant at ITU Lahore, working on medical imaging and AI. He also builds AI-powered web applications.\n\nAsk me about his research, projects, experience, or how to reach him.",
     options: [
       { label: "Research", value: "research" },
       { label: "Projects", value: "projects" },
@@ -47,9 +47,9 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   research: {
     text: "Ahsan's research:\n\n" +
-      "1. Meta-lens inverse design (RA work, ITU) — AI-driven inverse design of meta-lenses using FDTD simulation data and a deep-learning surrogate model.\n\n" +
-      "2. FIN glaucoma fairness study — sole-author working paper (draft, not published). EfficientNet-B1, FIN-race AUC 85.6.\n\n" +
-      "3. Anomaly-detection reproducibility study — in progress (draft). ~30 algorithms, 6 families, 16 ODDS datasets.",
+      "1. Optical lens inverse design (RA work, ITU) - AI-driven inverse design of optical lenses using FDTD simulation data and a deep-learning surrogate model.\n\n" +
+      "2. FIN glaucoma fairness study - sole-author working paper (draft, not published). EfficientNet-B1, FIN-race AUC 85.6.\n\n" +
+      "3. Anomaly-detection reproducibility study - in progress (draft). ~30 algorithms, 6 families, 16 ODDS datasets.",
     options: [
       { label: "Projects", value: "projects" },
       { label: "Contact", value: "contact" },
@@ -57,10 +57,10 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   projects: {
     text: "Ahsan's projects:\n\n" +
-      "• Smart Bin — AI waste segregation (FYP, Arduino + computer vision). Submitted to ICECT 2027 as Paper ID 96. GitHub: github.com/mscsAhsan/smart-bin\n\n" +
-      "• AI-powered diabetes prediction — Flask + ML web app.\n\n" +
-      "• Nexavo AI — founder of a Pakistan-only AI tools store with Safepay checkout (PKR).\n\n" +
-      "• Plus his research projects: meta-lens inverse design, the FIN fairness study, and the anomaly-detection study.",
+      "• Smart Bin - AI waste segregation (FYP, Arduino + computer vision). Submitted to ICECT 2027 as Paper ID 96. GitHub: github.com/mscsAhsan/smart-bin\n\n" +
+      "• AI-powered diabetes prediction - Flask + ML web app.\n\n" +
+      "• Nexavo AI - founder of a Pakistan-only AI tools store with Safepay checkout (PKR).\n\n" +
+      "• Plus his research projects: optical lens inverse design, the FIN fairness study, and the anomaly-detection study.",
     options: [
       { label: "Research", value: "research" },
       { label: "Tech Stack", value: "tech stack" },
@@ -68,10 +68,10 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   services: {
     text: "What Ahsan does:\n\n" +
-      "• AI / ML systems — computer vision, deep learning, model training and evaluation.\n\n" +
-      "• Research — AI-integrated meta optics, fairness in medical AI, reproducibility studies.\n\n" +
-      "• Web development — React front-ends, Flask back-ends, REST APIs.\n\n" +
-      "For project or collaboration enquiries, reach him directly — see Contact.",
+      "• AI / ML systems - computer vision, deep learning, model training and evaluation.\n\n" +
+      "• Research - medical imaging and AI, fairness in medical AI, reproducibility studies.\n\n" +
+      "• Web development - React front-ends, Flask back-ends, REST APIs.\n\n" +
+      "For project or collaboration enquiries, reach him directly - see Contact.",
     options: [
       { label: "Tech Stack", value: "tech stack" },
       { label: "Contact", value: "contact" },
@@ -79,16 +79,16 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   "tech stack": {
     text: "Ahsan's toolkit:\n\n" +
-      "• AI / ML — Python, PyTorch, TensorFlow, OpenCV\n\n" +
-      "• Research tools — MATLAB, Ansys Lumerical, FDTD, LaTeX\n\n" +
-      "• Programming — Python, SQL, Flask, REST APIs, React",
+      "• AI / ML - Python, PyTorch, TensorFlow, OpenCV\n\n" +
+      "• Research tools - MATLAB, Ansys Lumerical, FDTD, LaTeX\n\n" +
+      "• Programming - Python, SQL, Flask, REST APIs, React",
     options: [
       { label: "Experience", value: "experience" },
       { label: "Projects", value: "projects" },
     ],
   },
   about: {
-    text: "Syed Ahsan (Muhammad Ahsan Shah) — MS Computer Science student at ITU Lahore (Aug 2026–present), Research Assistant in AI-integrated meta optics (since Mar 2026), and Teaching Assistant for Numerical Analysis.\n\nHe completed his BS in Artificial Intelligence at The Islamia University of Bahawalpur in 2026 (CGPA 3.30/4.00), interned at the Deep Embed Lab, and served as president of the IUB Skills & Career Development Society.",
+    text: "Syed Ahsan (Muhammad Ahsan Shah) - MS Computer Science student at ITU Lahore (Aug 2026-present), Research Assistant in medical imaging and AI (since Mar 2026), and Teaching Assistant for Numerical Analysis.\n\nHe completed his BS in Artificial Intelligence at The Islamia University of Bahawalpur in 2026 (CGPA 3.30/4.00), interned at the Deep Embed Lab, and served as president of the IUB Skills & Career Development Society.",
     options: [
       { label: "Education", value: "education" },
       { label: "Experience", value: "experience" },
@@ -96,8 +96,8 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   education: {
     text: "Education:\n\n" +
-      "• MS Computer Science — Information Technology University (ITU), Lahore. Aug 2026–present.\n\n" +
-      "• BS Artificial Intelligence — The Islamia University of Bahawalpur (IUB). Completed 2026, CGPA 3.30/4.00.",
+      "• MS Computer Science - Information Technology University (ITU), Lahore. Aug 2026-present.\n\n" +
+      "• BS Artificial Intelligence - The Islamia University of Bahawalpur (IUB). Completed 2026, CGPA 3.30/4.00.",
     options: [
       { label: "Experience", value: "experience" },
       { label: "Contact", value: "contact" },
@@ -105,10 +105,10 @@ const knowledgeBase: Record<string, KBEntry> = {
   },
   experience: {
     text: "Experience:\n\n" +
-      "• Research Assistant — ITU Lahore (Mar 2026–present). AI-integrated meta optics: inverse design of meta-lenses with FDTD data + a deep-learning surrogate.\n\n" +
-      "• Teaching Assistant, Numerical Analysis — ITU Lahore (Aug 2026–present).\n\n" +
-      "• Intern — Deep Embed Lab, IUB (Oct 2023–Nov 2024).\n\n" +
-      "• President, IUB Skills & Career Development Society — ran Python, marketing and analytics courses for 1000+ students. Also IEEE Student Branch leadership.",
+      "• Research Assistant - ITU Lahore (Mar 2026-present). medical imaging and AI: inverse design of optical lenses with FDTD data + a deep-learning surrogate.\n\n" +
+      "• Teaching Assistant, Numerical Analysis - ITU Lahore (Aug 2026-present).\n\n" +
+      "• Intern - Deep Embed Lab, IUB (Oct 2023-Nov 2024).\n\n" +
+      "• President, IUB Skills & Career Development Society - ran Python, marketing and analytics courses for 1000+ students. Also IEEE Student Branch leadership.",
     options: [
       { label: "Research", value: "research" },
       { label: "Contact", value: "contact" },
@@ -121,7 +121,7 @@ const knowledgeBase: Record<string, KBEntry> = {
       "Phone / WhatsApp: +92 341 6985286\n" +
       "Location: Lahore, Pakistan\n" +
       "LinkedIn: linkedin.com/in/syedahsanai-engr\n" +
-      "GitHub: github.com/SyedAhsanShah1",
+      "GitHub: github.com/mscsAhsan",
   },
   help: {
     text: "I can tell you about:\n\n• Ahsan's research and projects\n• His education and experience\n• His tech stack\n• How to contact him",
@@ -131,7 +131,7 @@ const knowledgeBase: Record<string, KBEntry> = {
     ],
   },
   fallback: {
-    text: "I don't have an answer for that — I only know about Ahsan's research, projects, education, experience and contact details.\n\nWould you like to see his research or contact him directly?",
+    text: "I don't have an answer for that - I only know about Ahsan's research, projects, education, experience and contact details.\n\nWould you like to see his research or contact him directly?",
     options: [
       { label: "Research", value: "research" },
       { label: "Contact", value: "contact" },
@@ -143,6 +143,7 @@ const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [cohereLive, setCohereLive] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [messages, setMessages] = useState<any[]>([
     {
@@ -218,15 +219,17 @@ const Chatbot: React.FC = () => {
 
       await typeOut(botId, entry.text);
     } else {
-      // Server fallback (Gemini) — only if the local assistant server is running
+      // Cohere AI via the Vercel serverless function (/api/chat) - same setup as Nexavo.
+      // Falls back to canned answers if Cohere is not configured or unreachable.
       try {
-        const response = await fetch("http://localhost:5000/chat", {
+        const response = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: query }),
         });
 
         const data = await response.json();
+        if (response.ok && data.reply) setCohereLive(true);
         const botId = Date.now();
         const isRateLimit = response.status === 429 || (data.reply && data.reply.includes("Too many requests"));
 
@@ -240,21 +243,21 @@ const Chatbot: React.FC = () => {
           ...prev,
           {
             id: botId,
-            fullText: data.reply,
+            fullText: data.reply || knowledgeBase.fallback.text,
             displayed: "",
             isBot: true,
             options: isRateLimit ? fallbackOptions : undefined,
           },
         ]);
 
-        await typeOut(botId, data.reply);
+        await typeOut(botId, data.reply || knowledgeBase.fallback.text);
       } catch (error) {
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now(),
-            fullText: "I couldn't reach the assistant server, but I can still answer from what I know about Ahsan. Try asking about his research, projects, or contact details.",
-            displayed: "I couldn't reach the assistant server, but I can still answer from what I know about Ahsan. Try asking about his research, projects, or contact details.",
+            fullText: "Cohere AI isn't reachable right now, but I can still answer from what I know about Ahsan. Try asking about his research, projects, or contact details.",
+            displayed: "Cohere AI isn't reachable right now, but I can still answer from what I know about Ahsan. Try asking about his research, projects, or contact details.",
             isBot: true,
             options: [
               { label: "Research", value: "research" },
@@ -334,7 +337,7 @@ const Chatbot: React.FC = () => {
                     Ahsan&apos;s AI Assistant <Lightning size={12} weight="fill" className="text-accent" />
                   </h3>
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] opacity-70">
-                    Research · Projects · Contact
+                    {cohereLive ? "Answering with Cohere AI" : "Research · Projects · Contact"}
                   </p>
                 </div>
               </div>

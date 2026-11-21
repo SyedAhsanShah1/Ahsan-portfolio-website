@@ -1,5 +1,5 @@
 /**
- * Toon Chef Ahsan — a hand-drawn-style flat SVG cartoon chef.
+ * Toon Chef Ahsan - a hand-drawn-style flat SVG cartoon chef.
  * Animations (CSS, see index.css):
  *  - waves hello with his raised arm
  *  - blinks every few seconds

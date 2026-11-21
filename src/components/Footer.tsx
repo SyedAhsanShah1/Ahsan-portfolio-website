@@ -56,6 +56,7 @@ const Footer = () => {
     { name: 'Research', to: '/research' },
     { name: 'Projects', to: '/projects' },
     { name: 'Skills', to: '/skills' },
+    { name: 'Hidden Talent', to: '/hidden-talent' },
     { name: 'Contact', to: '/contact' },
   ];
 
@@ -75,11 +76,11 @@ const Footer = () => {
           <div>
             <h3 className="font-display text-2xl font-semibold mb-4">Syed Ahsan</h3>
             <p className="text-secondary-foreground/70 leading-relaxed mb-6">
-              AI researcher and engineer — building intelligent systems where machine learning meets real physics.
+              AI researcher and engineer - building intelligent systems where machine learning meets real medicine.
             </p>
             <div className="flex gap-4">
               <a
-                href="https://github.com/SyedAhsanShah1"
+                href="https://github.com/mscsAhsan"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110"
@@ -147,7 +148,7 @@ const Footer = () => {
             className="inline-flex items-center gap-2 text-secondary-foreground/50 hover:text-accent text-sm transition-colors duration-300"
           >
             <CookingPot size={16} />
-            Psst — hidden talent
+            Psst - hidden talent
           </Link>
 
           <button

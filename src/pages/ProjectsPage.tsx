@@ -4,7 +4,7 @@ import Projects from '../components/Projects';
 
 const ProjectsPage = () => (
   <div className="pt-16">
-    <div className="container mx-auto max-w-7xl px-6 pt-10">
+    <div className="container mx-auto max-w-7xl px-6 pt-10" data-reveal>
       <p className="text-center text-muted-foreground">
         Looking for the research behind some of these?{' '}
         <Link to="/research" className="inline-flex items-center gap-1 text-primary font-medium hover:underline">

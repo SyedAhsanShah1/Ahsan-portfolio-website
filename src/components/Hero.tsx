@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, DownloadSimple, Handshake } from 'phosphor-react';
 import { Button } from './ui/button';
 
-const ROLES = ['AI Researcher', 'Meta-Optics RA', 'Computer Vision', 'Web Engineer'];
+const ROLES = ['AI Researcher', 'Medical Imaging', 'Computer Vision', 'Web Engineer'];
 
 const TICKER_ITEMS = [
   'Machine Learning',
-  'Meta-Optics',
+  'Medical Imaging',
   'Computer Vision',
   'PyTorch',
   'FDTD Simulation',
@@ -120,7 +120,7 @@ const Hero = () => {
     navigate('/projects');
   };
 
-  const scrollToContact = () => {
+  const hireMe = () => {
     navigate('/contact');
   };
 
@@ -134,11 +134,12 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-0">
+    <section id="hero" ref={heroRef} data-mouse-zone className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-0">
       {/* Floating soft blobs in the new palette */}
-      <div ref={blobRef1} className="absolute top-1/4 left-[8%] w-64 h-64 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
-      <div ref={blobRef2} className="absolute top-1/3 right-[6%] w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
-      <div ref={blobRef3} className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none" />
+      <div ref={blobRef1} data-mouse-x="14" data-parallax data-speed="6" className="absolute top-1/4 left-[8%] w-64 h-64 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
+      <div ref={blobRef2} data-mouse-x="20" data-parallax data-speed="9" className="absolute top-1/3 right-[6%] w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
+      <div ref={blobRef3} data-mouse-x="16" data-parallax data-speed="7" className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle paper grain / dot texture */}
       {/* Subtle paper grain / dot texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.35]"
@@ -149,7 +150,7 @@ const Hero = () => {
         <div className="text-center lg:text-left">
           <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-6 border border-secondary/20">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            MS Computer Science — ITU Lahore
+            MS Computer Science - ITU Lahore
           </p>
 
           <h1 ref={titleRef} className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
@@ -162,18 +163,23 @@ const Hero = () => {
             <span className="typewriter-caret" />
           </div>
 
-          <p ref={subtitleRef} className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Research Assistant at ITU Lahore, working on AI-integrated meta optics — AI-driven inverse design of
-            meta-lenses. I build intelligent systems where machine learning meets real physics.
+          <p ref={subtitleRef} className="text-lg md:text-xl text-muted-foreground mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            AI researcher at ITU Lahore, working on medical imaging and AI - AI-driven design of optical
+            lenses. I build intelligent systems where machine learning meets real medicine.
+          </p>
+
+          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-8 border border-secondary/20">
+            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            Open to research collaborations and AI projects
           </p>
 
           <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <Button onClick={scrollToContact} className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105" size="lg">
+            <Button onClick={hireMe} data-magnetic className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105" size="lg">
               <Handshake size={20} />
               Hire Me
             </Button>
 
-            <Button onClick={downloadCV} variant="outline" className="group inline-flex items-center gap-3 px-8 py-4 border-primary/40 text-primary hover:bg-primary/10 rounded-full font-medium transition-all duration-300 hover:scale-105" size="lg">
+            <Button onClick={downloadCV} data-magnetic variant="outline" className="group inline-flex items-center gap-3 px-8 py-4 border-primary/40 text-primary hover:bg-primary/10 rounded-full font-medium transition-all duration-300 hover:scale-105" size="lg">
               <DownloadSimple size={20} />
               Download CV
             </Button>
@@ -186,7 +192,7 @@ const Hero = () => {
         </div>
 
         {/* Profile photo */}
-        <div ref={photoRef} className="relative mx-auto w-72 h-72 md:w-96 md:h-96">
+        <div ref={photoRef} data-mouse="10" data-parallax data-speed="5" className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 will-change-transform">
           <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-primary opacity-20 blur-xl" />
           <div className="absolute -inset-3 rounded-[2.5rem] border-2 border-primary/30 rotate-3" />
           <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-glass bg-card">
@@ -196,9 +202,9 @@ const Hero = () => {
               className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
             />
           </div>
-          <div className="absolute -bottom-5 -left-5 glass rounded-2xl px-4 py-3 shadow-glass animate-float">
+          <div className="absolute -bottom-4 -left-2 sm:-bottom-5 sm:-left-5 glass rounded-2xl px-4 py-3 shadow-glass animate-float">
             <p className="text-sm font-semibold text-foreground">Research Assistant</p>
-            <p className="text-xs text-muted-foreground">ITU Lahore · since Mar 2026</p>
+            <p className="text-xs text-muted-foreground">ITU Lahore - since Mar 2026</p>
           </div>
           <div className="absolute -top-4 -right-4 w-10 h-10 bg-accent rounded-full animate-float" style={{ animationDelay: '1s' }} />
         </div>

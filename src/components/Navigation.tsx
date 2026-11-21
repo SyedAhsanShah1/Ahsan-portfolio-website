@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { name: 'Research', to: '/research' },
   { name: 'Projects', to: '/projects' },
   { name: 'Skills', to: '/skills' },
+  { name: 'Hidden Talent', to: '/hidden-talent' },
   { name: 'Contact', to: '/contact' },
 ];
 
@@ -102,7 +103,7 @@ const Navigation = () => {
               </Link>
             </div>
 
-            <div ref={menuRef} className="hidden lg:flex items-center space-x-7">
+            <div ref={menuRef} className="hidden xl:flex items-center space-x-6">
               {NAV_ITEMS.map((item) => (
                 <NavLink key={item.to} to={item.to} end={item.to === '/'} className={linkClass}>
                   {item.name}
@@ -111,13 +112,14 @@ const Navigation = () => {
 
               <button
                 onClick={() => navigate('/contact')}
+                data-magnetic
                 className="px-6 py-2 bg-gradient-primary text-primary-foreground rounded-full hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
               >
                 Hire Me
               </button>
             </div>
 
-            <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-foreground p-2" aria-label="Open menu">
+            <button onClick={() => setIsOpen(!isOpen)} className="xl:hidden text-foreground p-2" aria-label="Open menu">
               <List size={24} />
             </button>
           </div>
@@ -132,7 +134,7 @@ const Navigation = () => {
 
       <div
         ref={mobileMenuRef}
-        className="fixed top-0 right-0 w-full h-full bg-background/95 backdrop-blur-lg z-50 transform translate-x-full lg:hidden"
+        className="fixed top-0 right-0 w-full h-full bg-background/95 backdrop-blur-lg z-50 transform translate-x-full xl:hidden overflow-y-auto"
       >
         <div className="flex items-center justify-between p-6 border-b border-border/60">
           <h2 className="font-display text-2xl font-semibold text-primary">Syed Ahsan</h2>
@@ -141,7 +143,7 @@ const Navigation = () => {
           </button>
         </div>
 
-        <div className="flex flex-col space-y-6 p-6 mt-8">
+        <div className="flex flex-col space-y-5 p-6 mt-6">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
