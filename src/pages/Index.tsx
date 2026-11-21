@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, User, Briefcase, Flask, FolderOpen, Brain, Envelope } from 'phosphor-react';
 import Hero from '../components/Hero';
+import { PageGlow, SectionDivider } from '../components/SiteFX';
 
 const EXPLORE = [
   {
@@ -75,9 +76,12 @@ const Index = () => {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* Explore the site */}
-      <section className="pb-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="relative pb-24 pt-16 px-6 overflow-hidden">
+        <PageGlow tone="blue" />
+        <div className="container mx-auto max-w-6xl relative">
           <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary text-center mb-3">
             // explore
           </p>
@@ -92,7 +96,7 @@ const Index = () => {
                 data-tilt
                 data-reveal
                 data-delay={(i * 0.08).toFixed(2)}
-                className="group glass rounded-2xl p-7 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 will-change-transform"
+                className="group glass visual-card rounded-2xl p-7 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 will-change-transform"
               >
                 <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 transition-transform duration-300">
                   <card.icon size={24} className="text-primary-foreground" />

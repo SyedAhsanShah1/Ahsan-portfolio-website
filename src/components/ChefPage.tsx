@@ -6,6 +6,7 @@ import { ArrowLeft, CookingPot, Star, ShoppingBag, X, Quotes, Fire, Timer } from
 import ToonChef from './ToonChef';
 import { BiryaniPot, ChaiCup, MaggiPlate, Chilli, RollingPin, BurgerArt, BowlArt, FriesArt } from './FoodArt';
 import { sparkleBurst, useTripleClick } from './FunBits';
+import { SectionDivider } from './SiteFX';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -359,7 +360,8 @@ const ChefPage = () => {
         </div>
 
         {/* Menu */}
-        <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+        <SectionDivider />
+        <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2 mt-14">
           The <span className="text-primary">Menu</span>
         </h2>
         <p data-reveal data-delay="0.05" className="text-center text-muted-foreground mb-10">
@@ -377,7 +379,7 @@ const ChefPage = () => {
                 data-tilt
                 data-reveal
                 data-delay={((i % 3) * 0.08).toFixed(2)}
-                className={`text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 will-change-transform ${
+                className={`visual-card text-left glass rounded-2xl p-6 hover:shadow-glow-primary transition-all duration-300 hover:-translate-y-1.5 active:scale-95 will-change-transform ${
                   open ? 'ring-2 ring-primary/50' : ''
                 }`}
               >

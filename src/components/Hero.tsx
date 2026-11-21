@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, DownloadSimple, Handshake } from 'phosphor-react';
 import { Button } from './ui/button';
+import ParticleField from './ParticleField';
 
 const ROLES = ['AI Researcher', 'Medical Imaging', 'Computer Vision', 'Web Engineer'];
 
@@ -100,6 +101,14 @@ const Hero = () => {
 
   return (
     <section id="hero" ref={heroRef} data-mouse-zone className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-0">
+      {/* Layered aurora mesh: slow-drifting gradient blobs (transform only) */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div className="aurora-blob aurora-blob--a -top-24 -left-24" />
+        <div className="aurora-blob aurora-blob--b top-1/3 -right-28" />
+        <div className="aurora-blob aurora-blob--c bottom-0 left-1/3" />
+      </div>
+      {/* Lightweight canvas particle field (desktop, fine pointer only) */}
+      <ParticleField />
       {/* Floating soft blobs in the new palette */}
       <div ref={blobRef1} data-mouse-x="14" data-parallax data-speed="6" className="absolute top-1/4 left-[8%] w-64 h-64 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
       <div ref={blobRef2} data-mouse-x="20" data-parallax data-speed="9" className="absolute top-1/3 right-[6%] w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
@@ -159,6 +168,9 @@ const Hero = () => {
             transforms on the inner element never fight the reveal transition */}
         <div data-reveal data-delay="0.15" className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96">
           <div ref={photoRef} data-mouse="10" data-parallax data-speed="5" className="relative w-full h-full will-change-transform">
+          {/* Conic gradient ring + soft glow behind the photo */}
+          <div className="photo-conic-ring absolute -inset-4 rounded-[3rem] blur-[2px]" />
+          <div className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl" />
           <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-primary opacity-20 blur-xl" />
           <div className="absolute -inset-3 rounded-[2.5rem] border-2 border-primary/30 rotate-3" />
           <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-glass bg-card">
@@ -171,6 +183,14 @@ const Hero = () => {
           <div className="absolute -bottom-4 -left-2 sm:-bottom-5 sm:-left-5 glass rounded-2xl px-4 py-3 shadow-glass animate-float">
             <p className="text-sm font-semibold text-foreground">Research Assistant</p>
             <p className="text-xs text-muted-foreground">ITU Lahore - since Mar 2026</p>
+          </div>
+          <div className="absolute -top-5 -right-2 sm:-right-6 glass rounded-2xl px-4 py-3 shadow-glass animate-float hidden sm:block" style={{ animationDelay: '0.6s' }}>
+            <p className="text-sm font-semibold text-foreground">CGPA 3.30 / 4.00</p>
+            <p className="text-xs text-muted-foreground">BS AI - IUB, 2026</p>
+          </div>
+          <div className="absolute -bottom-5 -right-2 sm:-right-6 glass rounded-2xl px-4 py-3 shadow-glass animate-float hidden sm:block" style={{ animationDelay: '1.4s' }}>
+            <p className="text-sm font-semibold text-foreground">1000+ students</p>
+            <p className="text-xs text-muted-foreground">taught as society president</p>
           </div>
           <div className="absolute -top-4 -right-4 w-10 h-10 bg-accent rounded-full animate-float" style={{ animationDelay: '1s' }} />
           </div>
