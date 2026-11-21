@@ -28,8 +28,8 @@ Hidden Talent page (Chef Ahsan) at `/hidden-talent`.
 ## Tech stack
 
 - React 18 + TypeScript + Vite
-- Tailwind CSS (warm ivory / ink / burnt orange / deep green theme, Fraunces + Inter)
-- GSAP for scroll reveals, counters, and playful animations
+- Tailwind CSS (research-lab theme: cool light `#F5F7FA` background, deep navy ink `#0B1B33`, electric blue `#2563EB` + teal `#0D9488`, dot-grid pattern, Space Grotesk + Inter + JetBrains Mono)
+- Content reveals use CSS + IntersectionObserver (never GSAP opacity tweens - content can never get stuck invisible); GSAP only for transform-only effects: parallax, tilt, magnetic buttons, counters
 - React Router for the multi-page structure
 - Vercel serverless function (`api/chat.js`) for the chatbot
 

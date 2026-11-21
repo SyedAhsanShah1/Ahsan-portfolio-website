@@ -1,17 +1,28 @@
 # Ahsan Portfolio - What Changed
 
-A full rebuild of Syed Ahsan's portfolio website: new warm editorial theme, new photo,
+A full rebuild of Syed Ahsan's portfolio website: new research-lab theme, new photo,
 verified content throughout, multi-page structure, a funny Chef Ahsan page, and a
 Cohere AI chatbot (same setup as Nexavo).
 
-## New theme
-- Warm editorial paper: ivory background `#FAF6EF`, ink `#191817`, burnt orange `#E4572E`,
-  amber `#F2A007`, deep green `#1E4D3B` (footer). The old dark navy / purple / cyan neon
-  theme is gone - no neon glows, no dark sections except the deep-green footer.
-- Fraunces (serif) display font for headings + Inter for body text.
+## New theme (research lab, updated 21 Nov 2026)
+- Research-lab look: cool light background `#F5F7FA` with a subtle dot-grid pattern,
+  deep navy ink `#0B1B33`, electric blue `#2563EB` primary, teal `#0D9488` accent.
+  It replaces the warm ivory / burnt orange editorial theme, which did not suit an
+  AI researcher / engineer. The old dark purple / cyan neon theme is also gone.
+- Space Grotesk for display headings, Inter for body text, JetBrains Mono for small
+  eyebrow labels and tags (e.g. `// 01 - about`).
 - The Tailwind CSS-variable token system (`background`, `foreground`, `primary`,
   `secondary`, `accent`, `muted`, `border`, `card`, gradients, shadows) is kept, so
   all components compile against the same tokens in the new palette.
+
+## Bug fix: blank sections (21 Nov 2026)
+- The deployed site showed empty "Explore the portfolio" cards on Home and empty
+  dish cards on the Chef page: per-page `gsap.from` opacity tweens got stuck at
+  opacity 0 when ScrollTrigger positions went stale. Content visibility now runs on
+  one bulletproof system: CSS `[data-reveal]` + IntersectionObserver in
+  `src/components/Motion.tsx`, with a 2.5s safety timer and a window-load re-check,
+  so no content can ever stay invisible. GSAP is kept only for transform-only
+  effects (parallax, tilt, magnetic buttons, counters) that cannot hide content.
 
 ## New photo
 - `public/Images/ahsan-profile.jpg` - his new photo (black t-shirt, white background).
@@ -41,12 +52,13 @@ Cohere AI chatbot (same setup as Nexavo).
   described factually as AI-driven inverse design of optical lenses (FDTD simulation data
   + a deep-learning surrogate model, ITU, since Mar 2026).
 
-## Animations (GSAP + ScrollTrigger)
+## Animations (CSS reveals + GSAP transform effects)
 - Hero typewriter rotating roles: AI Researcher / Medical Imaging / Computer Vision /
   Web Engineer.
 - Scroll progress bar in the navigation, marquee ticker strip under the hero.
-- GSAP scroll reveals on every section, animated counters, skill bars that fill on scroll,
-  hover tilt/lift on project cards, floating soft blobs, page-transition fade on route change.
+- CSS + IntersectionObserver reveals on every section (never GSAP opacity tweens),
+  animated counters, skill bars that fill on scroll, hover tilt/lift on project cards,
+  floating soft blobs, page-transition fade on route change.
 - Chef page: animated cartoon "Toon Chef Ahsan" (waves hello, blinks, stirs a bubbling
   pot, bobs gently, steam wisps), illustrated SVG food floating around the page with
   soft mouse parallax, and illustrated graphics on every dish card.

@@ -77,7 +77,8 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				display: ['Fraunces', 'Georgia', 'serif']
+				display: ['Space Grotesk', 'Inter', 'sans-serif'],
+				mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
 			},
 			keyframes: {
 				'accordion-down': {
