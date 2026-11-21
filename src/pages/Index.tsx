@@ -45,7 +45,7 @@ const EXPLORE = [
 const HIGHLIGHTS = [
   { value: 'MS CS', label: 'ITU Lahore · Aug 2026 - present' },
   { value: 'RA', label: 'medical imaging and AI · since Mar 2026' },
-  { value: '3.30', label: 'BS AI CGPA / 4.00 · IUB 2026' },
+  { value: 'BS AI', label: 'IUB 2026' },
   { value: '1000+', label: 'students taught as society president' },
 ];
 
@@ -54,7 +54,7 @@ const Index = () => {
     <div>
       <Hero />
 
-      {/* Short intro + highlights */}
+
       <section className="py-16 px-6">
         <div className="container mx-auto max-w-6xl text-center">
           <h2 data-reveal className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
@@ -65,9 +65,14 @@ const Index = () => {
             where AI meets medicine: teaching machines to design optical lenses, auditing fairness in medical AI, and
             building web apps that put models in people&apos;s hands.
           </p>
-          <div data-reveal data-delay="0.2" className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {HIGHLIGHTS.map((h) => (
-              <div key={h.label} className="glass rounded-2xl px-4 py-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {HIGHLIGHTS.map((h, i) => (
+              <div
+                key={h.label}
+                data-reveal
+                data-delay={(0.2 + i * 0.08).toFixed(2)}
+                className="glass rounded-2xl px-4 py-5 hover:shadow-glow-primary hover:-translate-y-1 transition-all duration-300"
+              >
                 <p className="font-display text-2xl md:text-3xl font-semibold text-primary">{h.value}</p>
                 <p className="text-sm text-muted-foreground mt-1">{h.label}</p>
               </div>
@@ -78,7 +83,7 @@ const Index = () => {
 
       <SectionDivider />
 
-      {/* Explore the site */}
+
       <section className="relative pb-24 pt-16 px-6 overflow-hidden">
         <PageGlow tone="blue" />
         <div className="container mx-auto max-w-6xl relative">
@@ -111,6 +116,35 @@ const Index = () => {
                 <p className="text-muted-foreground leading-relaxed">{card.text}</p>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      <section className="relative pb-24 pt-16 px-6 overflow-hidden">
+        <div className="container mx-auto max-w-6xl">
+          <div
+            data-reveal
+            className="relative overflow-hidden glass rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 justify-between"
+          >
+            <div className="absolute -top-16 -right-16 w-64 h-64 bg-primary/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative text-center md:text-left">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-2">
+                Need AI or web work done?
+              </h2>
+              <p className="text-muted-foreground leading-relaxed max-w-xl">
+                From AI prototypes to full websites - see what I offer, all based on real skills and real projects.
+              </p>
+            </div>
+            <Link
+              to="/services"
+              data-magnetic
+              className="relative shrink-0 inline-flex items-center gap-2 px-8 py-3 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+            >
+              See Services
+              <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </section>

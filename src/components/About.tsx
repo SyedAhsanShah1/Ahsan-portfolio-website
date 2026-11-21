@@ -12,7 +12,7 @@ import { Doodles } from './FunBits';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* True, harmless fun facts that rotate every few seconds. */
+
 const FUN_FACTS = [
   'President of a society that taught 1000+ students.',
   'Chai-powered debugger. The chai is non-negotiable.',
@@ -24,7 +24,7 @@ const TIMELINE = [
   {
     year: '2026',
     title: 'BS Artificial Intelligence - IUB',
-    text: 'Completed my BS in AI at The Islamia University of Bahawalpur, CGPA 3.30/4.00.',
+    text: 'Completed my BS in AI at The Islamia University of Bahawalpur in 2026.',
   },
   {
     year: 'Mar 2026',
@@ -71,7 +71,7 @@ function Counter({ target, suffix = '', decimals = 0 }: { target: number; suffix
 const About = () => {
   const [factIndex, setFactIndex] = useState(0);
 
-  /* Rotate one true fun fact every 4.5 seconds. */
+
   useEffect(() => {
     const timer = setInterval(() => {
       setFactIndex((prev) => (prev + 1) % FUN_FACTS.length);
@@ -81,12 +81,11 @@ const About = () => {
 
   return (
     <section id="about" className="py-20 px-6 relative overflow-hidden">
-      {/* Playful doodles, desktop only, inner page only */}
+
       <Doodles />
       <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Reveal lives on the wrapper so the GSAP parallax transform on
-              the inner element never fights the reveal transition */}
+
           <div data-reveal>
             <div data-parallax data-speed="5" className="relative will-change-transform">
             <div className="relative w-80 h-80 mx-auto lg:mx-0">
@@ -122,7 +121,7 @@ const About = () => {
             </p>
 
             <p data-reveal data-delay="0.16" className="text-lg text-muted-foreground leading-relaxed">
-              I completed my BS in Artificial Intelligence at The Islamia University of Bahawalpur (CGPA 3.30/4.00),
+              I completed my BS in Artificial Intelligence at The Islamia University of Bahawalpur in 2026,
               interned at the Deep Embed Lab, and led the IUB Skills &amp; Career Development Society as president -
               running Python, marketing and analytics courses for 1000+ students. Alongside research, I&apos;m a
               Teaching Assistant for Numerical Analysis at ITU and I build AI-powered web applications.
@@ -140,12 +139,6 @@ const About = () => {
                   <Counter target={6} suffix="+" />
                 </span>
                 <span className="text-muted-foreground ml-2 text-sm">projects built</span>
-              </div>
-              <div className="glass px-4 py-3 rounded-xl">
-                <span className="text-accent font-display text-2xl font-semibold">
-                  <Counter target={3.3} decimals={2} />
-                </span>
-                <span className="text-muted-foreground ml-2 text-sm">BS CGPA / 4.00</span>
               </div>
             </div>
 
@@ -165,7 +158,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* Timeline */}
+
         <div className="mt-20">
           <h3 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-12">
             My <span className="text-primary">Journey</span>

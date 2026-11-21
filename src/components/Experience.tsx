@@ -66,7 +66,7 @@ const Experience = () => {
           </p>
         </div>
 
-        {/* Currently strip */}
+
         <div data-reveal className="glass rounded-2xl p-6 md:p-7 mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 border-l-4 border-l-primary">
           <span className="shrink-0 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold border border-secondary/20">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />

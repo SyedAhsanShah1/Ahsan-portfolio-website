@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   const particlesRef = useRef<HTMLDivElement>(null);
 
-  /* Floating particles only (transform-only gsap.to). The footer content
-     itself uses the shared data-reveal system - it used to hide with a
-     gsap.from opacity tween that could strand it invisible. */
+
   useEffect(() => {
     const particles = particlesRef.current?.children;
     if (particles) {
@@ -38,6 +36,7 @@ const Footer = () => {
     { name: 'Research', to: '/research' },
     { name: 'Projects', to: '/projects' },
     { name: 'Skills', to: '/skills' },
+    { name: 'Services', to: '/services' },
     { name: 'Hidden Talent', to: '/hidden-talent' },
     { name: 'Contact', to: '/contact' },
   ];
@@ -131,6 +130,13 @@ const Footer = () => {
           >
             <CookingPot size={16} />
             Psst - hidden talent
+          </Link>
+
+          <Link
+            to="/admin"
+            className="text-secondary-foreground/50 hover:text-accent text-sm transition-colors duration-300"
+          >
+            Admin
           </Link>
 
           <button

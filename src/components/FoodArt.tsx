@@ -1,5 +1,3 @@
-/** Hand-drawn-style flat SVG food illustrations for the Chef Ahsan page. */
-
 export const BiryaniPot = ({ className = '' }: { className?: string }) => (
   <svg viewBox="0 0 120 110" className={className} aria-label="Biryani pot">
     <path d="M48 26 q5 -10 0 -18 M66 28 q5 -10 0 -18" stroke="#B9AE97" strokeWidth="3" fill="none" strokeLinecap="round" className="steam-wisp" />

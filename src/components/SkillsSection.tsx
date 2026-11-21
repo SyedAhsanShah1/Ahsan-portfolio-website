@@ -31,9 +31,7 @@ const SkillsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [barsVisible, setBarsVisible] = useState(false);
 
-  /* Skill bars fill with a CSS width transition once scrolled into view.
-     If the observer never fires, the bars simply show at full width from
-     the start (they are never hidden by JS). */
+
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;

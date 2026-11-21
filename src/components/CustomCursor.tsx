@@ -1,18 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * CustomCursor: a high-quality desktop cursor.
- * A small solid dot follows the mouse instantly; a trailing ring follows
- * with lerp smoothing on a single requestAnimationFrame loop. Over links,
- * buttons, cards and [data-tilt] elements the ring expands and the dot
- * shrinks. No text inside the cursor, transform-only motion.
- *
- * Safety: it only mounts on devices with a fine pointer, and `cursor: none`
- * is applied ONLY through a JS-added class on <html> - if JS fails, the
- * native cursor stays. Touch devices never get it. With
- * prefers-reduced-motion the ring follows instantly (no lag). The cursor
- * hides when the mouse leaves the window.
- */
+
 const HOVER_SELECTOR =
   'a, button, [data-tilt], [data-magnetic], input, textarea, select, [role="button"], label, .cursor-hover';
 

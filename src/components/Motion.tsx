@@ -5,27 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * ScrollFX: one place for scroll-based and mouse-based motion.
- *
- * CONTENT VISIBILITY lives on a bulletproof CSS + IntersectionObserver
- * system ([data-reveal] in index.css). Nothing is ever hidden by GSAP:
- * the observer adds .is-visible when an element scrolls into view, and a
- * repeating safety check reveals anything currently in the viewport that
- * the observer missed. The safety check only touches in-viewport elements,
- * so below-fold content keeps its scroll-in animation. GSAP is only used
- * for transform-only effects (parallax, tilt, magnetic, mouse parallax)
- * that can never hide content.
- *
- *  [data-reveal] [data-delay="0.1"]  - fade/slide/blur-in reveal on scroll
- *  [data-parallax] [data-speed="8"]  - background drifts with scroll (scrub)
- *  [data-mouse-zone] + [data-mouse="14"] - children shift with the cursor
- *  [data-mouse-x="14"]                - children shift on x only (for floating blobs)
- *  [data-tilt]                     - 3D tilt following the mouse
- *  [data-magnetic] [data-strength] - button gently pulls toward the cursor
- *
- * Icons are never animated: only cards, photos, buttons and sections move.
- */
+
 export const ScrollFX = () => {
   const { pathname } = useLocation();
 
@@ -35,10 +15,7 @@ export const ScrollFX = () => {
     const timers: number[] = [];
     const intervals: number[] = [];
 
-    /* ---- Bulletproof content reveal (CSS + IntersectionObserver) ---- */
-    /* Safety net: reveal anything currently in the viewport that the
-       observer missed. Only in-viewport elements, so below-fold content
-       keeps its scroll-in animation instead of being revealed early. */
+
     const revealInView = () => {
       document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)').forEach((el) => {
         const r = el.getBoundingClientRect();
@@ -57,8 +34,7 @@ export const ScrollFX = () => {
           const delay = Number(el.dataset.delay || 0);
           el.classList.add('is-visible');
           observer.unobserve(el);
-          /* Clear the stagger delay once the reveal finished, so later
-             hover transitions on the same element are not delayed. */
+
           timers.push(window.setTimeout(() => { el.style.transitionDelay = ''; }, delay * 1000 + 900));
         });
       },
@@ -74,15 +50,15 @@ export const ScrollFX = () => {
     };
 
     observeReveals();
-    /* Safety net: check every second, in-viewport elements only. */
+
     revealInView();
     intervals.push(window.setInterval(revealInView, 1000));
-    /* Images changing the layout must not strand anything. */
+
     const onLoad = () => observeReveals();
     window.addEventListener('load', onLoad);
 
     const ctx = gsap.context(() => {
-      /* Scroll parallax on background blobs and photos (transform only). */
+
       gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
         const speed = Number(el.dataset.speed || 8);
         gsap.fromTo(
@@ -103,8 +79,7 @@ export const ScrollFX = () => {
     });
 
     if (finePointer) {
-      /* Mouse parallax inside zones. [data-mouse] moves x+y, [data-mouse-x]
-         moves x only (for elements that already float on y). */
+
       document.querySelectorAll<HTMLElement>('[data-mouse-zone]').forEach((zone) => {
         const items = Array.from(zone.querySelectorAll<HTMLElement>('[data-mouse]'));
         const xItems = Array.from(zone.querySelectorAll<HTMLElement>('[data-mouse-x]'));
@@ -134,7 +109,7 @@ export const ScrollFX = () => {
         });
       });
 
-      /* 3D tilt on cards. */
+
       document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
         const onMove = (e: MouseEvent) => {
           const rect = el.getBoundingClientRect();
@@ -160,7 +135,7 @@ export const ScrollFX = () => {
         });
       });
 
-      /* Magnetic buttons. */
+
       document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
         const strength = Number(el.dataset.strength || 0.35);
         const onMove = (e: MouseEvent) => {

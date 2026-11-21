@@ -29,7 +29,7 @@ declare global {
   }
 }
 
-// --- Knowledge Base (verified facts only) ---
+
 type KBEntry = {
   text: string;
   options?: { label: string; value: string }[];
@@ -87,7 +87,7 @@ const knowledgeBase: Record<string, KBEntry> = {
     ],
   },
   about: {
-    text: "Syed Ahsan (Muhammad Ahsan Shah) - MS Computer Science student at ITU Lahore (Aug 2026-present), Research Assistant in medical imaging and AI (since Mar 2026), and Teaching Assistant for Numerical Analysis.\n\nHe completed his BS in Artificial Intelligence at The Islamia University of Bahawalpur in 2026 (CGPA 3.30/4.00), interned at the Deep Embed Lab, and served as president of the IUB Skills & Career Development Society.",
+    text: "Syed Ahsan (Muhammad Ahsan Shah) - MS Computer Science student at ITU Lahore (Aug 2026-present), Research Assistant in medical imaging and AI (since Mar 2026), and Teaching Assistant for Numerical Analysis.\n\nHe completed his BS in Artificial Intelligence at The Islamia University of Bahawalpur in 2026, interned at the Deep Embed Lab, and served as president of the IUB Skills & Career Development Society.",
     options: [
       { label: "Education", value: "education" },
       { label: "Experience", value: "experience" },
@@ -96,7 +96,7 @@ const knowledgeBase: Record<string, KBEntry> = {
   education: {
     text: "Education:\n\n" +
       "• MS Computer Science - Information Technology University (ITU), Lahore. Aug 2026-present.\n\n" +
-      "• BS Artificial Intelligence - The Islamia University of Bahawalpur (IUB). Completed 2026, CGPA 3.30/4.00.",
+      "• BS Artificial Intelligence - The Islamia University of Bahawalpur (IUB). Completed 2026.",
     options: [
       { label: "Experience", value: "experience" },
       { label: "Contact", value: "contact" },
@@ -167,9 +167,7 @@ const Chatbot: React.FC = () => {
     { label: "Help", value: "help", icon: <Info size={16} /> },
   ];
 
-  /* Chat trigger entrance: CSS keyframe (animate-scale-in) that ends at the
-     button's natural state. The old GSAP scale-0 entrance could strand the
-     button invisible if the tween never ran. */
+
   useEffect(() => {
     if (isOpen && endRef.current) {
       endRef.current.scrollIntoView({ behavior: "smooth" });
@@ -211,8 +209,8 @@ const Chatbot: React.FC = () => {
 
       await typeOut(botId, entry.text);
     } else {
-      // Cohere AI via the Vercel serverless function (/api/chat) - same setup as Nexavo.
-      // Falls back to canned answers if Cohere is not configured or unreachable.
+
+
       try {
         const response = await fetch("/api/chat", {
           method: "POST",
@@ -296,7 +294,7 @@ const Chatbot: React.FC = () => {
     <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[9999] flex flex-col items-end font-sans selection:bg-primary/30">
       {isOpen && (
         <div className="flex flex-col md:flex-row-reverse gap-4 items-end mb-4 w-[92vw] sm:w-[400px] md:w-auto transition-all duration-500">
-          {/* Desktop Only Side Menu */}
+
           <div className="hidden md:flex flex-col gap-2 max-h-[450px] overflow-y-auto no-scrollbar py-2">
             {sidebarActions.map((item, i) => (
               <button
@@ -310,12 +308,12 @@ const Chatbot: React.FC = () => {
             ))}
           </div>
 
-          {/* Main Interface Window */}
+
           <div
             ref={chatWindowRef}
             className="w-full md:w-[420px] h-[75vh] md:h-[520px] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden relative animate-in fade-in zoom-in duration-300"
           >
-            {/* Header */}
+
             <div className="p-5 md:p-6 border-b border-border bg-secondary text-secondary-foreground flex items-center justify-between z-10">
               <div className="flex items-center gap-4">
                 <div className="relative">
@@ -341,7 +339,7 @@ const Chatbot: React.FC = () => {
               </button>
             </div>
 
-            {/* Messages */}
+
             <div className="flex-1 overflow-y-auto p-5 md:p-8 space-y-6 scrollbar-hide z-10">
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.isBot ? "justify-start" : "justify-end"} animate-fade-in`}>
@@ -385,7 +383,7 @@ const Chatbot: React.FC = () => {
               <div ref={endRef} />
             </div>
 
-            {/* Input */}
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -426,7 +424,7 @@ const Chatbot: React.FC = () => {
         </div>
       )}
 
-      {/* Trigger button */}
+
       <div className="relative group">
         <div className="absolute inset-[-12px] bg-gradient-primary rounded-[2.5rem] blur-3xl opacity-0 group-hover:opacity-40 transition-all duration-700"></div>
 

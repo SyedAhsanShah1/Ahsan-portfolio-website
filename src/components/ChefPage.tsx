@@ -85,7 +85,7 @@ const FLOATERS = [
   { art: <RollingPin className="w-20 h-8 md:w-28 md:h-10" />, className: 'bottom-[8%] left-[6%]', depth: 18, delay: '2.4s' },
 ];
 
-/* Joke stats, totally unverified, exactly as the chef claims them. */
+
 const CHEF_STATS = [
   { icon: CookingPot, value: 47, label: 'Biryani attempts' },
   { icon: Star, value: 12, label: 'Edible biryanis' },
@@ -166,11 +166,7 @@ const ChefPage = () => {
     toastTimer.current = setTimeout(() => setToast(null), 3500);
   };
 
-  /* Entrance uses the shared CSS + IntersectionObserver reveal
-     (data-reveal) - the old gsap.from opacity tweens got stuck at
-     opacity 0 on the live site and hid the whole menu. */
 
-  // Soft mouse parallax on the floating food
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const nx = e.clientX / window.innerWidth - 0.5;
     const ny = e.clientY / window.innerHeight - 0.5;
@@ -186,7 +182,7 @@ const ChefPage = () => {
     if (willOpen) {
       const card = document.getElementById(`dish-${id}`);
       if (card) {
-        /* Transform-only pulse from its current (visible) state. */
+
         gsap.to(card, { scale: 1.02, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' });
       }
     }
@@ -196,13 +192,13 @@ const ChefPage = () => {
     showToast('Kitchen closed - the chef is debugging.');
   };
 
-  /* Easter egg: click the chef hat. */
+
   const onHatClick = (e: React.MouseEvent) => {
     sparkleBurst(e.clientX, e.clientY);
     showToast('The hat approves. The smoke alarm does not.');
   };
 
-  /* Easter egg: click the toon chef 3 times. */
+
   const toonRef = useRef<HTMLDivElement>(null);
   const onToonTripleClick = useTripleClick(() => {
     const el = toonRef.current;
@@ -215,7 +211,7 @@ const ChefPage = () => {
 
   return (
     <div ref={pageRef} onMouseMove={handleMouseMove} className="min-h-screen bg-background relative overflow-hidden">
-      {/* Floating illustrated food (with mouse parallax) */}
+
       {FLOATERS.map((f, i) => (
         <div
           key={i}
@@ -236,9 +232,9 @@ const ChefPage = () => {
           Back to the serious portfolio
         </Link>
 
-        {/* Hero: photo + toon chef side by side */}
+
         <div className="grid md:grid-cols-2 gap-10 items-center mb-14">
-          {/* Photo with chef hat */}
+
           <div data-reveal className="text-center">
             <div className="relative w-56 h-56 md:w-64 md:h-64 mx-auto mb-6">
               <div className="absolute -top-2 left-1/3 flex gap-2 z-20">
@@ -272,7 +268,7 @@ const ChefPage = () => {
             <p className="text-sm text-muted-foreground italic">The real chef. Allegedly.</p>
           </div>
 
-          {/* Animated toon chef - tap 3 times for a surprise */}
+
           <div ref={toonRef} onClick={onToonTripleClick} title="Tap 3 times for a surprise" data-reveal data-delay="0.15" className="text-center cursor-pointer">
             <div className="relative mx-auto max-w-[320px]">
               <ToonChef className="w-full h-auto drop-shadow-xl" />
@@ -309,12 +305,12 @@ const ChefPage = () => {
           </div>
         </div>
 
-        {/* Chef's story */}
+
         <div className="max-w-3xl mx-auto mb-14">
-          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+          <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
             The <span className="text-primary">Chef&apos;s Story</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-8" />
+          <div data-reveal data-delay="0.05" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-8" />
           <div className="glass rounded-2xl p-6 md:p-8 space-y-4 text-muted-foreground leading-relaxed" data-reveal>
             <p>
               Every great chef has an origin story. Mine starts in a hostel kitchen at 2am, with one packet of
@@ -333,12 +329,12 @@ const ChefPage = () => {
           </div>
         </div>
 
-        {/* Chef's stats (joke numbers, unverified, as claimed by the chef) */}
+
         <div className="mb-14">
-          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+          <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
             Chef&apos;s <span className="text-primary">Stats</span>
           </h2>
-          <p className="text-center text-muted-foreground mb-8">
+          <p data-reveal data-delay="0.05" className="text-center text-muted-foreground mb-8">
             Totally unverified kitchen statistics, as reported by the chef himself.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4" data-reveal>
@@ -359,7 +355,7 @@ const ChefPage = () => {
           </p>
         </div>
 
-        {/* Menu */}
+
         <SectionDivider />
         <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2 mt-14">
           The <span className="text-primary">Menu</span>
@@ -412,12 +408,12 @@ const ChefPage = () => {
           })}
         </div>
 
-        {/* Kitchen rules */}
+
         <div className="mb-14">
-          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+          <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
             Kitchen <span className="text-primary">Rules</span>
           </h2>
-          <p className="text-center text-muted-foreground mb-8">
+          <p data-reveal data-delay="0.05" className="text-center text-muted-foreground mb-8">
             Posted on the fridge. Enforced by no one. Broken by everyone.
           </p>
           <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4" data-reveal>
@@ -432,12 +428,12 @@ const ChefPage = () => {
           </div>
         </div>
 
-        {/* Reviews */}
+
         <div className="mb-14">
-          <h2 className="font-display text-3xl font-semibold text-center text-foreground mb-2">
+          <h2 data-reveal className="font-display text-3xl font-semibold text-center text-foreground mb-2">
             What People <span className="text-primary">Say</span>
           </h2>
-          <p className="text-center text-muted-foreground mb-8">
+          <p data-reveal data-delay="0.05" className="text-center text-muted-foreground mb-8">
             Real quotes. Real people. Questionable sample size.
           </p>
           <div className="grid md:grid-cols-2 gap-6" data-reveal>
@@ -456,7 +452,7 @@ const ChefPage = () => {
           </div>
         </div>
 
-        {/* Order CTA */}
+
         <div data-reveal className="text-center mb-16">
           <button
             onClick={orderNow}
@@ -473,7 +469,7 @@ const ChefPage = () => {
         </div>
       </div>
 
-      {/* Joke toast */}
+
       {toast && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md flex items-center justify-center gap-3 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-glow-secondary animate-fade-in">
           <CookingPot size={22} className="text-accent shrink-0" />

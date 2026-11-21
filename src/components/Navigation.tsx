@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { name: 'Research', to: '/research' },
   { name: 'Projects', to: '/projects' },
   { name: 'Skills', to: '/skills' },
+  { name: 'Services', to: '/services' },
   { name: 'Hidden Talent', to: '/hidden-talent' },
   { name: 'Contact', to: '/contact' },
 ];
@@ -20,8 +21,7 @@ const Navigation = () => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  /* The nav is visible by default (CSS fade-in on mount only). It used to
-     hide with a gsap.from opacity tween, which could strand it invisible. */
+
   useEffect(() => {
     if (isOpen) {
       gsap.to(mobileMenuRef.current, {
@@ -38,7 +38,7 @@ const Navigation = () => {
     }
   }, [isOpen]);
 
-  // Scroll progress bar
+
   useEffect(() => {
     const onScroll = () => {
       const el = document.documentElement;
@@ -82,12 +82,12 @@ const Navigation = () => {
               </button>
             </div>
 
-            <button onClick={() => setIsOpen(!isOpen)} className="xl:hidden text-foreground p-2" aria-label="Open menu">
+            <button onClick={() => setIsOpen(!isOpen)} className="xl:hidden text-foreground p-3" aria-label="Open menu">
               <List size={24} />
             </button>
           </div>
         </div>
-        {/* Scroll progress bar */}
+
         <div
           className="h-1 bg-gradient-primary transition-[width] duration-100 ease-linear"
           style={{ width: `${progress}%` }}
@@ -101,7 +101,7 @@ const Navigation = () => {
       >
         <div className="flex items-center justify-between p-6 border-b border-border/60">
           <h2 className="font-display text-2xl font-semibold text-primary">Syed Ahsan</h2>
-          <button onClick={() => setIsOpen(false)} className="text-foreground p-2" aria-label="Close menu">
+          <button onClick={() => setIsOpen(false)} className="text-foreground p-3" aria-label="Close menu">
             <X size={24} />
           </button>
         </div>

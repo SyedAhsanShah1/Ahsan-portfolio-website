@@ -1,12 +1,10 @@
 import { useCallback, useRef } from 'react';
 import { gsap } from 'gsap';
 
-/* Shared playful bits: sparkle bursts, triple-click easter eggs,
-   floating doodles and a tiny joke toast. No new dependencies. */
 
 const BURST_COLORS = ['#2563EB', '#0D9488', '#38BDF8', '#1D4ED8', '#14B8A6'];
 
-/** Little confetti-style sparkle burst at page coordinates (x, y). */
+
 export function sparkleBurst(x: number, y: number) {
   if (typeof document === 'undefined') return;
   const shapes = ['●', '✦', '★', '◆'];
@@ -31,7 +29,7 @@ export function sparkleBurst(x: number, y: number) {
   }
 }
 
-/** Returns an onClick handler that fires only on the 3rd quick click/tap. */
+
 export function useTripleClick(onTriple: () => void) {
   const clicks = useRef(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -49,7 +47,7 @@ export function useTripleClick(onTriple: () => void) {
   }, [onTriple]);
 }
 
-/** Small fixed joke toast, centred at the bottom. Parent owns the timeout. */
+
 export function JokeToast({ message }: { message: string }) {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-2rem)] max-w-md flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-5 py-3.5 rounded-2xl shadow-glow-secondary animate-fade-in text-center">
@@ -60,7 +58,7 @@ export function JokeToast({ message }: { message: string }) {
   );
 }
 
-/** Floating hand-drawn style doodles for the home page background. */
+
 export function Doodles() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block" aria-hidden="true">

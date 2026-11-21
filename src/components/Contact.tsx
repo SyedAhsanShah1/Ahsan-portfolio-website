@@ -9,8 +9,17 @@ const Contact = () => {
     message: '',
   });
   const [sent, setSent] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const openMailto = () => {
+    const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
+    const body = encodeURIComponent(`${formData.message}\n\n- ${formData.name} (${formData.email})`);
+    window.location.href = `mailto:asmatullahshah0343@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const button = e.currentTarget.querySelector('button[type="submit"]');
@@ -24,12 +33,33 @@ const Contact = () => {
       });
     }
 
-    const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
-    const body = encodeURIComponent(`${formData.message}\n\n- ${formData.name} (${formData.email})`);
-    window.location.href = `mailto:asmatullahshah0343@gmail.com?subject=${subject}&body=${body}`;
-
-    setSent(true);
-    setFormData({ name: '', email: '', message: '' });
+    setSending(true);
+    setError('');
+    setSaved(false);
+    setSent(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setSaved(true);
+        setFormData({ name: '', email: '', message: '' });
+        return;
+      }
+      if (res.status === 503 && data.error === 'DB_NOT_CONFIGURED') {
+        openMailto();
+        setSent(true);
+        return;
+      }
+      setError(data.error || 'Something went wrong. Please try again.');
+    } catch {
+      setError('Could not reach the server. Please try again or send an email directly.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -112,17 +142,34 @@ const Contact = () => {
                 <button
                   type="submit"
                   data-magnetic
-                  className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+                  disabled={sending}
+                  className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105 disabled:opacity-60 disabled:hover:scale-100"
                 >
-                Send Message
+                {sending ? 'Sending...' : 'Send Message'}
                 <PaperPlaneTilt size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </button>
               </div>
+
+              {saved && (
+                <p className="flex items-center justify-center gap-2 text-secondary text-sm font-medium">
+                  <CheckCircle size={18} />
+                  Message saved. I will get back to you soon.
+                </p>
+              )}
 
               {sent && (
                 <p className="flex items-center justify-center gap-2 text-secondary text-sm font-medium">
                   <CheckCircle size={18} />
                   Your email app should now be open with the message ready to send.
+                </p>
+              )}
+
+              {error && (
+                <p className="text-center text-sm font-medium text-destructive">
+                  {error}{' '}
+                  <a href="mailto:asmatullahshah0343@gmail.com" className="underline">
+                    Send an email instead
+                  </a>
                 </p>
               )}
             </form>

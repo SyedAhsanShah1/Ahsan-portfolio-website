@@ -1,12 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * ParticleField: a lightweight canvas particle field for the hero.
- * About 40 soft dots drift slowly and twinkle (transform-free canvas
- * drawing, no layout work). Desktop fine-pointer only, and it pauses when
- * the tab is hidden or when prefers-reduced-motion is set - in the latter
- * case it renders nothing at all.
- */
+
 const ParticleField = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
