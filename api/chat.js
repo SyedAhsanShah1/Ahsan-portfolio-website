@@ -1,8 +1,5 @@
-// Vercel serverless function: portfolio chatbot powered by Cohere.
-// Same setup as Nexavo: the key lives in Vercel env vars (COHERE_API_KEY),
-// never in code. Model command-a-03-2025 - command-r-plus is deprecated
-// by Cohere, so do not switch back to it. No key = clean 503, and the
-// frontend falls back to its built-in canned answers.
+import { getClient, ensureTables } from "./_lib/db.js";
+
 const COHERE_URL = "https://api.cohere.com/v1/chat";
 const MODEL = "command-a-03-2025";
 
@@ -15,7 +12,7 @@ const PREAMBLE = [
   "Research Assistant in medical imaging and AI since Mar 2026 (AI-driven inverse design of",
   "optical lenses using FDTD simulation data and a deep-learning surrogate model), and Teaching",
   "Assistant for Numerical Analysis at ITU (Aug 2026-present).",
-  "BS Artificial Intelligence, The Islamia University of Bahawalpur (IUB), completed 2026, CGPA 3.30/4.00.",
+  "BS Artificial Intelligence, The Islamia University of Bahawalpur (IUB), completed 2026.",
   "Intern at Deep Embed Lab (Oct 2023-Nov 2024). President of the IUB Skills & Career Development",
   "Society (ran Python, marketing and analytics courses for 1000+ students). IEEE Student Branch leadership.",
   "",
@@ -92,6 +89,18 @@ export default async function handler(req, res) {
         error: "AI_ERROR",
         reply: "Cohere AI returned an empty answer. Please try again.",
       });
+    }
+    try {
+      const db = getClient();
+      if (db) {
+        await ensureTables(db);
+        await db.execute({
+          sql: "INSERT INTO chat_queries (question, answer, created_at) VALUES (?, ?, ?)",
+          args: [message, reply, new Date().toISOString()],
+        });
+      }
+    } catch (err) {
+      console.error("Chat log failed:", err);
     }
     return res.status(200).json({ reply });
   } catch (err) {
