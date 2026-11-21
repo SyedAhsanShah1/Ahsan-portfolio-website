@@ -37,6 +37,33 @@ const Layout = () => {
   const location = useLocation();
   const wipeNavyRef = useRef<HTMLDivElement>(null);
   const wipeBlueRef = useRef<HTMLDivElement>(null);
+  /* Wipe panels are STATE-GATED: they only exist in the DOM while a wipe is
+     running, and timeouts unmount them no matter what. Their motion is pure
+     CSS (is-covering / is-clearing classes), never GSAP - a previous version
+     mixed the CSS translateX(-101%) default with GSAP xPercent, so the
+     "clear" position (xPercent 101) actually landed at 0% and the panels
+     stayed stuck covering the whole screen. That cannot happen now: if
+     anything fails, the panels simply unmount and the page is visible. */
+  const [wipeMounted, setWipeMounted] = useState(false);
+  const wipeActiveRef = useRef(false);
+  const wipeTimersRef = useRef<number[]>([]);
+
+  const wipePanels = () =>
+    [wipeNavyRef.current, wipeBlueRef.current].filter((p): p is HTMLDivElement => !!p);
+  const clearWipeClasses = () =>
+    wipePanels().forEach((p) => p.classList.remove('is-covering', 'is-clearing'));
+  const unmountWipe = () => {
+    wipeActiveRef.current = false;
+    clearWipeClasses();
+    setWipeMounted(false);
+  };
+  const wipeLater = (fn: () => void, ms: number) => {
+    wipeTimersRef.current.push(window.setTimeout(fn, ms));
+  };
+  const clearWipeTimers = () => {
+    wipeTimersRef.current.forEach((t) => window.clearTimeout(t));
+    wipeTimersRef.current = [];
+  };
 
   useEffect(() => {
     if (isLoading) {
@@ -49,10 +76,10 @@ const Layout = () => {
     };
   }, [isLoading]);
 
-  /* Wipe-in on internal link press: the panels cover the screen before the
-     new route paints, so the swap happens underneath the wipe. Non-blocking:
-     navigation is never prevented, and a 1200ms safety timeout clears the
-     panels even if no route change follows (same-page link, failed nav). */
+  /* Wipe-in on internal link press: mount the panels (off-screen left by
+     default), then cover on the next frame so the slide-in transition
+     animates. Navigation is never prevented. A hard 1200ms timeout unmounts
+     the panels even if no route change follows. */
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const onPointerDown = (e: PointerEvent) => {
@@ -62,68 +89,51 @@ const Layout = () => {
       if (!a) return;
       const href = a.getAttribute('href') || '';
       if (href.startsWith('//') || href.includes('#')) return;
-      const panels = [wipeNavyRef.current, wipeBlueRef.current].filter(
-        (p): p is HTMLDivElement => !!p
-      );
-      if (!panels.length) return;
-      gsap.set(panels, { xPercent: -101 });
-      gsap.to(panels, {
-        xPercent: 0,
-        duration: 0.35,
-        stagger: 0.07,
-        ease: 'power3.inOut',
-        overwrite: 'auto',
-      });
-      window.setTimeout(() => {
-        gsap.set(panels, { xPercent: 101 });
-      }, 1200);
+      if (wipeActiveRef.current) return;
+      clearWipeTimers();
+      wipeActiveRef.current = true;
+      setWipeMounted(true);
+      wipeLater(() => {
+        wipePanels().forEach((p) => p.classList.add('is-covering'));
+      }, 30);
+      wipeLater(unmountWipe, 1200);
     };
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, []);
 
-  /* Page transition on every route change: layered overlay wipe.
-     useLayoutEffect runs before paint, so the new page's first paint is
-     already covered by the panels - the route swaps underneath, then the
-     navy panel and the blue panel slide away in sequence and the new page
-     fades/slides in. Content entrance uses fromTo (never gsap.from), and a
-     hard 1200ms timeout force-clears the overlay and the page opacity even
-     if any animation fails, so the transition can never blank the page. */
+  /* Route change: content fades/slides in (fromTo, never gsap.from). If a
+     wipe is running, slide the panels away to the right, then unmount them.
+     No wipe runs on first load - the page just fades in. */
   useLayoutEffect(() => {
     if (isLoading) return;
     const page = document.getElementById('page-content');
-    const panels = [wipeNavyRef.current, wipeBlueRef.current].filter(
-      (p): p is HTMLDivElement => !!p
-    );
-    const clearWipe = () => {
-      if (panels.length) gsap.set(panels, { xPercent: 101 });
-      if (page) gsap.set(page, { clearProps: 'opacity,transform' });
-    };
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      clearWipe();
-      return;
+    if (page) {
+      gsap.fromTo(
+        page,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }
+      );
     }
-    gsap.set(panels, { xPercent: 0 });
+    if (!wipeActiveRef.current) return;
     window.scrollTo(0, 0);
-    const tl = gsap.timeline();
-    tl.to(panels, {
-      xPercent: 101,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: 'power3.inOut',
-      delay: 0.08,
-    }).fromTo(
-      page,
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' },
-      0.25
-    );
-    const hard = window.setTimeout(clearWipe, 1200);
-    return () => {
-      window.clearTimeout(hard);
-      tl.kill();
-    };
+    wipeLater(() => {
+      wipePanels().forEach((p) => {
+        p.classList.remove('is-covering');
+        p.classList.add('is-clearing');
+      });
+    }, 150);
+    wipeLater(unmountWipe, 950);
+    wipeLater(unmountWipe, 1200);
   }, [location.pathname, isLoading]);
+
+  /* Clear any pending wipe timers when the layout unmounts. */
+  useEffect(
+    () => () => {
+      wipeTimersRef.current.forEach((t) => window.clearTimeout(t));
+    },
+    []
+  );
 
   return (
     <div className="relative">
@@ -133,10 +143,15 @@ const Layout = () => {
       <AmbientOrbs />
       <GrainOverlay />
 
-      {/* Page transition wipe: two panels, navy then blue */}
+      {/* Page transition wipe: two panels, navy then blue. Rendered only
+          while a wipe is running - otherwise they are not in the DOM at all. */}
       <div aria-hidden="true" className="page-wipe">
-        <div ref={wipeNavyRef} className="page-wipe-panel page-wipe-panel--navy" />
-        <div ref={wipeBlueRef} className="page-wipe-panel page-wipe-panel--blue" />
+        {wipeMounted && (
+          <>
+            <div ref={wipeNavyRef} className="page-wipe-panel page-wipe-panel--navy" />
+            <div ref={wipeBlueRef} className="page-wipe-panel page-wipe-panel--blue" />
+          </>
+        )}
       </div>
 
       <div className={`relative z-10 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
