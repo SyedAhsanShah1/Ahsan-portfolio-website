@@ -1,94 +1,127 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, DownloadSimple, Handshake } from 'phosphor-react';
 import { Button } from './ui/button';
+
+const ROLES = ['AI Researcher', 'Meta-Optics RA', 'Computer Vision', 'Web Engineer'];
+
+const TICKER_ITEMS = [
+  'Machine Learning',
+  'Meta-Optics',
+  'Computer Vision',
+  'PyTorch',
+  'FDTD Simulation',
+  'Deep Learning',
+  'React',
+  'OpenCV',
+  'Flask',
+];
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const splineRef = useRef<HTMLDivElement>(null);
-  const orbRef1 = useRef<HTMLDivElement>(null);
-  const orbRef2 = useRef<HTMLDivElement>(null);
-  const orbRef3 = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+  const blobRef1 = useRef<HTMLDivElement>(null);
+  const blobRef2 = useRef<HTMLDivElement>(null);
+  const blobRef3 = useRef<HTMLDivElement>(null);
+
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [typed, setTyped] = useState('');
+
+  // Typewriter: type the role, pause, delete, move to the next role
+  useEffect(() => {
+    const current = ROLES[roleIndex];
+    let char = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof setTimeout>;
+
+    const tick = () => {
+      if (!deleting) {
+        char += 1;
+        setTyped(current.slice(0, char));
+        if (char === current.length) {
+          deleting = true;
+          timer = setTimeout(tick, 1800);
+          return;
+        }
+        timer = setTimeout(tick, 70);
+      } else {
+        char -= 1;
+        setTyped(current.slice(0, char));
+        if (char === 0) {
+          setRoleIndex((prev) => (prev + 1) % ROLES.length);
+          return;
+        }
+        timer = setTimeout(tick, 35);
+      }
+    };
+
+    timer = setTimeout(tick, 400);
+    return () => clearTimeout(timer);
+  }, [roleIndex]);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 4 });
+    const tl = gsap.timeline({ delay: 0.2 });
 
     tl.from(titleRef.current, {
       y: 50,
       opacity: 0,
-      filter: "blur(10px)",
+      filter: 'blur(10px)',
       duration: 1,
-      ease: "power3.out"
+      ease: 'power3.out',
     })
+      .from(photoRef.current, {
+        x: 80,
+        opacity: 0,
+        scale: 0.9,
+        duration: 1.1,
+        ease: 'power3.out',
+      }, '-=0.7')
       .from(subtitleRef.current, {
         y: 30,
         opacity: 0,
         duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.5")
+        ease: 'power3.out',
+      }, '-=0.5')
       .from(ctaRef.current, {
         y: 30,
         opacity: 0,
         scale: 0.9,
         duration: 0.8,
-        ease: "back.out(1.7)"
-      }, "-=0.3")
-      .from(splineRef.current, {
-        x: 100,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out"
-      }, "-=1");
+        ease: 'back.out(1.7)',
+      }, '-=0.3');
 
-    gsap.to(orbRef1.current, {
-      y: -20,
-      x: 10,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut"
-    });
-
-    gsap.to(orbRef2.current, {
-      y: -30,
-      x: -15,
-      duration: 5,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-      delay: 1
-    });
-
-    gsap.to(orbRef3.current, {
-      y: -25,
-      x: 20,
-      duration: 6,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-      delay: 2
-    });
+    const float = (el: HTMLDivElement | null, y: number, x: number, dur: number, delay: number) => {
+      if (!el) return;
+      gsap.to(el, {
+        y, x,
+        duration: dur,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut',
+        delay,
+      });
+    };
+    float(blobRef1.current, -24, 12, 5, 0);
+    float(blobRef2.current, -32, -16, 6, 1);
+    float(blobRef3.current, -26, 20, 7, 2);
 
     return () => {
       tl.kill();
     };
   }, []);
 
+  const navigate = useNavigate();
+
   const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/projects');
   };
 
   const scrollToContact = () => {
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/contact');
   };
 
   const downloadCV = () => {
@@ -101,50 +134,90 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div ref={splineRef} className="absolute inset-0 w-full h-full opacity-70 hidden md:block">
-        <iframe src="https://my.spline.design/genkubgreetingrobot-MW4W3iAFsJj5olFfT1MhN0TH/" frameBorder="0" width="100%" height="100%" className="w-full h-full" />
-      </div>
+    <section id="hero" ref={heroRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-0">
+      {/* Floating soft blobs in the new palette */}
+      <div ref={blobRef1} className="absolute top-1/4 left-[8%] w-64 h-64 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
+      <div ref={blobRef2} className="absolute top-1/3 right-[6%] w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
+      <div ref={blobRef3} className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-secondary/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle paper grain / dot texture */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.35]"
+        style={{ backgroundImage: 'radial-gradient(hsl(30 6% 10% / 0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
+      />
 
-      <div ref={orbRef1} className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-pulse hidden md:block" />
-      <div ref={orbRef2} className="absolute top-1/3 right-1/3 w-24 h-24 bg-secondary/20 rounded-full blur-xl animate-pulse hidden md:block" style={{ animationDelay: '1s' }} />
-      <div ref={orbRef3} className="absolute bottom-1/4 left-1/3 w-40 h-40 bg-accent/20 rounded-full blur-xl animate-pulse hidden md:block" style={{ animationDelay: '2s' }} />
+      <div className="relative z-10 container mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="text-center lg:text-left">
+          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-6 border border-secondary/20">
+            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            MS Computer Science — ITU Lahore
+          </p>
 
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto break-words min-w-0">
-        <h1 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl font-light text-foreground mb-6 leading-tight">
-          Hi, I'm{' '}
-          <span className="text-glow bg-gradient-primary bg-clip-text text-transparent">
-            Syed Ahsan
-          </span>
-          {' '}–{' '}
-          <br className="hidden md:block" />
-          <span className="text-primary-glow">AI & Web Engineer</span>
-        </h1>
+          <h1 ref={titleRef} className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
+            Hi, I&apos;m{' '}
+            <span className="text-primary">Syed Ahsan</span>
+          </h1>
 
-        <p ref={subtitleRef} className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-          AI & Web Engineer specializing in intelligent systems, machine learning, and modern web applications that combine data-driven intelligence with clean, scalable software.
-        </p>
+          <div className="font-display text-2xl md:text-3xl lg:text-4xl text-secondary mb-6 min-h-[2.5rem]">
+            {typed}
+            <span className="typewriter-caret" />
+          </div>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button onClick={scrollToContact} className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-lg font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105" size="lg">
-            <Handshake size={20} />
-            Hire Me
-          </Button>
+          <p ref={subtitleRef} className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Research Assistant at ITU Lahore, working on AI-integrated meta optics — AI-driven inverse design of
+            meta-lenses. I build intelligent systems where machine learning meets real physics.
+          </p>
 
-          <Button onClick={downloadCV} variant="outline" className="group inline-flex items-center gap-3 px-8 py-4 border-primary/30 text-primary hover:bg-primary/10 rounded-lg font-medium transition-all duration-300 hover:scale-105" size="lg">
-            <DownloadSimple size={20} />
-            Download CV
-          </Button>
+          <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <Button onClick={scrollToContact} className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105" size="lg">
+              <Handshake size={20} />
+              Hire Me
+            </Button>
 
-          <Button onClick={scrollToProjects} variant="ghost" className="group inline-flex items-center gap-3 px-8 py-4 text-foreground hover:bg-primary/10 rounded-lg font-medium transition-all duration-300 hover:scale-105" size="lg">
-            View My Work
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
-          </Button>
+            <Button onClick={downloadCV} variant="outline" className="group inline-flex items-center gap-3 px-8 py-4 border-primary/40 text-primary hover:bg-primary/10 rounded-full font-medium transition-all duration-300 hover:scale-105" size="lg">
+              <DownloadSimple size={20} />
+              Download CV
+            </Button>
+
+            <Button onClick={scrollToProjects} variant="ghost" className="group inline-flex items-center gap-3 px-8 py-4 text-foreground hover:bg-primary/10 rounded-full font-medium transition-all duration-300 hover:scale-105" size="lg">
+              View My Work
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Profile photo */}
+        <div ref={photoRef} className="relative mx-auto w-72 h-72 md:w-96 md:h-96">
+          <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-primary opacity-20 blur-xl" />
+          <div className="absolute -inset-3 rounded-[2.5rem] border-2 border-primary/30 rotate-3" />
+          <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-glass bg-card">
+            <img
+              src="/Images/ahsan-profile.jpg"
+              alt="Syed Ahsan Shah"
+              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <div className="absolute -bottom-5 -left-5 glass rounded-2xl px-4 py-3 shadow-glass animate-float">
+            <p className="text-sm font-semibold text-foreground">Research Assistant</p>
+            <p className="text-xs text-muted-foreground">ITU Lahore · since Mar 2026</p>
+          </div>
+          <div className="absolute -top-4 -right-4 w-10 h-10 bg-accent rounded-full animate-float" style={{ animationDelay: '1s' }} />
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
+      {/* Marquee ticker strip */}
+      <div className="relative z-10 mt-16 md:mt-20 bg-secondary text-secondary-foreground py-3 overflow-hidden -rotate-1 scale-[1.02]">
+        <div className="flex whitespace-nowrap animate-marquee w-max">
+          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+            <span key={i} className="mx-6 text-sm font-semibold tracking-widest uppercase flex items-center gap-6">
+              {item}
+              <span className="text-accent">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 flex justify-center py-8">
+        <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center animate-bounce">
           <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
         </div>
       </div>

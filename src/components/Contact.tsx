@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { PaperPlaneTilt, GithubLogo, LinkedinLogo, Envelope, Phone, MapPin } from 'phosphor-react';
+import { PaperPlaneTilt, GithubLogo, LinkedinLogo, Envelope, Phone, MapPin, CheckCircle } from 'phosphor-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,8 +14,9 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
+  const [sent, setSent] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -24,11 +25,11 @@ const Contact = () => {
         opacity: 0,
         duration: 1,
         stagger: 0.2,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: titleRef.current,
-          start: "top 80%"
-        }
+          start: 'top 80%',
+        },
       });
 
       gsap.from(formRef.current?.children || [], {
@@ -36,11 +37,11 @@ const Contact = () => {
         opacity: 0,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: formRef.current,
-          start: "top 80%"
-        }
+          start: 'top 80%',
+        },
       });
 
       gsap.from(infoRef.current?.children || [], {
@@ -48,11 +49,11 @@ const Contact = () => {
         opacity: 0,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: infoRef.current,
-          start: "top 80%"
-        }
+          start: 'top 80%',
+        },
       });
     }, sectionRef);
 
@@ -69,19 +70,22 @@ const Contact = () => {
         duration: 0.1,
         yoyo: true,
         repeat: 1,
-        ease: "power2.out"
+        ease: 'power2.out',
       });
     }
 
-    console.log('Form submitted:', formData);
+    const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
+    const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`);
+    window.location.href = `mailto:asmatullahshah0343@gmail.com?subject=${subject}&body=${body}`;
 
+    setSent(true);
     setFormData({ name: '', email: '', message: '' });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -89,12 +93,13 @@ const Contact = () => {
     <section id="contact" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-6xl">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-            Get In <span className="text-primary-glow">Touch</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+            Get In <span className="text-primary">Touch</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or just want to say hello? Drop me a message and let's create something amazing together.
+            Have a project in mind, a research idea, or just want to say hello? Drop me a message and let&apos;s
+            create something amazing together.
           </p>
         </div>
 
@@ -105,62 +110,97 @@ const Contact = () => {
                 <label htmlFor="name" className="block text-foreground mb-2 font-medium">
                   Name
                 </label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="Your name" />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
+                  placeholder="Your name"
+                />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-foreground mb-2 font-medium">
                   Email
                 </label>
-                <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="your.email@example.com" />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
+                  placeholder="your.email@example.com"
+                />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-foreground mb-2 font-medium">
                   Message
                 </label>
-                <textarea id="message" name="message" value={formData.message} onChange={handleInputChange} required rows={6} className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none" placeholder="Tell me about your project..." />
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className="w-full px-4 py-3 bg-input glass border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none"
+                  placeholder="Tell me about your project..."
+                />
               </div>
 
-              <button type="submit" className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-lg font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105">
+              <button
+                type="submit"
+                className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-primary text-primary-foreground rounded-full font-medium hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+              >
                 Send Message
                 <PaperPlaneTilt size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </button>
+
+              {sent && (
+                <p className="flex items-center justify-center gap-2 text-secondary text-sm font-medium">
+                  <CheckCircle size={18} />
+                  Your email app should now be open with the message ready to send.
+                </p>
+              )}
             </form>
           </div>
 
           <div ref={infoRef} className="space-y-8">
             <div>
-              <h3 className="text-2xl font-light text-foreground mb-6">
-                Let's Connect
-              </h3>
+              <h3 className="font-display text-2xl font-semibold text-foreground mb-6">Let&apos;s Connect</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                I'm always excited to work on new projects and collaborate with amazing people.
-                Whether you have a specific project in mind or just want to explore possibilities,
-                I'd love to hear from you.
+                I&apos;m always excited to work on new projects and collaborate with amazing people. Whether you have
+                a specific project in mind or just want to explore possibilities, I&apos;d love to hear from you.
               </p>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-primary transition-all duration-300">
+              <a href="mailto:asmatullahshah0343@gmail.com" className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-primary transition-all duration-300">
                 <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
                   <Envelope size={20} className="text-primary-foreground" />
                 </div>
                 <div>
                   <p className="text-foreground font-medium">Email</p>
-                  <p className="text-muted-foreground">info@syedahsan-ai-engr.tech</p>
+                  <p className="text-muted-foreground">asmatullahshah0343@gmail.com</p>
+                  <p className="text-muted-foreground text-sm">mscs26017@itu.edu.pk</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-secondary transition-all duration-300">
+              <a href="tel:+923416985286" className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-secondary transition-all duration-300">
                 <div className="w-12 h-12 bg-gradient-secondary rounded-lg flex items-center justify-center">
                   <Phone size={20} className="text-secondary-foreground" />
                 </div>
                 <div>
-                  <p className="text-foreground font-medium">Phone</p>
-                  <p className="text-muted-foreground">+92 3416985286</p>
+                  <p className="text-foreground font-medium">Phone / WhatsApp</p>
+                  <p className="text-muted-foreground">+92 341 6985286</p>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-center gap-4 p-4 glass rounded-lg hover:shadow-glow-primary transition-all duration-300">
                 <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -168,7 +208,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-foreground font-medium">Location</p>
-                  <p className="text-muted-foreground">Bahawalpur, Pakistan</p>
+                  <p className="text-muted-foreground">Lahore, Pakistan</p>
                 </div>
               </div>
             </div>
@@ -176,10 +216,22 @@ const Contact = () => {
             <div>
               <h4 className="text-lg font-medium text-foreground mb-4">Follow Me</h4>
               <div className="flex gap-4">
-                <a href="#" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110">
+                <a
+                  href="https://github.com/SyedAhsanShah1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 hover:scale-110"
+                  aria-label="GitHub"
+                >
                   <GithubLogo size={20} className="text-primary-foreground" />
                 </a>
-                <a href="https://www.linkedin.com/in/syedahsanai-engr/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110">
+                <a
+                  href="https://www.linkedin.com/in/syedahsanai-engr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gradient-secondary rounded-lg flex items-center justify-center hover:shadow-glow-secondary transition-all duration-300 hover:scale-110"
+                  aria-label="LinkedIn"
+                >
                   <LinkedinLogo size={20} className="text-secondary-foreground" />
                 </a>
               </div>
@@ -188,8 +240,8 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
     </section>
   );
 };

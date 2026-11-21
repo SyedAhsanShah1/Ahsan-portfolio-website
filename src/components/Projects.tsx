@@ -1,45 +1,99 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, GithubLogo, Globe } from 'phosphor-react';
+import { ArrowUpRight, GithubLogo, Globe, Eye, Brain, Cpu, Storefront } from 'phosphor-react';
 
 gsap.registerPlugin(ScrollTrigger);
+
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  image?: string;
+  tileIcon?: React.ReactNode;
+  tileGradient?: string;
+  tech: string[];
+  liveUrl?: string;
+  githubUrl?: string;
+  badge?: string;
+};
 
 const Projects = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
 
-  const projects = [
+  const projects: Project[] = [
     {
       id: 1,
-      title: "AI – powered Medical Prediction System",
-      description: "Developed A machine learning–based web application that predicts the likelihood of diabetes using patient health parameters. The system uses a trained classification model integrated with a Flask backend and a clean, user-friendly web interface.",
-      image: "/Images/project-1.jpg",
-      tech: ["Python", "Machine Learning", "Flask", "Scikit-learn", "HTML", "Tailwind CSS", "Artificial Intelligence", "Web Development"],
-      liveUrl: "https://www.linkedin.com/posts/syedahsanai-engr_webdevelopment-flask-python-activity-7412924969057259520-_onc?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEiLlaUBRTcDMrWkU_60oS7dOO4mxIuLUYc",
-      githubUrl: ""
+      title: 'Smart Bin — AI Waste Segregation',
+      description:
+        'AI-based waste segregation system (final-year project) using Arduino and computer vision to sort waste automatically. Submitted to ICECT 2027 as Paper ID 96.',
+      image: '/Images/project-3.png',
+      tech: ['Python', 'Computer Vision', 'YOLO', 'OpenCV', 'Arduino', 'Deep Learning'],
+      liveUrl: '',
+      githubUrl: 'https://github.com/mscsAhsan/smart-bin',
+      badge: 'ICECT 2027 · Paper ID 96',
     },
-
     {
       id: 2,
-      title: "3D Portfolio Website – Interactive & Animated",
-      description: "A visually engaging portfolio website featuring real-time 3D elements with Spline, fluid animations using GSAP, and a responsive UI built with React and Tailwind CSS.",
-      image: "/Images/project-2.jpg",
-      tech: ["React", "Spline", "GSAP", "Tailwind CSS", "Vercel"],
-      liveUrl: "",
-      githubUrl: ""
+      title: 'FIN Glaucoma Fairness Study',
+      description:
+        'Sole-author working paper studying fairness in glaucoma detection with EfficientNet-B1. FIN-race AUC 85.6 — measuring how well the model performs across patient groups.',
+      tileIcon: <Eye size={64} weight="duotone" className="text-white/90" />,
+      tileGradient: 'bg-gradient-to-br from-secondary to-emerald-700',
+      tech: ['Python', 'PyTorch', 'EfficientNet-B1', 'Fairness', 'Medical Imaging'],
+      liveUrl: '',
+      githubUrl: '',
+      badge: 'Working paper — draft',
     },
     {
       id: 3,
-      title: "AI-Based Waste Segregation System",
-      description: "A computer vision–based system that classifies waste into different categories using real-time image analysis. Designed to improve recycling efficiency, the project combines deep learning models with practical deployment logic.",
-      image: "/Images/project-3.png",
-      tech: ["Python","Computer Vision","YOLO","OpenCV","Deep Learning","Flask", "HTML", "CSS"],
-      liveUrl: "",
-      githubUrl: ""
-    }
-
+      title: 'Anomaly-Detection Reproducibility Study',
+      description:
+        'A family-level reproducibility study of anomaly detection benchmarks — comparing ~30 algorithms across 6 families on 16 ODDS datasets.',
+      tileIcon: <Brain size={64} weight="duotone" className="text-white/90" />,
+      tileGradient: 'bg-gradient-to-br from-primary to-amber-500',
+      tech: ['Python', 'PyOD', 'Benchmarking', 'Reproducibility'],
+      liveUrl: '',
+      githubUrl: '',
+      badge: 'In progress — draft',
+    },
+    {
+      id: 4,
+      title: 'Meta-Lens Inverse Design',
+      description:
+        'Research Assistant work at ITU Lahore: AI-driven inverse design of meta-lenses, learning a deep-learning surrogate model from FDTD simulation data.',
+      tileIcon: <Cpu size={64} weight="duotone" className="text-white/90" />,
+      tileGradient: 'bg-gradient-to-br from-indigo-900 to-secondary',
+      tech: ['PyTorch', 'Ansys Lumerical', 'FDTD', 'Inverse Design'],
+      liveUrl: '',
+      githubUrl: '',
+      badge: 'ITU Research',
+    },
+    {
+      id: 5,
+      title: 'AI-Powered Diabetes Prediction System',
+      description:
+        'Machine learning–based web application that predicts the likelihood of diabetes using patient health parameters, with a trained classification model integrated into a Flask backend.',
+      image: '/Images/project-1.jpg',
+      tech: ['Python', 'Machine Learning', 'Flask', 'Scikit-learn', 'HTML', 'Tailwind CSS'],
+      liveUrl:
+        'https://www.linkedin.com/posts/syedahsanai-engr_webdevelopment-flask-python-activity-7412924969057259520-_onc?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEiLlaUBRTcDMrWkU_60oS7dOO4mxIuLUYc',
+      githubUrl: '',
+    },
+    {
+      id: 6,
+      title: 'Nexavo AI — AI Tools Store',
+      description:
+        'Founder of Nexavo AI, a Pakistan-only store selling AI tools with Safepay checkout in PKR — cards, JazzCash, Easypaisa and Raast.',
+      tileIcon: <Storefront size={64} weight="duotone" className="text-white/90" />,
+      tileGradient: 'bg-gradient-to-br from-amber-500 to-primary',
+      tech: ['Next.js', 'Safepay', 'React', 'Tailwind CSS'],
+      liveUrl: '',
+      githubUrl: '',
+      badge: 'Founder',
+    },
   ];
 
   useEffect(() => {
@@ -49,11 +103,11 @@ const Projects = () => {
         opacity: 0,
         duration: 1,
         stagger: 0.2,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: titleRef.current,
-          start: "top 80%"
-        }
+          start: 'top 80%',
+        },
       });
 
       gsap.from(containerRef.current?.children || [], {
@@ -62,33 +116,40 @@ const Projects = () => {
         scale: 0.9,
         duration: 0.8,
         stagger: 0.15,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 80%"
-        }
+          start: 'top 80%',
+        },
       });
 
+      // Hover tilt + lift on project cards
       const cards = containerRef.current?.children;
       if (cards) {
         Array.from(cards).forEach((card) => {
           const element = card as HTMLElement;
 
-          element.addEventListener('mouseenter', () => {
+          element.addEventListener('mousemove', (e: MouseEvent) => {
+            const rect = element.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width - 0.5;
+            const py = (e.clientY - rect.top) / rect.height - 0.5;
             gsap.to(element, {
               y: -10,
-              scale: 1.02,
-              duration: 0.3,
-              ease: "power2.out"
+              rotateY: px * 8,
+              rotateX: -py * 8,
+              transformPerspective: 900,
+              duration: 0.4,
+              ease: 'power2.out',
             });
           });
 
           element.addEventListener('mouseleave', () => {
             gsap.to(element, {
               y: 0,
-              scale: 1,
-              duration: 0.3,
-              ease: "power2.out"
+              rotateY: 0,
+              rotateX: 0,
+              duration: 0.5,
+              ease: 'power2.out',
             });
           });
         });
@@ -102,66 +163,127 @@ const Projects = () => {
     <section id="projects" ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-            AI & WEB <span className="text-primary-glow">Projects</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
+            AI &amp; Web <span className="text-primary">Projects</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A curated collection of AI and web engineering projects showcasing intelligent systems, data-driven models, and their integration into modern, scalable web applications.          </p>
+            A curated collection of AI and web engineering projects — research, intelligent systems, and
+            production web applications.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <div key={project.id} className="glass cursor-pointer rounded-xl overflow-hidden hover:shadow-glow-primary transition-all duration-500 group">
+            <div
+              key={project.id}
+              className="glass cursor-pointer rounded-xl overflow-hidden hover:shadow-glow-primary transition-shadow duration-500 group will-change-transform"
+            >
               <div className="relative overflow-hidden h-48">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className={`w-full h-full ${project.tileGradient} flex items-center justify-center relative`}>
+                    <div
+                      className="absolute inset-0 opacity-20"
+                      style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '18px 18px' }}
+                    />
+                    <span className="relative group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      {project.tileIcon}
+                    </span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
+                {project.badge && (
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-background/90 backdrop-blur-sm text-primary text-xs font-semibold rounded-full border border-primary/30">
+                    {project.badge}
+                  </span>
+                )}
+
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a href={project.liveUrl} target='blank' className="w-10 h-10 bg-primary/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-primary transition-colors duration-200">
-                    <Globe size={18} className="text-primary-foreground" />
-                  </a>
-                  <a href={project.githubUrl} className="w-10 h-10 bg-secondary/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-secondary transition-colors duration-200">
-                    <GithubLogo size={18} className="text-secondary-foreground" />
-                  </a>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-primary/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-primary transition-colors duration-200"
+                    >
+                      <Globe size={18} className="text-primary-foreground" />
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-secondary/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-secondary transition-colors duration-200"
+                    >
+                      <GithubLogo size={18} className="text-secondary-foreground" />
+                    </a>
+                  )}
                 </div>
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary-glow transition-colors duration-300">
+                <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                   {project.title}
                 </h3>
 
-                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                  {project.description}
-                </p>
+                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((tech) => (
-                    <span key={tech} className="px-3 py-1 bg-primary/10 text-primary-glow text-xs rounded-full border border-primary/20">
+                    <span key={tech} className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20">
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <a href={project.liveUrl} className="inline-flex items-center gap-2 text-primary-glow hover:text-primary transition-colors duration-300 group/link">
-                  View Project
-                  <ArrowUpRight size={16} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
-                </a>
+                {project.githubUrl ? (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-primary hover:text-primary-glow transition-colors duration-300 group/link"
+                  >
+                    View on GitHub
+                    <ArrowUpRight size={16} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
+                  </a>
+                ) : project.liveUrl ? (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-primary hover:text-primary-glow transition-colors duration-300 group/link"
+                  >
+                    View Project
+                    <ArrowUpRight size={16} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
+                  </a>
+                ) : null}
               </div>
             </div>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <a href="https://www.linkedin.com/in/syedahsanai-engr/" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-gradient-secondary text-secondary-foreground rounded-lg hover:shadow-glow-secondary transition-all duration-300 hover:scale-105">
+          <a
+            href="https://www.linkedin.com/in/syedahsanai-engr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-3 bg-gradient-secondary text-secondary-foreground rounded-full hover:shadow-glow-secondary transition-all duration-300 hover:scale-105"
+          >
             View All Projects
           </a>
         </div>
       </div>
 
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -translate-x-1/2" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-x-1/2" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-x-1/2" />
     </section>
   );
 };

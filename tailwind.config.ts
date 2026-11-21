@@ -76,7 +76,8 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif']
+				sans: ['Inter', 'sans-serif'],
+				display: ['Fraunces', 'Georgia', 'serif']
 			},
 			keyframes: {
 				'accordion-down': {
@@ -114,6 +115,20 @@ export default {
 				'glow': {
 					'0%, 100%': { boxShadow: '0 0 5px hsl(var(--primary))' },
 					'50%': { boxShadow: '0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary))' }
+				},
+				'marquee': {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-50%)' }
+				},
+				'wobble': {
+					'0%, 100%': { transform: 'rotate(-1.5deg)' },
+					'50%': { transform: 'rotate(1.5deg)' }
+				},
+				'steam-rise': {
+					'0%': { transform: 'translateY(0) scaleX(1)', opacity: '0' },
+					'25%': { opacity: '0.7' },
+					'50%': { transform: 'translateY(-14px) scaleX(1.4)', opacity: '0.5' },
+					'100%': { transform: 'translateY(-30px) scaleX(1)', opacity: '0' }
 				}
 			},
 			animation: {
@@ -125,7 +140,10 @@ export default {
 				'fade-in-left': 'fade-in-left 0.6s ease-out',
 				'fade-in-right': 'fade-in-right 0.6s ease-out',
 				'scale-in': 'scale-in 0.3s ease-out',
-				'glow': 'glow 2s ease-in-out infinite'
+				'glow': 'glow 2s ease-in-out infinite',
+				'marquee': 'marquee 28s linear infinite',
+				'wobble': 'wobble 3s ease-in-out infinite',
+				'steam-rise': 'steam-rise 2.8s ease-in-out infinite'
 			},
 			transitionTimingFunction: {
 				'bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
