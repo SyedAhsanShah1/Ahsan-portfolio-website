@@ -33,6 +33,25 @@ Hidden Talent page (Chef Ahsan) at `/hidden-talent`.
 - React Router for the multi-page structure
 - Vercel serverless function (`api/chat.js`) for the chatbot
 
+## Visuals
+
+- Premium visual layer (pure CSS/SVG/canvas, no external images): layered
+  aurora mesh-gradient hero with a lightweight canvas particle field (~40
+  particles, desktop only, pauses when the tab is hidden), conic gradient
+  ring and glow behind the photo, floating glass stat chips, a fixed
+  ultra-subtle film-grain overlay (~0.03 opacity), ambient gradient orbs
+  behind every page, gradient hairline dividers, and glass cards with
+  gradient top borders and gradient frames.
+- Page transitions: a layered overlay wipe (navy panel, then blue panel)
+  covers the screen on navigation, the route swaps underneath, then the
+  panels slide away and the new page fades in. A hard 1200ms timeout
+  force-clears the overlay, so a transition can never blank the page.
+- Custom mouse cursor (desktop, fine pointer only): a solid dot that follows
+  instantly plus a trailing ring with smooth lerp. It expands over links,
+  buttons and cards. `cursor: none` is only applied by JS, so if JS fails
+  the native cursor stays; touch devices are untouched. Reduced-motion users
+  get instant follow with no lag.
+
 ## Run locally
 
 ```bash

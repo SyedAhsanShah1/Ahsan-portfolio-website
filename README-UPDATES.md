@@ -147,3 +147,23 @@ npm run preview  # preview the production build
 - The old local chatbot server in `servers/` (Gemini, `localhost:5000`) is no longer
   used by the site - the chatbot now calls `/api/chat` (Cohere). The `servers/`
   folder is kept only for reference.
+
+## Visuals upgrade (2026-11-21)
+- Heavy premium visuals, all pure CSS/SVG/canvas (no external images, bundle
+  stays light): aurora mesh-gradient hero with a canvas particle field (~40
+  particles, desktop fine-pointer only, pauses when the tab is hidden),
+  conic gradient ring and glow behind the photo, floating glass stat chips,
+  fixed film-grain overlay (~0.03 opacity), ambient gradient orbs behind
+  every page, per-section glows, gradient hairline dividers, and glass cards
+  with gradient top borders and gradient frames.
+- Page transitions: layered overlay wipe (navy panel, then blue panel) on
+  every route change - the panels cover the screen, the route swaps
+  underneath, then they slide away and the new page fades in. A hard 1200ms
+  timeout force-clears the overlay, so a transition can never blank the page.
+- Custom mouse cursor (desktop only): instant dot plus a lerped trailing
+  ring that expands over links, buttons and cards. `cursor: none` is only
+  applied by JS, so the native cursor stays if JS fails; touch devices are
+  untouched; reduced-motion users get instant follow with no lag.
+- All heavy visuals degrade cleanly on mobile: no particles, no custom
+  cursor, no layout shift, no horizontal overflow. Animations are
+  transform/opacity only.
