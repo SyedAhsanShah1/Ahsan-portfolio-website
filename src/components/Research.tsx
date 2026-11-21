@@ -38,7 +38,7 @@ const Research = () => {
     <section id="research" className="py-20 px-6 relative overflow-hidden bg-card/60">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 03 - research</p>
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3"><span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />03 - Research</p>
           <span data-reveal data-delay="0.05" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4 border border-secondary/20">
             <Flask size={16} />
             Research

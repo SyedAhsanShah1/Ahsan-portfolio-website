@@ -107,7 +107,7 @@ const About = () => {
 
           <div className="space-y-6">
             <div data-reveal>
-              <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 01 - about</p>
+              <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3"><span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />01 - About</p>
               <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
                 About <span className="text-primary">Me</span>
               </h2>

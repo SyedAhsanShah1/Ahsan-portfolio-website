@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, DownloadSimple, Handshake } from 'phosphor-react';
 import { Button } from './ui/button';
 import ParticleField from './ParticleField';
+import { CV_URL, CV_FILENAME } from '../config';
 
 const ROLES = ['AI Researcher', 'Medical Imaging', 'Computer Vision', 'Web Engineer'];
 
@@ -91,8 +92,8 @@ const Hero = () => {
 
   const downloadCV = () => {
     const link = document.createElement('a');
-    link.href = 'https://drive.usercontent.google.com/u/0/uc?id=18ayBqJRQqpHNLUeO-D94enteOAQ1CjCO&export=download';
-    link.download = 'Ahsan-Resume.pdf';
+    link.href = CV_URL;
+    link.download = CV_FILENAME;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -105,6 +106,7 @@ const Hero = () => {
         <div className="aurora-blob aurora-blob--a -top-24 -left-24" />
         <div className="aurora-blob aurora-blob--b top-1/3 -right-28" />
         <div className="aurora-blob aurora-blob--c bottom-0 left-1/3" />
+        <div className="aurora-blob aurora-blob--d top-2/3 -left-16 hidden md:block" />
       </div>
 
       <ParticleField />
@@ -127,7 +129,7 @@ const Hero = () => {
 
           <h1 data-reveal data-delay="0.05" className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
             Hi, I&apos;m{' '}
-            <span className="text-primary">Syed Ahsan</span>
+            <span className="bg-gradient-primary bg-clip-text text-transparent">Syed Ahsan</span>
           </h1>
 
           <div data-reveal data-delay="0.1" className="font-display text-2xl md:text-3xl lg:text-4xl text-secondary mb-6 min-h-[2.5rem]">

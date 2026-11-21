@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -22,15 +22,45 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import CustomCursor from './components/CustomCursor';
 import { ScrollFX } from './components/Motion';
-import { GrainOverlay, AmbientOrbs } from './components/SiteFX';
+import { GrainOverlay, AmbientOrbs, AuroraBackground, MouseGlow } from './components/SiteFX';
 
 const queryClient = new QueryClient();
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
+  const userScrolledRef = useRef(false);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    const markUserScroll = () => {
+      userScrolledRef.current = true;
+    };
+    window.addEventListener('wheel', markUserScroll, { passive: true });
+    window.addEventListener('touchmove', markUserScroll, { passive: true });
+    window.addEventListener('keydown', markUserScroll);
+    return () => {
+      window.removeEventListener('wheel', markUserScroll);
+      window.removeEventListener('touchmove', markUserScroll);
+      window.removeEventListener('keydown', markUserScroll);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    userScrolledRef.current = false;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const safety = window.setTimeout(() => {
+      if (!userScrolledRef.current) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }, 100);
+    return () => window.clearTimeout(safety);
   }, [pathname]);
+
   return null;
 };
 
@@ -76,6 +106,8 @@ const Layout = () => {
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
       <AmbientOrbs />
+      <AuroraBackground />
+      <MouseGlow />
       <GrainOverlay />
       <RouteSweep />
 

@@ -222,20 +222,40 @@ function StatCount({ target, suffix = '', decimals = 0 }: { target: number; suff
   );
 }
 
+const TINTS = {
+  blue: 'tint-blue',
+  teal: 'tint-teal',
+  navy: 'tint-navy',
+} as const;
+
 const ServicesPage = () => {
   return (
     <div className="pt-16">
-      <section className="relative py-20 px-6 overflow-hidden">
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div className="aurora-blob aurora-blob--a -top-20 left-[8%]" />
+          <div className="aurora-blob aurora-blob--b top-10 right-[5%]" />
+          <div className="aurora-blob aurora-blob--c bottom-0 left-1/3 hidden md:block" />
+        </div>
         <PageGlow tone="blue" />
         <div className="container mx-auto max-w-6xl relative text-center">
+          <div aria-hidden="true" className="absolute top-[16%] left-[2%] hidden lg:flex glass rounded-full px-4 py-2 text-sm font-medium text-primary shadow-glass animate-float">
+            12 services
+          </div>
+          <div aria-hidden="true" className="absolute top-[34%] right-[1%] hidden lg:flex glass rounded-full px-4 py-2 text-sm font-medium text-primary shadow-glass animate-float" style={{ animationDelay: '1.2s' }}>
+            4 focus areas
+          </div>
+          <div aria-hidden="true" className="absolute bottom-[8%] left-[8%] hidden lg:flex glass rounded-full px-4 py-2 text-sm font-medium text-primary shadow-glass animate-drift">
+            AI · Web · Research
+          </div>
           <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
-            // 07 - services
+            <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />07 - Services
           </p>
-          <h1 data-reveal data-delay="0.05" className="font-display text-4xl md:text-6xl font-semibold text-foreground mb-4">
-            What I Can <span className="text-primary">Do For You</span>
+          <h1 data-reveal data-delay="0.05" className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-4 leading-[1.05]">
+            What I Can <span className="bg-gradient-primary bg-clip-text text-transparent">Do For You</span>
           </h1>
           <div data-reveal data-delay="0.1" className="w-20 h-1 bg-gradient-primary rounded-full mx-auto mb-6" />
-          <p data-reveal data-delay="0.15" className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p data-reveal data-delay="0.15" className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             AI, web and research work - offered plainly, with the real skills and real projects behind each
             one. No inflated claims, no invented results.
           </p>
@@ -252,13 +272,14 @@ const ServicesPage = () => {
       {GROUPS.map((group, gi) => (
         <div key={group.id}>
           {gi > 0 && <SectionDivider />}
-          <section className="relative py-16 px-6 overflow-hidden">
-            <div className="container mx-auto max-w-7xl">
-              <div className="mb-10">
+          <section className={`relative py-20 px-6 overflow-hidden ${TINTS[group.tone]}`}>
+            <PageGlow tone={group.tone} />
+            <div className="container mx-auto max-w-7xl relative">
+              <div className="mb-12">
                 <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
-                  {group.label}
+                  <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />{group.label}
                 </p>
-                <h2 data-reveal data-delay="0.05" className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-3">
+                <h2 data-reveal data-delay="0.05" className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-3">
                   {group.title}
                 </h2>
                 <div data-reveal data-delay="0.1" className="w-20 h-1 bg-gradient-primary rounded-full mb-4" />
@@ -267,36 +288,86 @@ const ServicesPage = () => {
                 </p>
               </div>
 
-              <div className={`grid gap-6 ${group.services.length === 2 ? 'md:grid-cols-2 max-w-4xl' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
-                {group.services.map((service, i) => (
-                  <article
-                    key={service.title}
-                    data-tilt
-                    data-reveal
-                    data-delay={((i % 3) * 0.08).toFixed(2)}
-                    className="glass visual-card rounded-2xl p-7 hover:shadow-glow-primary hover:-translate-y-1.5 transition-all duration-300 will-change-transform flex flex-col"
-                  >
-                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-5">
-                      <service.icon size={24} className="text-primary-foreground" />
-                    </div>
-                    <h3 className="font-display text-2xl font-semibold text-foreground mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed mb-5 flex-1">{service.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {service.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {group.services.map((service, i) => {
+                  const featured = i === 0;
+                  const tall = group.services.length >= 3;
+                  const wide = group.services.length === 4 && i === 3;
+                  return (
+                    <article
+                      key={service.title}
+                      data-tilt
+                      data-reveal
+                      data-delay={((i % 3) * 0.08).toFixed(2)}
+                      className={
+                        featured
+                          ? 'spotlight-card visual-card glass rounded-2xl p-8 md:col-span-2 hover:shadow-glow-primary hover:-translate-y-1.5 transition-all duration-300 will-change-transform flex flex-col relative overflow-hidden' + (tall ? ' lg:row-span-2' : '')
+                          : wide
+                            ? 'glass visual-card rounded-2xl p-7 hover:shadow-glow-primary hover:-translate-y-1.5 transition-all duration-300 will-change-transform flex flex-col md:col-span-2 lg:col-span-3'
+                            : 'glass visual-card rounded-2xl p-7 hover:shadow-glow-primary hover:-translate-y-1.5 transition-all duration-300 will-change-transform flex flex-col'
+                      }
                     >
-                      Discuss your project
-                      <ArrowRight size={16} />
-                    </Link>
-                  </article>
-                ))}
+                      {featured && (
+                        <service.icon
+                          size={190}
+                          aria-hidden="true"
+                          className="absolute -bottom-10 -right-8 text-primary/[0.07] pointer-events-none"
+                        />
+                      )}
+                      {wide ? (
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-6 w-full">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center shrink-0">
+                            <service.icon size={24} className="text-primary-foreground" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-display text-2xl font-semibold text-foreground mb-2">{service.title}</h3>
+                            <p className="text-muted-foreground leading-relaxed mb-5">{service.description}</p>
+                            <div className="flex flex-wrap gap-2">
+                              {service.tags.map((tag) => (
+                                <span key={tag} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <Link
+                            to="/contact"
+                            className="inline-flex items-center gap-2 text-primary font-medium hover:underline shrink-0 sm:mt-2"
+                          >
+                            Discuss your project
+                            <ArrowRight size={16} />
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className={featured ? 'relative' : ''}>
+                          <div className={`${featured ? 'w-16 h-16 rounded-2xl' : 'w-12 h-12 rounded-xl'} bg-gradient-primary flex items-center justify-center mb-5`}>
+                            <service.icon size={featured ? 32 : 24} className="text-primary-foreground" />
+                          </div>
+                          <h3 className={`font-display font-semibold text-foreground mb-2 ${featured ? 'text-3xl' : 'text-2xl'}`}>
+                            {service.title}
+                          </h3>
+                          <p className={`text-muted-foreground leading-relaxed mb-5 ${featured ? 'text-lg' : ''} flex-1`}>
+                            {service.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {service.tags.map((tag) => (
+                              <span key={tag} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <Link
+                            to="/contact"
+                            className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+                          >
+                            Discuss your project
+                            <ArrowRight size={16} />
+                          </Link>
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -305,11 +376,12 @@ const ServicesPage = () => {
 
       <SectionDivider />
 
-      <section className="relative py-20 px-6 overflow-hidden">
-        <div className="container mx-auto max-w-6xl">
+      <section className="relative py-20 px-6 overflow-hidden tint-teal">
+        <PageGlow tone="teal" />
+        <div className="container mx-auto max-w-6xl relative">
           <div className="text-center mb-14">
             <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
-              // how it works
+              <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />How It Works
             </p>
             <h2 data-reveal data-delay="0.05" className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
               How It <span className="text-primary">Works</span>
@@ -320,32 +392,36 @@ const ServicesPage = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {STEPS.map((step, i) => (
-              <div
-                key={step.title}
-                data-reveal
-                data-delay={(i * 0.08).toFixed(2)}
-                className="glass rounded-2xl p-6 hover:shadow-glow-primary hover:-translate-y-1 transition-all duration-300 relative"
-              >
-                <span className="absolute top-5 right-6 font-display text-4xl font-semibold text-primary/15">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4">
-                  <step.icon size={24} className="text-primary-foreground" />
+          <div className="relative">
+            <div aria-hidden="true" className="process-line hidden lg:block" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+              {STEPS.map((step, i) => (
+                <div
+                  key={step.title}
+                  data-reveal
+                  data-delay={(i * 0.08).toFixed(2)}
+                  className="glass rounded-2xl p-6 hover:shadow-glow-primary hover:-translate-y-1 transition-all duration-300 relative"
+                >
+                  <span className="absolute top-5 right-6 font-display text-4xl font-semibold text-primary/15">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 relative">
+                    <step.icon size={24} className="text-primary-foreground" />
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.text}</p>
                 </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-2">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{step.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <SectionDivider />
 
-      <section className="relative py-16 px-6 overflow-hidden">
-        <div className="container mx-auto max-w-6xl">
+      <section className="relative py-16 px-6 overflow-hidden tint-blue">
+        <PageGlow tone="blue" />
+        <div className="container mx-auto max-w-6xl relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {STATS.map((stat, i) => (
               <div
@@ -378,6 +454,10 @@ const ServicesPage = () => {
             data-reveal
             className="relative overflow-hidden rounded-3xl bg-gradient-secondary text-secondary-foreground p-8 md:p-12 text-center"
           >
+            <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+              <div className="aurora-blob aurora-blob--a -top-24 -left-16 opacity-70" />
+              <div className="aurora-blob aurora-blob--b -bottom-28 -right-10 opacity-70" />
+            </div>
             <div className="absolute -top-20 -right-20 w-72 h-72 bg-primary/30 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-24 -left-16 w-72 h-72 bg-accent/25 rounded-full blur-3xl pointer-events-none" />
             <div className="relative">

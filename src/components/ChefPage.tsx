@@ -242,14 +242,15 @@ const ChefPage = () => {
                 <span className="steam-wisp block w-1.5 h-10 bg-muted-foreground/40 rounded-full blur-[2px]" style={{ animationDelay: '0.9s' }} />
                 <span className="steam-wisp block w-1.5 h-8 bg-muted-foreground/40 rounded-full blur-[2px]" style={{ animationDelay: '1.7s' }} />
               </div>
-              <svg
-                viewBox="0 0 200 110"
-                onClick={onHatClick}
-                className="absolute -top-14 left-1/2 -translate-x-1/2 w-52 z-20 drop-shadow-lg cursor-pointer hover-wiggle"
-                aria-label="Chef hat - click me"
-                role="button"
-                title="Click the hat. You know you want to."
-              >
+              <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-52 z-20">
+                <svg
+                  viewBox="0 0 200 110"
+                  onClick={onHatClick}
+                  className="w-full drop-shadow-lg cursor-pointer hover-wiggle"
+                  aria-label="Chef hat - click me"
+                  role="button"
+                  title="Click the hat. You know you want to."
+                >
                 <path
                   d="M100 8c-14 0-24 9-26 21-12 1-22 10-22 23 0 7 3 13 8 17-4 4-7 10-7 16 0 8 5 14 12 17h70c7-3 12-9 12-17 0-6-3-12-7-16 5-4 8-10 8-17 0-13-10-22-22-23-2-12-12-21-26-21z"
                   fill="#FFFDF8"
@@ -258,6 +259,7 @@ const ChefPage = () => {
                 />
                 <rect x="62" y="86" width="76" height="18" rx="6" fill="#FFFDF8" stroke="#E5DDCB" strokeWidth="2" />
               </svg>
+              </div>
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-accent shadow-glass bg-card">
                 <img src="/Images/ahsan-profile.jpg" alt="Chef Ahsan" className="w-full h-full object-cover object-top" />
               </div>
@@ -280,7 +282,7 @@ const ChefPage = () => {
         </div>
 
         <div data-reveal className="text-center mb-14">
-          <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// hidden_talent</p>
+          <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3"><span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />Hidden Talent</p>
           <h1 className="font-display text-5xl md:text-6xl font-semibold text-foreground mb-3">
             Chef <span className="text-primary">Ahsan</span>
           </h1>
@@ -471,12 +473,14 @@ const ChefPage = () => {
 
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md flex items-center justify-center gap-3 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-glow-secondary animate-fade-in">
-          <CookingPot size={22} className="text-accent shrink-0" />
-          <p className="font-medium text-center">{toast}</p>
-          <button onClick={() => setToast(null)} className="text-secondary-foreground/60 hover:text-secondary-foreground shrink-0" aria-label="Dismiss">
-            <X size={18} />
-          </button>
+        <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-4 pointer-events-none">
+          <div className="pointer-events-auto w-full max-w-md flex items-center justify-center gap-3 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-glow-secondary toast-fade-in">
+            <CookingPot size={22} className="text-accent shrink-0" />
+            <p className="font-medium text-center">{toast}</p>
+            <button onClick={() => setToast(null)} className="text-secondary-foreground/60 hover:text-secondary-foreground shrink-0" aria-label="Dismiss">
+              <X size={18} />
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -53,7 +53,7 @@ const Experience = () => {
     <section id="experience" className="py-20 px-6 relative overflow-hidden">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
-          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">// 02 - experience</p>
+          <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3"><span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />02 - Experience</p>
           <h2 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
             My <span className="text-primary">Experience</span>
           </h2>

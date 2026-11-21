@@ -50,10 +50,12 @@ export function useTripleClick(onTriple: () => void) {
 
 export function JokeToast({ message }: { message: string }) {
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-2rem)] max-w-md flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-5 py-3.5 rounded-2xl shadow-glow-secondary animate-fade-in text-center">
-      <span className="text-accent">✦</span>
-      <p className="font-medium text-sm sm:text-base">{message}</p>
-      <span className="text-accent">✦</span>
+    <div className="fixed inset-x-0 bottom-6 z-[9999] flex justify-center px-4 pointer-events-none">
+      <div className="pointer-events-auto w-full max-w-md flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-5 py-3.5 rounded-2xl shadow-glow-secondary toast-fade-in text-center">
+        <span className="text-accent">✦</span>
+        <p className="font-medium text-sm sm:text-base">{message}</p>
+        <span className="text-accent">✦</span>
+      </div>
     </div>
   );
 }

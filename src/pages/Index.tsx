@@ -55,7 +55,7 @@ const Index = () => {
       <Hero />
 
 
-      <section className="py-16 px-6">
+      <section className="py-16 px-6 tint-blue">
         <div className="container mx-auto max-w-6xl text-center">
           <h2 data-reveal className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
             Researcher first, <span className="text-primary">engineer always</span>
@@ -84,11 +84,11 @@ const Index = () => {
       <SectionDivider />
 
 
-      <section className="relative pb-24 pt-16 px-6 overflow-hidden">
+      <section className="relative pb-24 pt-16 px-6 overflow-hidden tint-teal">
         <PageGlow tone="blue" />
         <div className="container mx-auto max-w-6xl relative">
           <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary text-center mb-3">
-            // explore
+            <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />Explore
           </p>
           <h2 data-reveal data-delay="0.05" className="font-display text-3xl md:text-4xl font-semibold text-foreground text-center mb-12">
             Explore the <span className="text-primary">portfolio</span>

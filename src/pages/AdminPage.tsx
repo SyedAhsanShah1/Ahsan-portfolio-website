@@ -235,7 +235,7 @@ const AdminPage = () => {
         <div className="container mx-auto max-w-lg px-6 py-24 relative z-10">
           <div className="text-center mb-10">
             <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
-              // admin
+              <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />Admin
             </p>
             <h1 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4">
               Admin <span className="text-primary">Dashboard</span>
@@ -323,7 +323,7 @@ const AdminPage = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
           <div>
             <p data-reveal className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
-              // admin dashboard
+              <span aria-hidden="true" className="mr-2 inline-block h-px w-8 shrink-0 bg-gradient-primary align-middle" />Admin Dashboard
             </p>
             <h1 data-reveal data-delay="0.05" className="font-display text-4xl md:text-5xl font-semibold text-foreground">
               Inbox <span className="text-primary">&amp; Queries</span>
