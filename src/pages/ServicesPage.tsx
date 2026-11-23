@@ -24,6 +24,8 @@ import { PageGlow, SectionDivider } from '../components/SiteFX';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SERVICES_SITE_URL = 'https://ahsan-services-website.vercel.app';
+
 type Service = {
   icon: React.ElementType;
   title: string;
@@ -266,6 +268,17 @@ const ServicesPage = () => {
               </span>
             ))}
           </div>
+          <div data-reveal data-delay="0.25" className="flex flex-wrap items-center justify-center gap-3 mt-8">
+            <a
+              href={SERVICES_SITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-primary text-primary-foreground rounded-full font-semibold hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+            >
+              Visit Ahsan Services
+              <ArrowRight size={18} />
+            </a>
+          </div>
         </div>
       </section>
 
@@ -466,15 +479,27 @@ const ServicesPage = () => {
               </h2>
               <p className="text-secondary-foreground/80 text-lg max-w-xl mx-auto mb-8 leading-relaxed">
                 Tell me about it - a short message is enough to start. I reply personally, usually within a day.
+                For the full services site with live chat, visit Ahsan Services.
               </p>
-              <Link
-                to="/contact"
-                data-magnetic
-                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-primary text-primary-foreground rounded-full font-semibold text-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
-              >
-                Get in Touch
-                <ArrowRight size={20} />
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  to="/contact"
+                  data-magnetic
+                  className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-primary text-primary-foreground rounded-full font-semibold text-lg hover:shadow-glow-primary transition-all duration-300 hover:scale-105"
+                >
+                  Get in Touch
+                  <ArrowRight size={20} />
+                </Link>
+                <a
+                  href={SERVICES_SITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg border border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 transition-all duration-300"
+                >
+                  Visit Ahsan Services
+                  <ArrowRight size={20} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
