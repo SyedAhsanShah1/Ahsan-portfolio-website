@@ -1,4 +1,4 @@
 export const CV_URL =
-  'https://drive.usercontent.google.com/u/0/uc?id=18ayBqJRQqpHNLUeO-D94enteOAQ1CjCO&export=download';
+  'https://drive.google.com/uc?id=1mSuer17AN6qADDghrMA7nHajaDolZGYc&export=download';
 
-export const CV_FILENAME = 'Ahsan-Resume.pdf';
+export const CV_FILENAME = 'Muhammad-Ahsan-Shah-CV.pdf';
